@@ -8,6 +8,7 @@ import io.reactivex.rxkotlin.subscribeBy
 import me.androidbox.pokemon.di.modules.ApplicationModule.PokemonSchedulers
 import me.androidbox.pokemon.domain.interactors.PokemonDetailInteractor
 import me.androidbox.pokemon.domain.interactors.PokemonListInteractor
+import me.androidbox.pokemon.domain.models.PokemonListModel
 import me.androidbox.pokemon.domain.models.PokemonModel
 import timber.log.Timber
 
@@ -22,7 +23,7 @@ class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
 
     private val compositeDisposable = CompositeDisposable()
     private val pokemonDetailLiveData = MutableLiveData<PokemonModel>()
-    private val pokemonListLiveData = MutableLiveData<List<PokemonModel>>()
+    private val pokemonListLiveData = MutableLiveData<PokemonListModel>()
 
     fun getPokemonsList() {
         pokemonListInteractor.getListOfPokemons()
@@ -52,7 +53,7 @@ class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
             ).addTo(compositeDisposable)
     }
 
-    fun registerPokemonList(): MutableLiveData<List<PokemonModel>> =
+    fun registerPokemonList(): MutableLiveData<PokemonListModel> =
         pokemonListLiveData
 
     fun registerPokemonDetail(): MutableLiveData<PokemonModel> =

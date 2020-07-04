@@ -1,16 +1,19 @@
 package me.androidbox.pokemon.presentation.adapters
 
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import me.androidbox.pokemon.R
 import me.androidbox.pokemon.domain.models.PokemonModel
 import me.androidbox.pokemon.presentation.viewholders.PokemonViewHolder
 
 class PokemonAdapter : RecyclerView.Adapter<PokemonViewHolder>() {
 
-    private val pokemonList = listOf<PokemonModel>()
+    private val pokemonList = mutableListOf<PokemonModel>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonViewHolder {
-        val pokemonViewHolder = PokemonViewHolder(parent)
+        val pokemonViewHolder = PokemonViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.pokemon_list_item, parent, false))
 
         pokemonViewHolder.itemView.setOnClickListener {
 
@@ -19,14 +22,15 @@ class PokemonAdapter : RecyclerView.Adapter<PokemonViewHolder>() {
         return pokemonViewHolder
     }
 
-    override fun getItemCount(): Int = pokemonList.count()
+    override fun getItemCount(): Int =
+        pokemonList.count()
 
     override fun onBindViewHolder(holder: PokemonViewHolder, position: Int) {
         holder.name.text = pokemonList[position].name
     }
 
     fun populatePokemons(pokemonList: List<PokemonModel>) {
-        this.pokemonList.toMutableList().addAll(pokemonList)
+        this.pokemonList.addAll(pokemonList)
     }
 }
 

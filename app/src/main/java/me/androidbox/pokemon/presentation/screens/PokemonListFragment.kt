@@ -14,15 +14,16 @@ import me.androidbox.pokemon.di.ProvideApplicationComponent.getApplicationCompon
 import me.androidbox.pokemon.di.modules.PokemonModule
 import me.androidbox.pokemon.presentation.adapters.PokemonAdapter
 import me.androidbox.pokemon.presentation.viewmodels.PokemonViewModel
+import timber.log.Timber
 import javax.inject.Inject
 
 class PokemonListFragment : Fragment() {
 
     @Inject
-    lateinit var pokemonAdapter: PokemonAdapter
+    lateinit var pokemonViewModel: PokemonViewModel
 
     @Inject
-    lateinit var pokemonViewModel: PokemonViewModel
+    lateinit var pokemonAdapter: PokemonAdapter
 
     private lateinit var bindings: FragmentPokemonListBinding
 
@@ -34,8 +35,10 @@ class PokemonListFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         getApplicationComponent(requireActivity())
-            .add(PokemonModule())
+            .add(PokemonModule(this@PokemonListFragment))
             .inject(this@PokemonListFragment)
+
+        Timber.d(TAG, "injection success")
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -44,7 +47,8 @@ class PokemonListFragment : Fragment() {
         setupAdapter()
 
         pokemonViewModel.registerPokemonList().observe(viewLifecycleOwner, Observer { pokemonList ->
-            pokemonAdapter.populatePokemons(pokemonList)
+            pokemonAdapter.populatePokemons(pokemonList.pokemonList)
+            pokemonAdapter.notifyDataSetChanged()
         })
         pokemonViewModel.getPokemonsList()
 

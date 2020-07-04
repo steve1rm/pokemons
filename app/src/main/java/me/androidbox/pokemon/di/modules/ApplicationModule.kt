@@ -1,6 +1,7 @@
 package me.androidbox.pokemon.di.modules
 
 import android.app.Application
+import android.content.Context
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
@@ -19,14 +20,18 @@ class ApplicationModule(private val application: PokemonApplication) {
 
     @Singleton
     @Provides
+    fun provideContext(): Context = application
+
+    @Singleton
+    @Provides
     fun provideSchedulers(): PokemonSchedulers {
         return object : PokemonSchedulers {
             override fun ui(): Scheduler {
-                return Schedulers.io()
+                return AndroidSchedulers.mainThread()
             }
 
             override fun background(): Scheduler {
-                return AndroidSchedulers.mainThread()
+                return Schedulers.io()
             }
 
             override fun test(): Scheduler {
