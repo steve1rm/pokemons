@@ -6,4 +6,5 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [NetworkModule::class])
 interface ApplicationComponent {
+    fun add(pokemonModule: PokemonModule): PokemonSubcomponent
 }
