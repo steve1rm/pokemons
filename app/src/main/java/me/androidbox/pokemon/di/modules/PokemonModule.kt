@@ -1,4 +1,4 @@
-package me.androidbox.pokemon.di
+package me.androidbox.pokemon.di.modules
 
 import dagger.Module
 import dagger.Provides

@@ -1,8 +1,9 @@
-package me.androidbox.pokemon.di
+package me.androidbox.pokemon.di.modules
 
 import android.app.Application
 import dagger.Module
 import dagger.Provides
+import me.androidbox.pokemon.di.PokemonApplication
 import javax.inject.Singleton
 
 @Module
