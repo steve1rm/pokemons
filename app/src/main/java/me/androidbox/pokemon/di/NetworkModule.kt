@@ -1,10 +1,10 @@
 package me.androidbox.pokemon.di
 
 import android.content.Context
-import androidx.multidex.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
+import me.androidbox.pokemon.BuildConfig
 import me.androidbox.pokemon.R
 import me.androidbox.pokemon.data.service.PokemonService
 import okhttp3.OkHttpClient
