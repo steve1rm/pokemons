@@ -3,7 +3,6 @@ package me.androidbox.pokemon.data.requests
 import io.reactivex.Single
 import me.androidbox.pokemon.data.service.PokemonService
 import me.androidbox.pokemon.domain.interactors.PokemonDetailInteractor
-import me.androidbox.pokemon.domain.models.PokemonListModel
 import me.androidbox.pokemon.domain.models.PokemonModel
 import java.util.concurrent.TimeUnit
 

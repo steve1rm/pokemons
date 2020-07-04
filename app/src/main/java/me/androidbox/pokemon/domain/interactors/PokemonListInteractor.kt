@@ -1,9 +1,9 @@
 package me.androidbox.pokemon.domain.interactors
 
 import io.reactivex.Single
-import me.androidbox.pokemon.domain.models.PokemonListModel
+import me.androidbox.pokemon.domain.models.PokemonModel
 
 interface PokemonListInteractor {
-    fun getListOfPokemons(): Single<PokemonListModel>
+    fun getListOfPokemons(): Single<List<PokemonModel>>
 }
 

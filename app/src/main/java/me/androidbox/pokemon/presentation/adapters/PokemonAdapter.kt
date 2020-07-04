@@ -25,8 +25,8 @@ class PokemonAdapter : RecyclerView.Adapter<PokemonViewHolder>() {
         holder.name.text = pokemonList[position].name
     }
 
-    fun populatePokemons(pokemons: List<PokemonModel>) {
-        pokemonList.toMutableList().addAll(pokemons)
+    fun populatePokemons(pokemonList: List<PokemonModel>) {
+        this.pokemonList.toMutableList().addAll(pokemonList)
     }
 }
 

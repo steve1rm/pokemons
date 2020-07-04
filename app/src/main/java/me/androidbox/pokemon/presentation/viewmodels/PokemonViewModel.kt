@@ -8,7 +8,6 @@ import io.reactivex.rxkotlin.subscribeBy
 import me.androidbox.pokemon.di.modules.ApplicationModule.PokemonSchedulers
 import me.androidbox.pokemon.domain.interactors.PokemonDetailInteractor
 import me.androidbox.pokemon.domain.interactors.PokemonListInteractor
-import me.androidbox.pokemon.domain.models.PokemonListModel
 import me.androidbox.pokemon.domain.models.PokemonModel
 import timber.log.Timber
 
@@ -18,20 +17,20 @@ class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
 
     companion object {
         @JvmField
-        val TAG = PokemonViewModel::class.java.simpleName
+        val TAG: String = PokemonViewModel::class.java.simpleName
     }
 
     private val compositeDisposable = CompositeDisposable()
-    private val pokemonDetail = MutableLiveData<PokemonModel>()
-    private val pokemonList = MutableLiveData<PokemonListModel>()
+    private val pokemonDetailLiveData = MutableLiveData<PokemonModel>()
+    private val pokemonListLiveData = MutableLiveData<List<PokemonModel>>()
 
     fun getPokemonsList() {
         pokemonListInteractor.getListOfPokemons()
             .subscribeOn(pokemonSchedulers.background())
             .observeOn(pokemonSchedulers.ui())
             .subscribeBy(
-                onSuccess = { pokemons ->
-                    pokemonList.value = pokemons
+                onSuccess = { pokemonList ->
+                    this.pokemonListLiveData.value = pokemonList
                 },
                 onError = {
                     Timber.e(TAG, it.localizedMessage)
@@ -45,13 +44,19 @@ class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
             .observeOn(pokemonSchedulers.ui())
             .subscribeBy(
                 onSuccess = { pokemon ->
-                    pokemonDetail.value = pokemon
+                    pokemonDetailLiveData.value = pokemon
                 },
                 onError = {
                     Timber.e(TAG, it.localizedMessage)
                 }
             ).addTo(compositeDisposable)
     }
+
+    fun registerPokemonList(): MutableLiveData<List<PokemonModel>> =
+        pokemonListLiveData
+
+    fun registerPokemonDetail(): MutableLiveData<PokemonModel> =
+        pokemonDetailLiveData
 
     override fun onCleared() {
         compositeDisposable.clear()
