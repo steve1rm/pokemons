@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import me.androidbox.pokemon.R
 import me.androidbox.pokemon.domain.models.PokemonModel
 import me.androidbox.pokemon.presentation.viewholders.PokemonViewHolder
+import timber.log.Timber
 
 class PokemonAdapter : RecyclerView.Adapter<PokemonViewHolder>() {
 
@@ -16,7 +17,7 @@ class PokemonAdapter : RecyclerView.Adapter<PokemonViewHolder>() {
             LayoutInflater.from(parent.context).inflate(R.layout.pokemon_list_item, parent, false))
 
         pokemonViewHolder.itemView.setOnClickListener {
-
+            val name = pokemonList[pokemonViewHolder.adapterPosition].name
         }
 
         return pokemonViewHolder
