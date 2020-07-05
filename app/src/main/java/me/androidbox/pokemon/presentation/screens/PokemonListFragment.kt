@@ -9,10 +9,12 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
+import androidx.recyclerview.widget.RecyclerView
 import me.androidbox.pokemon.databinding.FragmentPokemonListBinding
 import me.androidbox.pokemon.di.ProvideApplicationComponent.getApplicationComponent
 import me.androidbox.pokemon.di.modules.PokemonModule
 import me.androidbox.pokemon.presentation.adapters.PokemonAdapter
+import me.androidbox.pokemon.presentation.utils.EndlessRecyclerViewScrollListener
 import me.androidbox.pokemon.presentation.viewmodels.PokemonViewModel
 import timber.log.Timber
 import javax.inject.Inject
@@ -56,8 +58,24 @@ class PokemonListFragment : Fragment() {
     }
 
     private fun setupAdapter() {
+        val layoutManager = LinearLayoutManager(requireContext(), VERTICAL, false)
+
         bindings.rvPokemons.adapter = pokemonAdapter
-        bindings.rvPokemons.layoutManager = LinearLayoutManager(requireContext(), VERTICAL, false)
+        bindings.rvPokemons.layoutManager = layoutManager
         bindings.rvPokemons.addItemDecoration(DividerItemDecoration(requireContext(), VERTICAL))
+
+        val endlessRecyclerViewScrollListener = object : EndlessRecyclerViewScrollListener(layoutManager) {
+            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
+                loadMorePokemons(page)
+                Timber.d("page $page totalItemsCount $totalItemsCount")
+            }
+        }
+        bindings.rvPokemons.addOnScrollListener(endlessRecyclerViewScrollListener)
+    }
+
+    private fun loadMorePokemons(page: Int) {
+        /** Offset is calculated by multiplying the actual page number by 20 to get the next 'page * 20' of pokemons */
+        val offset = page * 20
+        pokemonViewModel.getMorePokemons(offset)
     }
 }

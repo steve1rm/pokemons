@@ -4,6 +4,7 @@ import io.reactivex.Single
 import me.androidbox.pokemon.domain.models.PokemonListModel
 import me.androidbox.pokemon.domain.models.PokemonModel
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface PokemonService {
@@ -11,5 +12,8 @@ interface PokemonService {
     fun getPokemons(): Single<PokemonListModel>
 
     @GET(EndPoints.POKEMON_BY_ID)
-    fun getPokemonById(@Query("id") id: Int): Single<PokemonModel>
+    fun getPokemonById(@Path("id") id: Int): Single<PokemonModel>
+
+    @GET(EndPoints.POKEMON)
+    fun loadMorePokemons(@Query("offset") offset: Int): Single<PokemonListModel>
 }

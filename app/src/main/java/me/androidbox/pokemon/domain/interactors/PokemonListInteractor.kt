@@ -5,5 +5,7 @@ import me.androidbox.pokemon.domain.models.PokemonListModel
 
 interface PokemonListInteractor {
     fun getListOfPokemons(): Single<PokemonListModel>
+    fun loadMorePokemonsByOffset(offset: Int): Single<PokemonListModel>
 }
+
 

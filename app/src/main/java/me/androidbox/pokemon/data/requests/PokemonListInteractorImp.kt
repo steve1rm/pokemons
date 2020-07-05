@@ -11,4 +11,9 @@ class PokemonListInteractorImp(private val pokemonService: PokemonService) : Pok
         return pokemonService.getPokemons()
             .timeout(10, TimeUnit.SECONDS)
     }
+
+    override fun loadMorePokemonsByOffset(offset: Int): Single<PokemonListModel> {
+        return pokemonService.loadMorePokemons(offset)
+            .timeout(10, TimeUnit.SECONDS)
+    }
 }

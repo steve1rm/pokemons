@@ -53,6 +53,20 @@ class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
             ).addTo(compositeDisposable)
     }
 
+    fun getMorePokemons(offset: Int) {
+        pokemonListInteractor.loadMorePokemonsByOffset(offset)
+            .subscribeOn(pokemonSchedulers.background())
+            .observeOn(pokemonSchedulers.ui())
+            .subscribeBy(
+                onSuccess = { pokemonList ->
+                    pokemonListLiveData.value = pokemonList
+                },
+                onError = {
+                    Timber.e(TAG, it.localizedMessage)
+                }
+            ).addTo(compositeDisposable)
+    }
+
     fun registerPokemonList(): MutableLiveData<PokemonListModel> =
         pokemonListLiveData
 
