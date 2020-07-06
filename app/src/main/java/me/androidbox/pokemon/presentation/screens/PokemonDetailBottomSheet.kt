@@ -23,9 +23,9 @@ class PokemonDetailBottomSheet : BottomSheetDialogFragment() {
         arguments?.let {
             (it.getParcelable(POKEMON_DETAIL_KEY) as? PokemonModel)?.let { pokemon ->
                 binding.tvName.text = pokemon.name
-                binding.tvHeight.text = pokemon.height.toString()
-                binding.tvWeight.text = pokemon.weight.toString()
-                binding.tvBaseExperience.text = pokemon.baseExperience.toString()
+                binding.tvHeight.text = "Height: ${pokemon.height.toString()} Metre"
+                binding.tvWeight.text = "Weight: ${pokemon.weight.toString()} Kilogram"
+                binding.tvBaseExperience.text = "Base Exp: ${pokemon.baseExperience.toString()}"
             }
         }
 

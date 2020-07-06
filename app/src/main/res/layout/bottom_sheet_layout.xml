@@ -4,30 +4,44 @@
     android:id="@+id/bottom_sheet_layout"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingTop="32dp"
+    android:paddingStart="18sp"
+    android:paddingEnd="18sp"
+    android:paddingBottom="40sp">
 
     <TextView
         android:id="@+id/tvName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="pikachu"/>
+        tools:text="pikachu"
+        style="@style/details_title" />
 
     <TextView
         android:id="@+id/tvHeight"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Height: 0.40 Metre"/>
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        tools:text="Height: 0.40 Metre"
+        style="@style/details_items" />
 
     <TextView
         android:id="@+id/tvWeight"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Weight: 6.00 Kilogram"/>
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        tools:text="Weight: 6.00 Kilogram"
+        style="@style/details_items"/>
 
     <TextView
         android:id="@+id/tvBaseExperience"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="Base Exp: 112"/>
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        tools:text="Base Exp: 112"
+        style="@style/details_items"/>
 
 </LinearLayout>
