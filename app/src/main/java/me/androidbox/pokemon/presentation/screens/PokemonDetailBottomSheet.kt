@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import me.androidbox.pokemon.R
 import me.androidbox.pokemon.databinding.BottomSheetLayoutBinding
 import me.androidbox.pokemon.domain.models.PokemonModel
 
@@ -23,9 +24,9 @@ class PokemonDetailBottomSheet : BottomSheetDialogFragment() {
         arguments?.let {
             (it.getParcelable(POKEMON_DETAIL_KEY) as? PokemonModel)?.let { pokemon ->
                 binding.tvName.text = pokemon.name
-                binding.tvHeight.text = "Height: ${pokemon.height.toString()} Metre"
-                binding.tvWeight.text = "Weight: ${pokemon.weight.toString()} Kilogram"
-                binding.tvBaseExperience.text = "Base Exp: ${pokemon.baseExperience.toString()}"
+                binding.tvHeight.text = getString(R.string.height, pokemon.height)
+                binding.tvWeight.text = getString(R.string.weight, pokemon.weight)
+                binding.tvBaseExperience.text = getString(R.string.BaseExp, pokemon.baseExperience)
             }
         }
 
