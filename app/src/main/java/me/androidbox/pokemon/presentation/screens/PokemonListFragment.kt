@@ -54,12 +54,22 @@ class PokemonListFragment : Fragment() {
         })
         pokemonViewModel.getPokemonsList()
 
+        pokemonViewModel.registerPokemonDetail().observe(viewLifecycleOwner, Observer { pokemon ->
+            val bottomSheet = PokemonDetailBottomSheet()
+
+            bottomSheet.arguments = Bundle().apply {
+                putParcelable(PokemonDetailBottomSheet.POKEMON_DETAIL_KEY, pokemon)
+            }
+            bottomSheet.show(parentFragmentManager, PokemonDetailBottomSheet::class.java.simpleName)
+        })
+
         return bindings.root
     }
 
     private fun setupAdapter() {
         val layoutManager = LinearLayoutManager(requireContext(), VERTICAL, false)
 
+        pokemonAdapter.setupPokemonTappedListener(::onPokemonTapped)
         bindings.rvPokemons.adapter = pokemonAdapter
         bindings.rvPokemons.layoutManager = layoutManager
         bindings.rvPokemons.addItemDecoration(DividerItemDecoration(requireContext(), VERTICAL))
@@ -77,5 +87,9 @@ class PokemonListFragment : Fragment() {
         /** Offset is calculated by multiplying the actual page number by 20 to get the next 'page * 20' of pokemons */
         val offset = page * 20
         pokemonViewModel.getMorePokemons(offset)
+    }
+
+    private fun onPokemonTapped(name: String) {
+        pokemonViewModel.getPokemonDetailByName(name)
     }
 }

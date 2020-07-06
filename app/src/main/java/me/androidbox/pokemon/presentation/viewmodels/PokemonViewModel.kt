@@ -39,6 +39,20 @@ class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
             ).addTo(compositeDisposable)
     }
 
+    fun getMorePokemons(offset: Int) {
+        pokemonListInteractor.loadMorePokemonsByOffset(offset)
+            .subscribeOn(pokemonSchedulers.background())
+            .observeOn(pokemonSchedulers.ui())
+            .subscribeBy(
+                onSuccess = { pokemonList ->
+                    pokemonListLiveData.value = pokemonList
+                },
+                onError = {
+                    Timber.e(TAG, it.localizedMessage)
+                }
+            ).addTo(compositeDisposable)
+    }
+
     fun getPokemonDetailById(id: Int) {
         pokemonDetailInteractor.getPokemonDetailById(id)
             .subscribeOn(pokemonSchedulers.background())
@@ -53,13 +67,13 @@ class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
             ).addTo(compositeDisposable)
     }
 
-    fun getMorePokemons(offset: Int) {
-        pokemonListInteractor.loadMorePokemonsByOffset(offset)
+    fun getPokemonDetailByName(name: String) {
+        pokemonDetailInteractor.getPokemonDetailByName(name)
             .subscribeOn(pokemonSchedulers.background())
             .observeOn(pokemonSchedulers.ui())
             .subscribeBy(
-                onSuccess = { pokemonList ->
-                    pokemonListLiveData.value = pokemonList
+                onSuccess = { pokemon ->
+                    pokemonDetailLiveData.value = pokemon
                 },
                 onError = {
                     Timber.e(TAG, it.localizedMessage)

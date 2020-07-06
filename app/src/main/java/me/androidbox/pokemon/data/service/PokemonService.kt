@@ -14,6 +14,9 @@ interface PokemonService {
     @GET(EndPoints.POKEMON_BY_ID)
     fun getPokemonById(@Path("id") id: Int): Single<PokemonModel>
 
+    @GET(EndPoints.POKEMON_BY_NAME)
+    fun getPokemonByName(@Path("name") name: String): Single<PokemonModel>
+
     @GET(EndPoints.POKEMON)
     fun loadMorePokemons(@Query("offset") offset: Int): Single<PokemonListModel>
 }

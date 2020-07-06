@@ -12,4 +12,9 @@ class PokemonDetailInteractorImp(private val pokemonService: PokemonService) : P
         return pokemonService.getPokemonById(id)
             .timeout(10, TimeUnit.SECONDS)
     }
+
+    override fun getPokemonDetailByName(name: String): Single<PokemonModel> {
+        return pokemonService.getPokemonByName(name)
+            .timeout(10, TimeUnit.SECONDS)
+    }
 }

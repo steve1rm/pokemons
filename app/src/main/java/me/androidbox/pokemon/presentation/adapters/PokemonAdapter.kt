@@ -11,6 +11,7 @@ import timber.log.Timber
 class PokemonAdapter : RecyclerView.Adapter<PokemonViewHolder>() {
 
     private val pokemonList = mutableListOf<PokemonModel>()
+    private lateinit var pokemonTapped: (String) -> Unit
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonViewHolder {
         val pokemonViewHolder = PokemonViewHolder(
@@ -18,6 +19,10 @@ class PokemonAdapter : RecyclerView.Adapter<PokemonViewHolder>() {
 
         pokemonViewHolder.itemView.setOnClickListener {
             val name = pokemonList[pokemonViewHolder.adapterPosition].name
+
+            if(::pokemonTapped.isInitialized) {
+                pokemonTapped(name)
+            }
         }
 
         return pokemonViewHolder
@@ -32,6 +37,10 @@ class PokemonAdapter : RecyclerView.Adapter<PokemonViewHolder>() {
 
     fun populatePokemons(pokemonList: List<PokemonModel>) {
         this.pokemonList.addAll(pokemonList)
+    }
+
+    fun setupPokemonTappedListener(action: (String) -> Unit) {
+        pokemonTapped = action
     }
 }
 
