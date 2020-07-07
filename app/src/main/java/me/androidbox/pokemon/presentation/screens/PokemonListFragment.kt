@@ -39,8 +39,6 @@ class PokemonListFragment : Fragment() {
         getApplicationComponent(requireActivity())
             .add(PokemonModule(this@PokemonListFragment))
             .inject(this@PokemonListFragment)
-
-        Timber.d(TAG, "injection success")
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -52,7 +50,6 @@ class PokemonListFragment : Fragment() {
             pokemonAdapter.populatePokemons(pokemonList.pokemonList)
             pokemonAdapter.notifyDataSetChanged()
         })
-        pokemonViewModel.getPokemonsList()
 
         pokemonViewModel.registerPokemonDetail().observe(viewLifecycleOwner, Observer { pokemon ->
             val bottomSheet = PokemonDetailBottomSheet()

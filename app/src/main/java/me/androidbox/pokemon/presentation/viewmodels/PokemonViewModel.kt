@@ -25,6 +25,11 @@ class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
     private val pokemonDetailLiveData = MutableLiveData<PokemonModel>()
     private val pokemonListLiveData = MutableLiveData<PokemonListModel>()
 
+    init {
+        Timber.d("PokemonViewModel init")
+        getPokemonsList()
+    }
+
     fun getPokemonsList() {
         pokemonListInteractor.getListOfPokemons()
             .subscribeOn(pokemonSchedulers.background())
