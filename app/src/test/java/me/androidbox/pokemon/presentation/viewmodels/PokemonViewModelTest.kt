@@ -2,6 +2,7 @@ package me.androidbox.pokemon.presentation.viewmodels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import com.nhaarman.mockitokotlin2.atLeast
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
@@ -11,10 +12,12 @@ import me.androidbox.pokemon.di.modules.ApplicationModule.PokemonSchedulers
 import me.androidbox.pokemon.domain.interactors.PokemonDetailInteractor
 import me.androidbox.pokemon.domain.interactors.PokemonListInteractor
 import me.androidbox.pokemon.domain.models.PokemonListModel
+import me.androidbox.pokemon.presentation.mockdata.MockDataFactory
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import java.util.concurrent.TimeUnit
 
 class PokemonViewModelTest {
     private val pokemonListInteractor: PokemonListInteractor = mock()
@@ -31,6 +34,7 @@ class PokemonViewModelTest {
     fun setUp() {
         whenever(pokemonSchedulers.background()).thenReturn(testScheduler)
         whenever(pokemonSchedulers.ui()).thenReturn(testScheduler)
+        whenever(pokemonListInteractor.getListOfPokemons()).thenReturn(Single.just(PokemonListModel(emptyList())))
 
         pokemonViewModel = PokemonViewModel(
             pokemonListInteractor,
@@ -42,15 +46,33 @@ class PokemonViewModelTest {
     @Test
     fun `should get a list of pokemon`() {
         // Arrange
+        val pokemonList = MockDataFactory.createListOfPokemon(10)
         whenever(pokemonListInteractor.getListOfPokemons())
-            .thenReturn(Single.just(PokemonListModel(emptyList())))
+            .thenReturn(Single.just(PokemonListModel(pokemonList)))
 
         // Act
         pokemonViewModel.getPokemonsList()
         testScheduler.triggerActions()
 
         // Assert
-        verify(pokemonListInteractor).getListOfPokemons()
+        verify(pokemonListInteractor, atLeast(1)).getListOfPokemons()
+        assertThat(pokemonViewModel.registerPokemonList().value).isEqualTo(PokemonListModel(pokemonList))
+    }
+
+    @Test
+    fun `should not get a list of pokemon on error`() {
+        // Arrange
+           whenever(pokemonListInteractor.getListOfPokemons())
+            .thenReturn(Single.error(Exception("Timeout exception")))
+
+        // Act
+        pokemonViewModel.getPokemonsList()
+        testScheduler.triggerActions()
+
+        // Assert
+        verify(pokemonListInteractor, atLeast(1)).getListOfPokemons()
         assertThat(pokemonViewModel.registerPokemonList().value).isEqualTo(PokemonListModel(emptyList()))
     }
+
+
 }
