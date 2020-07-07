@@ -1,62 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_width="match_parent">
+    android:paddingTop="24dp"
+    android:paddingStart="18sp"
+    android:paddingEnd="18sp"
+    android:paddingBottom="40sp">
 
-    <androidx.cardview.widget.CardView
-        xmlns:tools="http://schemas.android.com/tools"
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/bottom_sheet_layout"
-        android:orientation="vertical"
+    <TextView
+        android:id="@+id/tvName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        card_view:cardCornerRadius="24dp">
+        tools:text="pikachu"
+        style="@style/details_title" />
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="24dp"
-            android:paddingStart="18sp"
-            android:paddingEnd="18sp"
-            android:paddingBottom="40sp">
+    <TextView
+        android:id="@+id/tvHeight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        tools:text="Height: 0.40 Metre"
+        style="@style/details_items" />
 
-            <TextView
-                android:id="@+id/tvName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:text="pikachu"
-                style="@style/details_title" />
+    <TextView
+        android:id="@+id/tvWeight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        tools:text="Weight: 6.00 Kilogram"
+        style="@style/details_items"/>
 
-            <TextView
-                android:id="@+id/tvHeight"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="8dp"
-                tools:text="Height: 0.40 Metre"
-                style="@style/details_items" />
-
-            <TextView
-                android:id="@+id/tvWeight"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="8dp"
-                tools:text="Weight: 6.00 Kilogram"
-                style="@style/details_items"/>
-
-            <TextView
-                android:id="@+id/tvBaseExperience"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="8dp"
-                tools:text="Base Exp: 112"
-                style="@style/details_items"/>
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
-
-</FrameLayout>
+    <TextView
+        android:id="@+id/tvBaseExperience"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        tools:text="Base Exp: 112"
+        style="@style/details_items"/>
+</LinearLayout>
