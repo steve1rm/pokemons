@@ -33,10 +33,6 @@ class ApplicationModule(private val application: PokemonApplication) {
             override fun background(): Scheduler {
                 return Schedulers.io()
             }
-
-            override fun test(): Scheduler {
-                return TestScheduler()
-            }
         }
     }
 
@@ -44,7 +40,5 @@ class ApplicationModule(private val application: PokemonApplication) {
         fun ui(): Scheduler
 
         fun background(): Scheduler
-
-        fun test(): Scheduler
     }
 }
