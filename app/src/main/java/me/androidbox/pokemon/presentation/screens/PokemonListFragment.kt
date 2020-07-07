@@ -72,8 +72,7 @@ class PokemonListFragment : Fragment() {
         pokemonAdapter.setupPokemonTappedListener(::onPokemonTapped)
         bindings.rvPokemons.adapter = pokemonAdapter
         bindings.rvPokemons.layoutManager = layoutManager
-        bindings.rvPokemons.addItemDecoration(DividerItemDecoration(requireContext(), VERTICAL))
-
+     
         val endlessRecyclerViewScrollListener = object : EndlessRecyclerViewScrollListener(layoutManager) {
             override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
                 loadMorePokemons(page)
