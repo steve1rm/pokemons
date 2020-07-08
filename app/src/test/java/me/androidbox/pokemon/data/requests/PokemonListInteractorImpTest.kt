@@ -26,7 +26,8 @@ class PokemonListInteractorImpTest {
         whenever(pokemonService.getPokemons()).thenReturn(Single.just(pokomonList))
 
         // Act
-        val testObserver = pokemonListInteractorImp.getListOfPokemons().test()
+        val testObserver =
+            pokemonListInteractorImp.getListOfPokemons().test()
 
         // Assert
         testObserver
@@ -43,7 +44,8 @@ class PokemonListInteractorImpTest {
         whenever(pokemonService.loadMorePokemons(20)).thenReturn(Single.just(pokomonList))
 
         // Act
-        val testObserver = pokemonListInteractorImp.loadMorePokemonsByOffset(20).test()
+        val testObserver =
+            pokemonListInteractorImp.loadMorePokemonsByOffset(20).test()
 
         // Assert
         testObserver
@@ -52,5 +54,4 @@ class PokemonListInteractorImpTest {
             .assertValue(pokomonList)
         verify(pokemonService).loadMorePokemons(20)
     }
-
 }
