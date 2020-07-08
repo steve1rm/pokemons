@@ -24,6 +24,7 @@ class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
     private val compositeDisposable = CompositeDisposable()
     private val pokemonDetailLiveData = MutableLiveData<PokemonModel>()
     private val pokemonListLiveData = MutableLiveData<PokemonListModel>()
+    private val shouldShowLoading = MutableLiveData<Boolean>()
 
     init {
         Timber.d("PokemonViewModel init")
@@ -31,28 +32,36 @@ class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
     }
 
     fun getPokemonsList() {
+        shouldShowLoading.value = true
+
         pokemonListInteractor.getListOfPokemons()
             .subscribeOn(pokemonSchedulers.background())
             .observeOn(pokemonSchedulers.ui())
             .subscribeBy(
                 onSuccess = { pokemonList ->
                     this.pokemonListLiveData.value = pokemonList
+                    shouldShowLoading.value = false
                 },
                 onError = {
+                    shouldShowLoading.value = false
                     Timber.e(TAG, it.localizedMessage)
                 }
             ).addTo(compositeDisposable)
     }
 
     fun getMorePokemons(offset: Int) {
+        shouldShowLoading.value = true
+
         pokemonListInteractor.loadMorePokemonsByOffset(offset)
             .subscribeOn(pokemonSchedulers.background())
             .observeOn(pokemonSchedulers.ui())
             .subscribeBy(
                 onSuccess = { pokemonList ->
+                    shouldShowLoading.value = false
                     pokemonListLiveData.value = pokemonList
                 },
                 onError = {
+                    shouldShowLoading.value = false
                     Timber.e(TAG, it.localizedMessage)
                 }
             ).addTo(compositeDisposable)
@@ -73,24 +82,28 @@ class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
     }
 
     fun getPokemonDetailByName(name: String) {
+        shouldShowLoading.value = true
+
         pokemonDetailInteractor.getPokemonDetailByName(name)
             .subscribeOn(pokemonSchedulers.background())
             .observeOn(pokemonSchedulers.ui())
             .subscribeBy(
                 onSuccess = { pokemon ->
+                    shouldShowLoading.value = false
                     pokemonDetailLiveData.value = pokemon
                 },
                 onError = {
+                    shouldShowLoading.value = false
                     Timber.e(TAG, it.localizedMessage)
                 }
             ).addTo(compositeDisposable)
     }
 
-    fun registerPokemonList(): MutableLiveData<PokemonListModel> =
-        pokemonListLiveData
+    fun registerPokemonList(): MutableLiveData<PokemonListModel> = pokemonListLiveData
 
-    fun registerPokemonDetail(): MutableLiveData<PokemonModel> =
-        pokemonDetailLiveData
+    fun registerPokemonDetail(): MutableLiveData<PokemonModel> = pokemonDetailLiveData
+
+    fun registerShouldShowLoading(): MutableLiveData<Boolean> = shouldShowLoading
 
     override fun onCleared() {
         compositeDisposable.clear()

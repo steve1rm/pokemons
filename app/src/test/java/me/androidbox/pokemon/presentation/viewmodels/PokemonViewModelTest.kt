@@ -72,6 +72,4 @@ class PokemonViewModelTest {
         verify(pokemonListInteractor, atLeast(1)).getListOfPokemons()
         assertThat(pokemonViewModel.registerPokemonList().value).isEqualTo(PokemonListModel(emptyList()))
     }
-
-
 }

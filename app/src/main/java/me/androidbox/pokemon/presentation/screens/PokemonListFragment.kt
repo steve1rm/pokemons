@@ -60,6 +60,17 @@ class PokemonListFragment : Fragment() {
             bottomSheet.show(parentFragmentManager, PokemonDetailBottomSheet::class.java.simpleName)
         })
 
+        pokemonViewModel.registerShouldShowLoading().observe(viewLifecycleOwner, Observer { shouldShow ->
+            if(shouldShow) {
+                bindings.pbLoading.visibility = View.VISIBLE
+                bindings.pbLoading.show()
+            }
+            else {
+                bindings.pbLoading.visibility = View.GONE
+                bindings.pbLoading.hide()
+            }
+        })
+
         return bindings.root
     }
 
