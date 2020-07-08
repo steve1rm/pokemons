@@ -45,5 +45,7 @@ class PokemonListTest {
 
         PokemonListPage
             .shouldBeVisible()
+            .shouldHaveSize(20)
+            .shouldHaveItemAtPosition(0, "bulbasaur")
     }
 }

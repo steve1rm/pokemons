@@ -16,5 +16,22 @@ object PokemonListPage {
         }
     }
 
+    fun shouldHaveSize(size: Int): PokemonListPage = apply {
+        pokemonListScreen {
+            pokomons {
+                hasSize(size)
+            }
+        }
+    }
 
+    fun shouldHaveItemAtPosition(position: Int, _name: String): PokemonListPage = apply {
+        pokemonListScreen {
+            pokomons {
+                childAt<PokemonListScreen.Item>(position) {
+                    name.hasText(_name)
+                    name.isDisplayed()
+                }
+            }
+        }
+    }
 }
