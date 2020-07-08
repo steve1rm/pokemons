@@ -10,7 +10,7 @@ import me.androidbox.pokemon.R
 import org.hamcrest.Matcher
 
 class PokemonListScreen : Screen<PokemonListScreen>() {
-    val container: KView = KView { R.id.PokemonListFragment }
+    val container: KView = KView { withId(R.id.fragment_pokemon_list) }
 
     class Item(parent: Matcher<View>) : KRecyclerItem<Item>(parent) {
         val name: KTextView = KTextView(parent) { withId(R.id.tvName) }

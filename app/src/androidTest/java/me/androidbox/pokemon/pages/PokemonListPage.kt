@@ -11,8 +11,10 @@ object PokemonListPage {
     fun shouldBeVisible(): PokemonListPage = apply {
         pokemonListScreen {
             container {
-                isVisible()
+                isDisplayed()
             }
         }
     }
+
+
 }

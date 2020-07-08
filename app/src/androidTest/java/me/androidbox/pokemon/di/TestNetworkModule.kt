@@ -42,8 +42,7 @@ class TestNetworkModule {
     @Named("TestBaseUrl")
     @Reusable
     @Provides
-    fun provideBaseUrl(context: Context): String =
-        "http://localhost:8080/"
+    fun provideBaseUrl(): String = "http://localhost:8080/"
 
     @Reusable
     @Provides

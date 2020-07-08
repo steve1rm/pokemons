@@ -6,7 +6,7 @@ import org.junit.rules.TestRule
 import org.junit.runner.Description
 import org.junit.runners.model.Statement
 
-class PokemonComponentRule(private val context: Context): TestRule {
+class TestComponentRule(private val context: Context): TestRule {
 
     private var testComponent: TestComponent? = null
 
