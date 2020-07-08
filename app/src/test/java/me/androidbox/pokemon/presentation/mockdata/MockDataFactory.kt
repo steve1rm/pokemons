@@ -1,11 +1,12 @@
 package me.androidbox.pokemon.presentation.mockdata
 
+import me.androidbox.pokemon.domain.models.PokemonListModel
 import me.androidbox.pokemon.domain.models.PokemonModel
 import java.util.*
 
 object MockDataFactory {
 
-    fun createListOfPokemon(count: Int): List<PokemonModel> {
+    fun createListOfPokemons(count: Int): List<PokemonModel> {
         val pokemonList = mutableListOf<PokemonModel>()
 
         repeat(count) {
@@ -13,6 +14,13 @@ object MockDataFactory {
         }
 
         return pokemonList.toList()
+    }
+
+    fun createPokemonList(count: Int) : PokemonListModel {
+        return createListOfPokemons(10)
+            .run {
+                PokemonListModel(this)
+            }
     }
 
     fun createPokemon(): PokemonModel {

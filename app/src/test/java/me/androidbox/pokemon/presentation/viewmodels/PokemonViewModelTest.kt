@@ -17,7 +17,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import java.util.concurrent.TimeUnit
 
 class PokemonViewModelTest {
     private val pokemonListInteractor: PokemonListInteractor = mock()
@@ -46,7 +45,7 @@ class PokemonViewModelTest {
     @Test
     fun `should get a list of pokemon`() {
         // Arrange
-        val pokemonList = MockDataFactory.createListOfPokemon(10)
+        val pokemonList = MockDataFactory.createListOfPokemons(10)
         whenever(pokemonListInteractor.getListOfPokemons())
             .thenReturn(Single.just(PokemonListModel(pokemonList)))
 
@@ -63,7 +62,7 @@ class PokemonViewModelTest {
     fun `should not get a list of pokemon on error`() {
         // Arrange
            whenever(pokemonListInteractor.getListOfPokemons())
-            .thenReturn(Single.error(Exception("Timeout exception")))
+            .thenReturn(Single.error(Exception("Exception happened")))
 
         // Act
         pokemonViewModel.getPokemonsList()
