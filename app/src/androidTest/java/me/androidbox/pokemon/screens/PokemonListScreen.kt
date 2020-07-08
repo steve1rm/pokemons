@@ -9,7 +9,7 @@ import com.agoda.kakao.text.KTextView
 import me.androidbox.pokemon.R
 import org.hamcrest.Matcher
 
-class PokomonList : Screen<PokomonList>() {
+class PokemonListScreen : Screen<PokemonListScreen>() {
     val container: KView = KView { R.id.PokemonListFragment }
 
     class Item(parent: Matcher<View>) : KRecyclerItem<Item>(parent) {
