@@ -11,6 +11,7 @@ import me.androidbox.pokemon.domain.interactors.PokemonListInteractor
 import me.androidbox.pokemon.domain.models.PokemonListModel
 import me.androidbox.pokemon.domain.models.PokemonModel
 import timber.log.Timber
+import java.util.concurrent.TimeUnit
 
 class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
                        private val pokemonDetailInteractor: PokemonDetailInteractor,
@@ -87,6 +88,9 @@ class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
         pokemonDetailInteractor.getPokemonDetailByName(name)
             .subscribeOn(pokemonSchedulers.background())
             .observeOn(pokemonSchedulers.ui())
+            .toObservable()
+            .debounce(300, TimeUnit.MILLISECONDS)
+            .singleOrError()
             .subscribeBy(
                 onSuccess = { pokemon ->
                     shouldShowLoading.value = false
