@@ -31,8 +31,7 @@ class PokemonAdapter : RecyclerView.Adapter<PokemonViewHolder>() {
     override fun getItemCount(): Int = pokemonList.count()
 
     override fun onBindViewHolder(holder: PokemonViewHolder, position: Int) {
-        holder.name.text = pokemonList[position].name
-        binding.tvName.text = pokemonList[position].name
+        binding.pokemonModel = pokemonList[position]
     }
 
     fun populatePokemons(pokemonList: List<PokemonModel>) {
