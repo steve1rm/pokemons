@@ -91,6 +91,7 @@ dependencies {
     implementation "androidx.test.espresso:espresso-intents:$espressoCoreVersion"
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationComponentVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navigationComponentVersion"
+    implementation 'com.jakewharton.rxbinding4:rxbinding:4.0.0'
 
     testImplementation 'junit:junit:4.13'
     testImplementation "org.assertj:assertj-core:$assertJVersion"
