@@ -99,4 +99,9 @@ class PokemonListFragment : Fragment() {
     private fun onPokemonTapped(name: String) {
         pokemonViewModel.getPokemonDetailByName(name)
     }
+
+    override fun onDestroyView() {
+        pokemonAdapter.clearResources()
+        super.onDestroyView()
+    }
 }
