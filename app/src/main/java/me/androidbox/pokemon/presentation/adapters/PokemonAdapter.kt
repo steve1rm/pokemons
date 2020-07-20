@@ -2,6 +2,7 @@ package me.androidbox.pokemon.presentation.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.jakewharton.rxbinding3.view.clicks
 import io.reactivex.disposables.CompositeDisposable
@@ -46,8 +47,14 @@ class PokemonAdapter : RecyclerView.Adapter<PokemonViewHolder>() {
         binding.pokemonModel = pokemonList[position]
     }
 
-    fun populatePokemons(pokemonList: List<PokemonModel>) {
-        this.pokemonList.addAll(pokemonList)
+    fun populatePokemons(newPokemonList: List<PokemonModel>) {
+        val oldPokemonList = pokemonList
+        val diffResult = DiffUtil.calculateDiff(PokemonDiffCallback(
+            newPokemonList,
+            oldPokemonList))
+
+        this.pokemonList.addAll(newPokemonList)
+        diffResult.dispatchUpdatesTo(this)
     }
 
     fun setupPokemonTappedListener(action: (String) -> Unit) {

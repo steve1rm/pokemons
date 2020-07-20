@@ -48,7 +48,6 @@ class PokemonListFragment : Fragment() {
 
         pokemonViewModel.registerPokemonList().observe(viewLifecycleOwner, Observer { pokemonList ->
             pokemonAdapter.populatePokemons(pokemonList.pokemonList)
-            pokemonAdapter.notifyDataSetChanged()
         })
 
         pokemonViewModel.registerPokemonDetail().observe(viewLifecycleOwner, Observer { pokemon ->
