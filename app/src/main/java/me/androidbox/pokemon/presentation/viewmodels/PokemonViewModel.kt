@@ -11,6 +11,7 @@ import me.androidbox.pokemon.domain.interactors.PokemonDetailInteractor
 import me.androidbox.pokemon.domain.interactors.PokemonListInteractor
 import me.androidbox.pokemon.domain.models.PokemonListModel
 import me.androidbox.pokemon.domain.models.PokemonModel
+import me.androidbox.pokemon.presentation.utils.NetworkConnectivity
 import timber.log.Timber
 
 class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
