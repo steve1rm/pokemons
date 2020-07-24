@@ -1,11 +1,14 @@
 package me.androidbox.pokemon.presentation.viewmodels
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.subjects.PublishSubject
+import kotlinx.coroutines.launch
 import me.androidbox.pokemon.di.modules.ApplicationModule.PokemonSchedulers
 import me.androidbox.pokemon.domain.interactors.PokemonDetailInteractor
 import me.androidbox.pokemon.domain.interactors.PokemonListInteractor
@@ -13,6 +16,7 @@ import me.androidbox.pokemon.domain.models.PokemonListModel
 import me.androidbox.pokemon.domain.models.PokemonModel
 import me.androidbox.pokemon.presentation.utils.NetworkConnectivity
 import timber.log.Timber
+import java.lang.Exception
 
 class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
                        private val pokemonDetailInteractor: PokemonDetailInteractor,
@@ -34,6 +38,21 @@ class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
     }
 
     fun getPokemonsList() {
+        viewModelScope.launch {
+            try {
+                shouldShowLoading.value = true
+                val pokemonListModel = pokemonListInteractor.getListOfPokemons()
+                pokemonListLiveData.value = pokemonListModel
+            }
+            catch(error: Exception) {
+                Timber.e(TAG, error.localizedMessage)
+            }
+            finally {
+                shouldShowLoading.value = false
+            }
+        }
+
+/*
         shouldShowLoading.value = true
 
         pokemonListInteractor.getListOfPokemons()
@@ -49,9 +68,25 @@ class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
                     Timber.e(TAG, it.localizedMessage)
                 }
             ).addTo(compositeDisposable)
+*/
     }
 
     fun getMorePokemons(offset: Int) {
+        viewModelScope.launch {
+            try {
+                shouldShowLoading.value = true
+                val pokemonListModel = pokemonListInteractor.loadMorePokemonsByOffset(offset)
+                pokemonListLiveData.value = pokemonListModel
+            }
+            catch(error: Exception) {
+                Timber.e(TAG, error.localizedMessage)
+            }
+            finally {
+                shouldShowLoading.value = false
+            }
+        }
+
+/*
         shouldShowLoading.value = true
 
         pokemonListInteractor.loadMorePokemonsByOffset(offset)
@@ -67,9 +102,25 @@ class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
                     Timber.e(TAG, it.localizedMessage)
                 }
             ).addTo(compositeDisposable)
+*/
     }
 
     fun getPokemonDetailById(id: Int) {
+        viewModelScope.launch {
+            try {
+                shouldShowLoading.value = true
+                val pokemonModel = pokemonDetailInteractor.getPokemonDetailById(id)
+                pokemonDetailLiveData.value = pokemonModel
+            }
+            catch(error: Exception) {
+                Timber.e(TAG, error.localizedMessage)
+            }
+            finally {
+                shouldShowLoading.value = false
+            }
+        }
+
+/*
         pokemonDetailInteractor.getPokemonDetailById(id)
             .subscribeOn(pokemonSchedulers.background())
             .observeOn(pokemonSchedulers.ui())
@@ -81,9 +132,26 @@ class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
                     Timber.e(TAG, it.localizedMessage)
                 }
             ).addTo(compositeDisposable)
+*/
     }
 
     fun getPokemonDetailByName(name: String) {
+
+        viewModelScope.launch {
+            try {
+                shouldShowLoading.value = true
+                val pokemonModel = pokemonDetailInteractor.getPokemonDetailByName(name)
+                pokemonDetailLiveData.value = pokemonModel
+            }
+            catch(error: Exception) {
+                Timber.e(TAG, error.localizedMessage)
+            }
+            finally {
+                shouldShowLoading.value = false
+            }
+        }
+
+/*
         shouldShowLoading.postValue(true)
 
         pokemonDetailInteractor.getPokemonDetailByName(name)
@@ -99,13 +167,14 @@ class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
                     Timber.e(TAG, it.localizedMessage)
                 }
             ).addTo(compositeDisposable)
+*/
     }
 
-    fun registerPokemonList(): MutableLiveData<PokemonListModel> = pokemonListLiveData
+    fun registerPokemonList(): LiveData<PokemonListModel> = pokemonListLiveData
 
-    fun registerPokemonDetail(): MutableLiveData<PokemonModel> = pokemonDetailLiveData
+    fun registerPokemonDetail(): LiveData<PokemonModel> = pokemonDetailLiveData
 
-    fun registerShouldShowLoading(): MutableLiveData<Boolean> = shouldShowLoading
+    fun registerShouldShowLoading(): LiveData<Boolean> = shouldShowLoading
 
     override fun onCleared() {
         compositeDisposable.clear()

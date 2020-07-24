@@ -1,14 +1,20 @@
 package me.androidbox.pokemon.data.requests
 
-import io.reactivex.Single
 import me.androidbox.pokemon.data.service.PokemonService
 import me.androidbox.pokemon.domain.interactors.PokemonDetailInteractor
 import me.androidbox.pokemon.domain.models.PokemonModel
-import java.util.concurrent.TimeUnit
 
 class PokemonDetailInteractorImp(private val pokemonService: PokemonService) : PokemonDetailInteractor {
 
-    override fun getPokemonDetailById(id: Int): Single<PokemonModel> {
+    override suspend fun getPokemonDetailById(id: Int): PokemonModel {
+        return pokemonService.getPokemonById(id)
+    }
+
+    override suspend fun getPokemonDetailByName(name: String): PokemonModel {
+        return pokemonService.getPokemonByName(name)
+    }
+
+    /*   override fun getPokemonDetailById(id: Int): PokemonModel {
         return pokemonService.getPokemonById(id)
             .timeout(10, TimeUnit.SECONDS)
     }
@@ -16,5 +22,5 @@ class PokemonDetailInteractorImp(private val pokemonService: PokemonService) : P
     override fun getPokemonDetailByName(name: String): Single<PokemonModel> {
         return pokemonService.getPokemonByName(name)
             .timeout(10, TimeUnit.SECONDS)
-    }
+    }*/
 }

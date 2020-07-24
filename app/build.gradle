@@ -69,6 +69,7 @@ dependencies {
     def fragmentVersion = "1.2.5"
     def mockitoVersion = "3.3.3"
     def navigationComponentVersion = "2.3.0"
+    def kotlinxCoroutinesVersion = "1.3.7"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -98,6 +99,8 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationComponentVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navigationComponentVersion"
     implementation 'com.jakewharton.rxbinding3:rxbinding:3.0.0'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${kotlinxCoroutinesVersion}"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${kotlinxCoroutinesVersion}"
 
     testImplementation 'junit:junit:4.13'
     testImplementation "org.assertj:assertj-core:$assertJVersion"
