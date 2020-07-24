@@ -23,6 +23,7 @@ class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
     private val pokemonDetailLiveData = MutableLiveData<PokemonModel>()
     private val pokemonListLiveData = MutableLiveData<PokemonListModel>()
     private val shouldShowLoading = MutableLiveData<Boolean>()
+    private val errorMessage = MutableLiveData<String>()
 
     init {
         Timber.d("PokemonViewModel init")
@@ -54,10 +55,9 @@ class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
     }
 
     fun registerPokemonList(): LiveData<PokemonListModel> = pokemonListLiveData
-
     fun registerPokemonDetail(): LiveData<PokemonModel> = pokemonDetailLiveData
-
     fun registerShouldShowLoading(): LiveData<Boolean> = shouldShowLoading
+    fun registerErrorMessages(): LiveData<String> = errorMessage
 
     private fun fetchPokemons(fetchBlock: suspend () -> Unit) {
         viewModelScope.launch {
@@ -67,6 +67,7 @@ class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
             }
             catch(error: Exception) {
                 Timber.e(TAG, error.localizedMessage)
+                errorMessage.value = error.localizedMessage
             }
             finally {
                 shouldShowLoading.value = false

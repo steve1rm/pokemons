@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
+import me.androidbox.pokemon.R
 import me.androidbox.pokemon.databinding.FragmentPokemonListBinding
 import me.androidbox.pokemon.di.ProvideApplicationComponent.getApplicationComponent
 import me.androidbox.pokemon.di.modules.PokemonModule
@@ -68,6 +71,17 @@ class PokemonListFragment : Fragment() {
                 bindings.pbLoading.visibility = View.GONE
                 bindings.pbLoading.hide()
             }
+        })
+
+        pokemonViewModel.registerErrorMessages().observe(viewLifecycleOwner, Observer { errorMessage ->
+            val snackbar = Snackbar.make(bindings.root, errorMessage, Snackbar.LENGTH_LONG)
+
+            snackbar.setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.colorAccent))
+            snackbar.setActionTextColor(ContextCompat.getColor(requireContext(), R.color.colorPrimary))
+            snackbar.setAction(getString(R.string.retry)) {
+                pokemonViewModel.getPokemonsList()
+            }
+            snackbar.show()
         })
 
         return bindings.root

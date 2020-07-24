@@ -70,6 +70,7 @@ dependencies {
     def mockitoVersion = "3.3.3"
     def navigationComponentVersion = "2.3.0"
     def kotlinxCoroutinesVersion = "1.3.7"
+    def materialVersion = "1.1.0"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -101,7 +102,8 @@ dependencies {
     implementation 'com.jakewharton.rxbinding3:rxbinding:3.0.0'
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${kotlinxCoroutinesVersion}"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${kotlinxCoroutinesVersion}"
-
+    implementation "com.google.android.material:material:${materialVersion}"
+    
     testImplementation 'junit:junit:4.13'
     testImplementation "org.assertj:assertj-core:$assertJVersion"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoKotlinVersion"

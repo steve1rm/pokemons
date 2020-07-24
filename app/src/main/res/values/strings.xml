@@ -4,5 +4,6 @@
     <string name="height">Height: %.2f metre</string>
     <string name="weight">Weight: %.2f kilogram</string>
     <string name="BaseExp">Base Exp: %d</string>
+    <string name="retry">Retry</string>
 
 </resources>

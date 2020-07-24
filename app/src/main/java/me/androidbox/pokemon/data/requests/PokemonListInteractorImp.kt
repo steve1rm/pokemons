@@ -8,7 +8,7 @@ import me.androidbox.pokemon.domain.models.PokemonListModel
 class PokemonListInteractorImp(private val pokemonService: PokemonService) : PokemonListInteractor {
 
     override suspend fun getListOfPokemons(): PokemonListModel {
-        return withTimeout(10_000) {
+        return withTimeout(2_000) {
             pokemonService.getPokemons()
         }
     }
@@ -16,16 +16,4 @@ class PokemonListInteractorImp(private val pokemonService: PokemonService) : Pok
     override suspend fun loadMorePokemonsByOffset(offset: Int): PokemonListModel {
         return pokemonService.loadMorePokemons(offset)
     }
-
-    /*
-    override fun getListOfPokemons(): Single<PokemonListModel> {
-        return pokemonService.getPokemons()
-            .timeout(10, TimeUnit.SECONDS)
-    }
-
-    override fun loadMorePokemonsByOffset(offset: Int): Single<PokemonListModel> {
-        return pokemonService.loadMorePokemons(offset)
-            .timeout(10, TimeUnit.SECONDS)
-    }
-*/
 }
