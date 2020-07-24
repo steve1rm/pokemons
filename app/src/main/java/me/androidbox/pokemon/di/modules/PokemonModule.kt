@@ -37,14 +37,13 @@ class PokemonModule(private val fragment: PokemonListFragment) {
     @Provides
     fun providePokemonViewModel(
         pokemonListInteractor: PokemonListInteractor,
-        pokemonDetailInteractor: PokemonDetailInteractor,
-        pokemonSchedulers: PokemonSchedulers
+        pokemonDetailInteractor: PokemonDetailInteractor
     ): PokemonViewModel {
         return ViewModelProvider(
             fragment,
             ViewModelPokemonProvider {
                 PokemonViewModel(
-                    pokemonListInteractor, pokemonDetailInteractor, pokemonSchedulers
+                    pokemonListInteractor, pokemonDetailInteractor
                 )
             }).get(PokemonViewModel::class.java)
     }
