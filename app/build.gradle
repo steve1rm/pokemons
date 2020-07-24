@@ -16,6 +16,12 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.incremental":"true"]
+            }
+        }
     }
 
     buildTypes {
@@ -33,6 +39,7 @@ android {
     /* Android 4.0 */
     buildFeatures {
         viewBinding = true
+        dataBinding = true
     }
 }
 
@@ -47,7 +54,6 @@ dependencies {
     def rxkotlinVersion = "2.4.0"
     def timberVersion = "4.7.1"
     def lifecycleVersion = "2.2.0"
-    def omiseVersion = "3.0.0"
     def parcelerVersion = "1.1.12"
     def glideVersion = "4.11.0"
     def assertJVersion = "3.11.1"
@@ -83,7 +89,6 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxkotlin:$rxkotlinVersion"
     implementation "com.jakewharton.timber:timber:$timberVersion"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
-    implementation "co.omise:omise-android:$omiseVersion"
     kapt "org.parceler:parceler:$parcelerVersion"
     implementation "org.parceler:parceler-api:$parcelerVersion"
     implementation "com.github.bumptech.glide:glide:$glideVersion"
@@ -92,6 +97,7 @@ dependencies {
     implementation "androidx.test.espresso:espresso-intents:$espressoCoreVersion"
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationComponentVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navigationComponentVersion"
+    implementation 'com.jakewharton.rxbinding3:rxbinding:3.0.0'
 
     testImplementation 'junit:junit:4.13'
     testImplementation "org.assertj:assertj-core:$assertJVersion"

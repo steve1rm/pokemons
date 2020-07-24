@@ -5,11 +5,13 @@ import androidx.lifecycle.ViewModel
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.subjects.PublishSubject
 import me.androidbox.pokemon.di.modules.ApplicationModule.PokemonSchedulers
 import me.androidbox.pokemon.domain.interactors.PokemonDetailInteractor
 import me.androidbox.pokemon.domain.interactors.PokemonListInteractor
 import me.androidbox.pokemon.domain.models.PokemonListModel
 import me.androidbox.pokemon.domain.models.PokemonModel
+import me.androidbox.pokemon.presentation.utils.NetworkConnectivity
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
@@ -83,7 +85,7 @@ class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
     }
 
     fun getPokemonDetailByName(name: String) {
-        shouldShowLoading.value = true
+        shouldShowLoading.postValue(true)
 
         pokemonDetailInteractor.getPokemonDetailByName(name)
             .subscribeOn(pokemonSchedulers.background())
@@ -93,8 +95,8 @@ class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
             .singleOrError()
             .subscribeBy(
                 onSuccess = { pokemon ->
-                    shouldShowLoading.value = false
-                    pokemonDetailLiveData.value = pokemon
+                    shouldShowLoading.postValue(false)
+                    pokemonDetailLiveData.postValue(pokemon)
                 },
                 onError = {
                     shouldShowLoading.value = false

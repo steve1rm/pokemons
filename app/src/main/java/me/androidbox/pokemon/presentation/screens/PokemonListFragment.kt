@@ -48,7 +48,6 @@ class PokemonListFragment : Fragment() {
 
         pokemonViewModel.registerPokemonList().observe(viewLifecycleOwner, Observer { pokemonList ->
             pokemonAdapter.populatePokemons(pokemonList.pokemonList)
-            pokemonAdapter.notifyDataSetChanged()
         })
 
         pokemonViewModel.registerPokemonDetail().observe(viewLifecycleOwner, Observer { pokemon ->
@@ -98,5 +97,10 @@ class PokemonListFragment : Fragment() {
 
     private fun onPokemonTapped(name: String) {
         pokemonViewModel.getPokemonDetailByName(name)
+    }
+
+    override fun onDestroyView() {
+        pokemonAdapter.clearResources()
+        super.onDestroyView()
     }
 }

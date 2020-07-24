@@ -28,8 +28,8 @@ class PokemonDetailBottomSheet : BottomSheetDialogFragment() {
         binding = BottomSheetLayoutBinding.inflate(inflater, container, false)
 
         arguments?.let {
-            (it.getParcelable(POKEMON_DETAIL_KEY) as? PokemonModel)?.let { pokemon ->
-                binding.tvName.text = pokemon.name
+            (it.getParcelable(POKEMON_DETAIL_KEY) as? PokemonModel)?.let { pokemon: PokemonModel ->
+                binding.pokemonModel = pokemon
                 binding.tvHeight.text = getString(R.string.height, pokemon.height)
                 binding.tvWeight.text = getString(R.string.weight, pokemon.weight)
                 binding.tvBaseExperience.text = getString(R.string.BaseExp, pokemon.baseExperience)
