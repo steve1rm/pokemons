@@ -8,7 +8,7 @@ import me.androidbox.pokemon.domain.models.PokemonListModel
 class PokemonListInteractorImp(private val pokemonService: PokemonService) : PokemonListInteractor {
 
     override suspend fun getListOfPokemons(): PokemonListModel {
-        return withTimeout(2_000) {
+        return withTimeout(10_000) {
             pokemonService.getPokemons()
         }
     }

@@ -48,7 +48,6 @@ class PokemonListFragment : Fragment() {
         bindings = FragmentPokemonListBinding.inflate(inflater, container, false)
 
         setupAdapter()
-
         pokemonViewModel.registerPokemonList().observe(viewLifecycleOwner, Observer { pokemonList ->
             pokemonAdapter.populatePokemons(pokemonList.pokemonList)
         })

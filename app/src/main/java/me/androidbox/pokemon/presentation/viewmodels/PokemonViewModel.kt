@@ -63,7 +63,7 @@ class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
         viewModelScope.launch {
             try {
                 shouldShowLoading.value = true
-                fetchBlock()
+                pokemonListLiveData.value = pokemonListInteractor.getListOfPokemons()
             }
             catch(error: Exception) {
                 Timber.e(TAG, error.localizedMessage)
