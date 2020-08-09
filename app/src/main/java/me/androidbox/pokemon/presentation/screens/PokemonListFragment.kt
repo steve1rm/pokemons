@@ -10,10 +10,13 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.pokemon_list_item.*
 import me.androidbox.pokemon.databinding.FragmentPokemonListBinding
 import me.androidbox.pokemon.di.ProvideApplicationComponent.getApplicationComponent
 import me.androidbox.pokemon.di.modules.PokemonModule
+import me.androidbox.pokemon.domain.models.PokemonModel
 import me.androidbox.pokemon.presentation.adapters.PokemonAdapter
+import me.androidbox.pokemon.presentation.adapters.models.epoxyPokemon
 import me.androidbox.pokemon.presentation.utils.EndlessRecyclerViewScrollListener
 import me.androidbox.pokemon.presentation.viewmodels.PokemonViewModel
 import timber.log.Timber
@@ -47,7 +50,8 @@ class PokemonListFragment : Fragment() {
         setupAdapter()
 
         pokemonViewModel.registerPokemonList().observe(viewLifecycleOwner, Observer { pokemonList ->
-            pokemonAdapter.populatePokemons(pokemonList.pokemonList)
+          //  pokemonAdapter.populatePokemons(pokemonList.pokemonList)
+            setupEpoxyAdapter(pokemonList.pokemonList)
         })
 
         pokemonViewModel.registerPokemonDetail().observe(viewLifecycleOwner, Observer { pokemon ->
@@ -71,6 +75,17 @@ class PokemonListFragment : Fragment() {
         })
 
         return bindings.root
+    }
+
+    private fun setupEpoxyAdapter(pokemonList: List<PokemonModel>) {
+        bindings.rvPokemons.withModels {
+            pokemonList.forEach {
+                epoxyPokemon {
+                    id(hashCode())
+                    pokemonName(it.name)
+                }
+            }
+        }
     }
 
     private fun setupAdapter() {
