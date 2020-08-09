@@ -8,9 +8,9 @@ import me.androidbox.pokemon.domain.models.PokemonModel
 import timber.log.Timber
 
 class PokemonPageKeyedDataSource(private val pokemonListInteractor: PokemonListInteractor)
-    : PageKeyedDataSource<String, PokemonModel>() {
+    : PageKeyedDataSource<Int, PokemonModel>() {
 
-    override fun loadInitial(params: LoadInitialParams<String>, callback: LoadInitialCallback<String, PokemonModel>) {
+    override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, PokemonModel>) {
         pokemonListInteractor.getListOfPokemons()
             .subscribeOn(Schedulers.io())
             .subscribeBy(
@@ -20,8 +20,8 @@ class PokemonPageKeyedDataSource(private val pokemonListInteractor: PokemonListI
             )
     }
 
-    override fun loadAfter(params: LoadParams<String>, callback: LoadCallback<String, PokemonModel>) {
-        pokemonListInteractor.getListOfPokemons()
+    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, PokemonModel>) {
+        pokemonListInteractor.loadMorePokemonsByOffset(params.key)
             .subscribeOn(Schedulers.io())
             .subscribeBy(
                 onSuccess = {
@@ -31,5 +31,5 @@ class PokemonPageKeyedDataSource(private val pokemonListInteractor: PokemonListI
             )
     }
 
-    override fun loadBefore(params: LoadParams<String>, callback: LoadCallback<String, PokemonModel>): Unit = Unit
+    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, PokemonModel>): Unit = Unit
 }

@@ -5,9 +5,9 @@ import me.androidbox.pokemon.domain.interactors.PokemonListInteractor
 import me.androidbox.pokemon.domain.models.PokemonModel
 
 class PokemonDataSourceFactory(private val pokemonListInteractor: PokemonListInteractor)
-    : DataSource.Factory<String, PokemonModel>() {
+    : DataSource.Factory<Int, PokemonModel>() {
 
-    override fun create(): DataSource<String, PokemonModel> {
+    override fun create(): DataSource<Int, PokemonModel> {
         return PokemonPageKeyedDataSource(pokemonListInteractor)
     }
 }

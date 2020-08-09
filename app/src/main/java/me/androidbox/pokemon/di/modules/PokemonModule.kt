@@ -3,6 +3,7 @@ package me.androidbox.pokemon.di.modules
 import androidx.lifecycle.ViewModelProvider
 import dagger.Module
 import dagger.Provides
+import me.androidbox.pokemon.data.datasource.PokemonDataSourceFactory
 import me.androidbox.pokemon.data.requests.PokemonDetailInteractorImp
 import me.androidbox.pokemon.data.requests.PokemonListInteractorImp
 import me.androidbox.pokemon.data.service.PokemonService
@@ -35,16 +36,23 @@ class PokemonModule(private val fragment: PokemonListFragment) {
 
     @ViewScope
     @Provides
+    fun providePokemonDataSourceFactory(pokemonListInteractor: PokemonListInteractor): PokemonDataSourceFactory {
+        return PokemonDataSourceFactory(pokemonListInteractor)
+    }
+
+    @ViewScope
+    @Provides
     fun providePokemonViewModel(
         pokemonListInteractor: PokemonListInteractor,
         pokemonDetailInteractor: PokemonDetailInteractor,
-        pokemonSchedulers: PokemonSchedulers
+        pokemonSchedulers: PokemonSchedulers,
+        pokemonDatasourceFactory: PokemonDataSourceFactory
     ): PokemonViewModel {
         return ViewModelProvider(
             fragment,
             ViewModelPokemonProvider {
                 PokemonViewModel(
-                    pokemonListInteractor, pokemonDetailInteractor, pokemonSchedulers
+                    pokemonListInteractor, pokemonDetailInteractor, pokemonSchedulers, pokemonDatasourceFactory
                 )
             }).get(PokemonViewModel::class.java)
     }
