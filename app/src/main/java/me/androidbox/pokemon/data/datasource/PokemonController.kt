@@ -4,8 +4,9 @@ import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
 import me.androidbox.pokemon.domain.models.PokemonModel
 import me.androidbox.pokemon.presentation.adapters.models.EpoxyPokemonModel_
+import javax.inject.Inject
 
-class PokemonController()
+class PokemonController @Inject constructor()
     : PagedListEpoxyController<PokemonModel>() {
 
     override fun buildItemModel(currentPosition: Int, item: PokemonModel?): EpoxyModel<*> {
@@ -15,6 +16,11 @@ class PokemonController()
         else {
             EpoxyPokemonModel_()
                 .pokemonName(item.name)
+                .id(hashCode())
         }
+    }
+
+    override fun addModels(models: List<EpoxyModel<*>>) {
+        super.addModels(models)
     }
 }

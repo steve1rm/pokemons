@@ -6,11 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.pokemon_list_item.*
+import me.androidbox.pokemon.data.datasource.PokemonController
 import me.androidbox.pokemon.databinding.FragmentPokemonListBinding
 import me.androidbox.pokemon.di.ProvideApplicationComponent.getApplicationComponent
 import me.androidbox.pokemon.di.modules.PokemonModule
@@ -30,6 +32,9 @@ class PokemonListFragment : Fragment() {
     @Inject
     lateinit var pokemonAdapter: PokemonAdapter
 
+    @Inject
+    lateinit var pokemonController: PokemonController
+
     private lateinit var bindings: FragmentPokemonListBinding
 
     companion object {
@@ -47,7 +52,7 @@ class PokemonListFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         bindings = FragmentPokemonListBinding.inflate(inflater, container, false)
 
-        setupAdapter()
+      //  setupAdapter()
 
         pokemonViewModel.registerPokemonList().observe(viewLifecycleOwner, Observer { pokemonList ->
           //  pokemonAdapter.populatePokemons(pokemonList.pokemonList)
@@ -74,18 +79,28 @@ class PokemonListFragment : Fragment() {
             }
         })
 
+        pokemonViewModel.feed.observe(viewLifecycleOwner, Observer {
+            pokemonController.submitList(it)
+        })
+
         return bindings.root
     }
 
     private fun setupEpoxyAdapter(pokemonList: List<PokemonModel>) {
-        bindings.rvPokemons.withModels {
+        bindings.rvPokemons.run {
+            layoutManager = LinearLayoutManager(requireContext())
+            itemAnimator = DefaultItemAnimator()
+            adapter = pokemonController.adapter
+        }
+
+     /*   bindings.rvPokemons.withModels {
             pokemonList.forEach {
                 epoxyPokemon {
                     id(hashCode())
                     pokemonName(it.name)
                 }
             }
-        }
+        }*/
     }
 
     private fun setupAdapter() {

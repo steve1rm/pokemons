@@ -1,5 +1,6 @@
 package me.androidbox.pokemon.presentation.viewmodels
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
@@ -27,6 +28,7 @@ class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
         val TAG: String = PokemonViewModel::class.java.simpleName
     }
 
+    lateinit var feed: LiveData<PagedList<PokemonModel>>
     private val compositeDisposable = CompositeDisposable()
     private val pokemonDetailLiveData = MutableLiveData<PokemonModel>()
     private val pokemonListLiveData = MutableLiveData<PokemonListModel>()
@@ -39,7 +41,7 @@ class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
     }
 
     fun startPagingPokemons() {
-        LivePagedListBuilder<Int, PokemonModel>(pokemonDataSourceFactory, getPagedListConfig())
+        feed = LivePagedListBuilder<Int, PokemonModel>(pokemonDataSourceFactory, getPagedListConfig())
             .setBoundaryCallback(object : PagedList.BoundaryCallback<PokemonModel>() {
                 override fun onItemAtEndLoaded(itemAtEnd: PokemonModel) {
                     super.onItemAtEndLoaded(itemAtEnd)
