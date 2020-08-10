@@ -54,9 +54,11 @@ class PokemonListFragment : Fragment() {
 
       //  setupAdapter()
 
+        setupEpoxyAdapter()
+
         pokemonViewModel.registerPokemonList().observe(viewLifecycleOwner, Observer { pokemonList ->
           //  pokemonAdapter.populatePokemons(pokemonList.pokemonList)
-            setupEpoxyAdapter(pokemonList.pokemonList)
+            // setupEpoxyAdapter(pokemonList.pokemonList)
         })
 
         pokemonViewModel.registerPokemonDetail().observe(viewLifecycleOwner, Observer { pokemon ->
@@ -86,7 +88,7 @@ class PokemonListFragment : Fragment() {
         return bindings.root
     }
 
-    private fun setupEpoxyAdapter(pokemonList: List<PokemonModel>) {
+    private fun setupEpoxyAdapter() {
         bindings.rvPokemons.run {
             layoutManager = LinearLayoutManager(requireContext())
             itemAnimator = DefaultItemAnimator()

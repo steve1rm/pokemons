@@ -21,14 +21,14 @@ class PokemonPageKeyedDataSource(private val pokemonListInteractor: PokemonListI
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, PokemonModel>) {
-        pokemonListInteractor.loadMorePokemonsByOffset(params.key)
+        /*pokemonListInteractor.loadMorePokemonsByOffset(params.key)
             .subscribeOn(Schedulers.io())
             .subscribeBy(
                 onSuccess = {
                     callback.onResult(it.pokemonList, it.after)
                 },
                 onError = { Timber.e(it, it.localizedMessage) }
-            )
+            )*/
     }
 
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, PokemonModel>): Unit = Unit
