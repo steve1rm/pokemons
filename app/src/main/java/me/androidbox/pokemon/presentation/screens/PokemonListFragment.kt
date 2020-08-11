@@ -91,7 +91,6 @@ class PokemonListFragment : Fragment() {
     private fun setupEpoxyAdapter() {
         bindings.rvPokemons.run {
             layoutManager = LinearLayoutManager(requireContext())
-            itemAnimator = DefaultItemAnimator()
             adapter = pokemonController.adapter
         }
 

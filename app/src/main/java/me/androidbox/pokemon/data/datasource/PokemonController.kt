@@ -4,6 +4,7 @@ import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
 import me.androidbox.pokemon.domain.models.PokemonModel
 import me.androidbox.pokemon.presentation.adapters.models.EpoxyPokemonModel_
+import java.util.*
 import javax.inject.Inject
 
 class PokemonController @Inject constructor()
@@ -16,7 +17,7 @@ class PokemonController @Inject constructor()
         else {
             EpoxyPokemonModel_()
                 .pokemonName(item.name)
-                .id(hashCode())
+                .id(UUID.randomUUID().toString())
         }
     }
 
