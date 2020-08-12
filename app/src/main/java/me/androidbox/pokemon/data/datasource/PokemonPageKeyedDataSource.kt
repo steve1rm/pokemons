@@ -19,13 +19,13 @@ class PokemonPageKeyedDataSource(private val pokemonListInteractor: PokemonListI
             .subscribeOn(Schedulers.io())
             .subscribeBy(
                 onSuccess = { pokemonListModel ->
-                    callback.onResult(pokemonListModel.pokemonList, pokemonListModel.before, pokemonListModel.after)},
+                    callback.onResult(pokemonListModel.pokemonList, null, 20)},
                 onError = { Timber.e(it, it.localizedMessage) }
             ).addTo(compositeDisposable)
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, PokemonModel>) {
-        pokemonListInteractor.loadMorePokemonsByOffset(params.requestedLoadSize)
+        pokemonListInteractor.loadMorePokemonsByOffset(params.key + 20)
             .subscribeOn(Schedulers.io())
             .subscribeBy(
                 onSuccess = {

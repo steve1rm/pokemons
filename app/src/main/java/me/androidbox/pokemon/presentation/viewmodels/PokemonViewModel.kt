@@ -15,6 +15,8 @@ import me.androidbox.pokemon.domain.interactors.PokemonDetailInteractor
 import me.androidbox.pokemon.domain.interactors.PokemonListInteractor
 import me.androidbox.pokemon.domain.models.PokemonListModel
 import me.androidbox.pokemon.domain.models.PokemonModel
+import me.androidbox.pokemon.presentation.adapters.models.EpoxyPokemonModel
+import me.androidbox.pokemon.presentation.adapters.models.EpoxyPokemonModel_
 import me.androidbox.pokemon.presentation.utils.NetworkConnectivity
 import timber.log.Timber
 
@@ -33,11 +35,16 @@ class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
     private val pokemonDetailLiveData = MutableLiveData<PokemonModel>()
     private val pokemonListLiveData = MutableLiveData<PokemonListModel>()
     private val shouldShowLoading = MutableLiveData<Boolean>()
+    private val pokemonClickedLiveData = MutableLiveData<String>()
 
     init {
         Timber.d("PokemonViewModel init")
       //  getPokemonsList()
         startPagingPokemons()
+
+      /*  EpoxyPokemonModel_().pokemonClickedRelay.subscribe { pokemonName ->
+            pokemonClickedLiveData.value = pokemonName
+        }*/
     }
 
     fun startPagingPokemons() {
@@ -124,6 +131,8 @@ class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
     fun registerPokemonDetail(): MutableLiveData<PokemonModel> = pokemonDetailLiveData
 
     fun registerShouldShowLoading(): MutableLiveData<Boolean> = shouldShowLoading
+
+    fun registerPokemonClicked(): LiveData<String> = pokemonClickedLiveData
 
     override fun onCleared() {
         compositeDisposable.clear()

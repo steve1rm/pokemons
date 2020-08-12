@@ -2,6 +2,9 @@ package me.androidbox.pokemon.data.datasource
 
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
+import com.jakewharton.rxrelay3.PublishRelay
+import io.reactivex.Observable
+import io.reactivex.rxjava3.annotations.NonNull
 import me.androidbox.pokemon.domain.models.PokemonModel
 import me.androidbox.pokemon.presentation.adapters.models.EpoxyPokemonModel_
 import java.util.*
@@ -9,6 +12,10 @@ import javax.inject.Inject
 
 class PokemonController @Inject constructor()
     : PagedListEpoxyController<PokemonModel>() {
+
+    private val pokemonNameClickedRelay by lazy {
+        PublishRelay.create<String>()
+    }
 
     override fun buildItemModel(currentPosition: Int, item: PokemonModel?): EpoxyModel<*> {
         return if(item == null) {
@@ -18,10 +25,13 @@ class PokemonController @Inject constructor()
             EpoxyPokemonModel_()
                 .pokemonName(item.name)
                 .id(UUID.randomUUID().toString())
+                .pokemonClickedRelay(pokemonNameClickedRelay)
         }
     }
 
     override fun addModels(models: List<EpoxyModel<*>>) {
         super.addModels(models)
     }
+
+    fun bindPokemonNameClickedRelay() = pokemonNameClickedRelay
 }

@@ -70,6 +70,15 @@ class PokemonListFragment : Fragment() {
             bottomSheet.show(parentFragmentManager, PokemonDetailBottomSheet::class.java.simpleName)
         })
 
+        pokemonController.bindPokemonNameClickedRelay().subscribe { pokemon ->
+            val bottomSheet = PokemonDetailBottomSheet()
+
+            bottomSheet.arguments = Bundle().apply {
+      //          putParcelable(PokemonDetailBottomSheet.POKEMON_DETAIL_KEY, pokemon)
+            }
+            bottomSheet.show(parentFragmentManager, PokemonDetailBottomSheet::class.java.simpleName)
+        }
+
         pokemonViewModel.registerShouldShowLoading().observe(viewLifecycleOwner, Observer { shouldShow ->
             if(shouldShow) {
                 bindings.pbLoading.visibility = View.VISIBLE

@@ -98,6 +98,8 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationComponentVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navigationComponentVersion"
     implementation 'com.jakewharton.rxbinding3:rxbinding:3.0.0'
+    implementation 'com.jakewharton.rxrelay3:rxrelay:3.0.0'
+
     implementation 'com.airbnb.android:epoxy:3.11.0'
     kapt 'com.airbnb.android:epoxy-processor:3.11.0'
     implementation 'com.airbnb.android:epoxy-paging:3.11.0'
