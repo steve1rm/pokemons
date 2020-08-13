@@ -39,15 +39,10 @@ class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
 
     init {
         Timber.d("PokemonViewModel init")
-      //  getPokemonsList()
         startPagingPokemons()
-
-      /*  EpoxyPokemonModel_().pokemonClickedRelay.subscribe { pokemonName ->
-            pokemonClickedLiveData.value = pokemonName
-        }*/
     }
 
-    fun startPagingPokemons() {
+    private fun startPagingPokemons() {
         feed = LivePagedListBuilder<Int, PokemonModel>(pokemonDataSourceFactory, getPagedListConfig())
             .setBoundaryCallback(object : PagedList.BoundaryCallback<PokemonModel>() {
                 override fun onItemAtEndLoaded(itemAtEnd: PokemonModel) {

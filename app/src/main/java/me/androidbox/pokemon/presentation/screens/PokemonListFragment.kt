@@ -52,14 +52,7 @@ class PokemonListFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         bindings = FragmentPokemonListBinding.inflate(inflater, container, false)
 
-      //  setupAdapter()
-
         setupEpoxyAdapter()
-
-        pokemonViewModel.registerPokemonList().observe(viewLifecycleOwner, Observer { pokemonList ->
-          //  pokemonAdapter.populatePokemons(pokemonList.pokemonList)
-            // setupEpoxyAdapter(pokemonList.pokemonList)
-        })
 
         pokemonViewModel.registerPokemonDetail().observe(viewLifecycleOwner, Observer { pokemon ->
             val bottomSheet = PokemonDetailBottomSheet()
@@ -71,12 +64,7 @@ class PokemonListFragment : Fragment() {
         })
 
         pokemonController.bindPokemonNameClickedRelay().subscribe { pokemon ->
-            val bottomSheet = PokemonDetailBottomSheet()
-
-            bottomSheet.arguments = Bundle().apply {
-      //          putParcelable(PokemonDetailBottomSheet.POKEMON_DETAIL_KEY, pokemon)
-            }
-            bottomSheet.show(parentFragmentManager, PokemonDetailBottomSheet::class.java.simpleName)
+            onPokemonTapped(pokemon)
         }
 
         pokemonViewModel.registerShouldShowLoading().observe(viewLifecycleOwner, Observer { shouldShow ->
@@ -102,37 +90,6 @@ class PokemonListFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = pokemonController.adapter
         }
-
-     /*   bindings.rvPokemons.withModels {
-            pokemonList.forEach {
-                epoxyPokemon {
-                    id(hashCode())
-                    pokemonName(it.name)
-                }
-            }
-        }*/
-    }
-
-    private fun setupAdapter() {
-        val layoutManager = LinearLayoutManager(requireContext(), VERTICAL, false)
-
-        pokemonAdapter.setupPokemonTappedListener(::onPokemonTapped)
-        bindings.rvPokemons.adapter = pokemonAdapter
-        bindings.rvPokemons.layoutManager = layoutManager
-     
-        val endlessRecyclerViewScrollListener = object : EndlessRecyclerViewScrollListener(layoutManager) {
-            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
-                loadMorePokemons(page)
-                Timber.d("page $page totalItemsCount $totalItemsCount")
-            }
-        }
-        bindings.rvPokemons.addOnScrollListener(endlessRecyclerViewScrollListener)
-    }
-
-    private fun loadMorePokemons(page: Int) {
-        /** Offset is calculated by multiplying the actual page number by 20 to get the next 'page * 20' of pokemons */
-        val offset = page * 20
-        pokemonViewModel.getMorePokemons(offset)
     }
 
     private fun onPokemonTapped(name: String) {

@@ -10,9 +10,11 @@ import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.jakewharton.rxbinding3.view.clicks
 import com.jakewharton.rxrelay3.PublishRelay
 import com.jakewharton.rxrelay3.Relay
+import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.pokemon_list_item.view.*
 import me.androidbox.pokemon.R
 import timber.log.Timber
+import java.util.concurrent.TimeUnit
 
 @EpoxyModelClass(layout = R.layout.pokemon_list_item)
 abstract class EpoxyPokemonModel : EpoxyModelWithHolder<EpoxyPokemonModel.PokemonHolder>() {
@@ -29,13 +31,18 @@ abstract class EpoxyPokemonModel : EpoxyModelWithHolder<EpoxyPokemonModel.Pokemo
     override fun bind(holder: PokemonHolder) {
         holder.pokemonName.text = pokemonName
 
-        holder.pokemonCardView.setOnClickListener {
-            Timber.d("Pokemon clicked $pokemonName")
-            pokemonClickedRelay.accept(pokemonName.toString())
-        }
+        holder.pokemonCardView.clicks()
+            .debounce(300, TimeUnit.MILLISECONDS)
+            .map {
+                pokemonName.toString()
+            }
+            .subscribeBy(
+                onNext = pokemonClickedRelay::accept,
+                onError = { Timber.e(it.localizedMessage, "Failed to click pokemon") }
+            )
     }
 
-    inner class PokemonHolder : EpoxyHolder() {
+    class PokemonHolder : EpoxyHolder() {
         lateinit var pokemonName: TextView
         lateinit var pokemonCardView: CardView
 

@@ -29,9 +29,5 @@ class PokemonController @Inject constructor()
         }
     }
 
-    override fun addModels(models: List<EpoxyModel<*>>) {
-        super.addModels(models)
-    }
-
     fun bindPokemonNameClickedRelay() = pokemonNameClickedRelay
 }
