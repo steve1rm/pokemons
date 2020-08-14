@@ -2,6 +2,7 @@ package me.androidbox.pokemon.presentation.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
@@ -10,6 +11,7 @@ import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.subjects.PublishSubject
 import me.androidbox.pokemon.data.datasource.PokemonDataSourceFactory
+import me.androidbox.pokemon.data.datasource.PokemonPageKeyedDataSource
 import me.androidbox.pokemon.di.modules.ApplicationModule.PokemonSchedulers
 import me.androidbox.pokemon.domain.interactors.PokemonDetailInteractor
 import me.androidbox.pokemon.domain.interactors.PokemonListInteractor
@@ -42,6 +44,14 @@ class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
         startPagingPokemons()
     }
 
+    private fun getPagedListConfig(): PagedList.Config {
+        return PagedList.Config.Builder()
+            .setEnablePlaceholders(false)
+            .setInitialLoadSizeHint(10)
+            .setPageSize(20)
+            .build()
+    }
+
     private fun startPagingPokemons() {
         feed = LivePagedListBuilder<Int, PokemonModel>(pokemonDataSourceFactory, getPagedListConfig())
             .setBoundaryCallback(object : PagedList.BoundaryCallback<PokemonModel>() {
@@ -53,7 +63,11 @@ class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
             .build()
     }
 
-    fun getPokemonsList() {
+    fun getState(): LiveData<Boolean> =
+        Transformations.switchMap<PokemonPageKeyedDataSource, Boolean>(
+            pokemonDataSourceFactory.pokemonDataSourceLiveData, PokemonPageKeyedDataSource::shouldShowProgressNetwork)
+
+  /*  fun getPokemonsList() {
         shouldShowLoading.value = true
 
         pokemonListInteractor.getListOfPokemons()
@@ -70,7 +84,7 @@ class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
                 }
             ).addTo(compositeDisposable)
     }
-
+*/
     fun getMorePokemons(offset: Int) {
         shouldShowLoading.value = true
 
@@ -132,13 +146,5 @@ class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
     override fun onCleared() {
         compositeDisposable.clear()
         super.onCleared()
-    }
-
-    private fun getPagedListConfig(): PagedList.Config {
-        return PagedList.Config.Builder()
-            .setEnablePlaceholders(false)
-            .setInitialLoadSizeHint(5)
-            .setPageSize(20)
-            .build()
     }
 }

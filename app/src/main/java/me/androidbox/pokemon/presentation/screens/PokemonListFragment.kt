@@ -64,7 +64,7 @@ class PokemonListFragment : Fragment() {
         })
 
         pokemonController.bindPokemonNameClickedRelay().subscribe { pokemon ->
-            onPokemonTapped(pokemon)
+            pokemonViewModel.getPokemonDetailByName(pokemon)
         }
 
         pokemonViewModel.registerShouldShowLoading().observe(viewLifecycleOwner, Observer { shouldShow ->
@@ -78,22 +78,29 @@ class PokemonListFragment : Fragment() {
             }
         })
 
-        pokemonViewModel.feed.observe(viewLifecycleOwner, Observer {
-            pokemonController.submitList(it)
+        pokemonViewModel.feed.observe(viewLifecycleOwner, Observer { pagedList ->
+            pokemonController.submitList(pagedList)
+        })
+
+        pokemonViewModel.getState().observe(viewLifecycleOwner, Observer { shouldShow ->
+            if(shouldShow) {
+                bindings.pbLoading.visibility = View.VISIBLE
+                bindings.pbLoading.show()
+            }
+            else {
+                bindings.pbLoading.visibility = View.GONE
+                bindings.pbLoading.hide()
+            }
         })
 
         return bindings.root
     }
 
     private fun setupEpoxyAdapter() {
-        bindings.rvPokemons.run {
+        with(bindings.rvPokemons) {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = pokemonController.adapter
         }
-    }
-
-    private fun onPokemonTapped(name: String) {
-        pokemonViewModel.getPokemonDetailByName(name)
     }
 
     override fun onDestroyView() {

@@ -29,5 +29,5 @@ class PokemonController @Inject constructor()
         }
     }
 
-    fun bindPokemonNameClickedRelay() = pokemonNameClickedRelay
+    fun bindPokemonNameClickedRelay(): PublishRelay<String> = pokemonNameClickedRelay
 }

@@ -1,6 +1,8 @@
 package me.androidbox.pokemon.data.datasource
 
+import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
@@ -13,6 +15,7 @@ class PokemonPageKeyedDataSource(private val pokemonListInteractor: PokemonListI
     : PageKeyedDataSource<Int, PokemonModel>() {
 
     val compositeDisposable = CompositeDisposable()
+    val shouldShowProgressNetwork = MutableLiveData<Boolean>()
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, PokemonModel>) {
         pokemonListInteractor.getListOfPokemons()
@@ -27,13 +30,18 @@ class PokemonPageKeyedDataSource(private val pokemonListInteractor: PokemonListI
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, PokemonModel>) {
         val nextOffSet = params.key + 20
 
+        shouldShowProgressNetwork.postValue(true)
         pokemonListInteractor.loadMorePokemonsByOffset(nextOffSet)
             .subscribeOn(Schedulers.io())
             .subscribeBy(
                 onSuccess = {
+                    shouldShowProgressNetwork.postValue(false)
                     callback.onResult(it.pokemonList, nextOffSet )
                 },
-                onError = { Timber.e(it, it.localizedMessage) }
+                onError = {
+                    shouldShowProgressNetwork.postValue(false)
+                    Timber.e(it, it.localizedMessage)
+                }
             ).addTo(compositeDisposable)
     }
 
