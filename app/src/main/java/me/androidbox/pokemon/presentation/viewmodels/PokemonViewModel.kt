@@ -6,10 +6,10 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
+import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
-import io.reactivex.subjects.PublishSubject
 import me.androidbox.pokemon.data.datasource.PokemonDataSourceFactory
 import me.androidbox.pokemon.data.datasource.PokemonPageKeyedDataSource
 import me.androidbox.pokemon.di.modules.ApplicationModule.PokemonSchedulers
@@ -17,9 +17,6 @@ import me.androidbox.pokemon.domain.interactors.PokemonDetailInteractor
 import me.androidbox.pokemon.domain.interactors.PokemonListInteractor
 import me.androidbox.pokemon.domain.models.PokemonListModel
 import me.androidbox.pokemon.domain.models.PokemonModel
-import me.androidbox.pokemon.presentation.adapters.models.EpoxyPokemonModel
-import me.androidbox.pokemon.presentation.adapters.models.EpoxyPokemonModel_
-import me.androidbox.pokemon.presentation.utils.NetworkConnectivity
 import timber.log.Timber
 
 class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
@@ -32,7 +29,7 @@ class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
         val TAG: String = PokemonViewModel::class.java.simpleName
     }
 
-    lateinit var feed: LiveData<PagedList<PokemonModel>>
+    lateinit var pokemonPagingListLiveData: LiveData<PagedList<PokemonModel>>
     private val compositeDisposable = CompositeDisposable()
     private val pokemonDetailLiveData = MutableLiveData<PokemonModel>()
     private val pokemonListLiveData = MutableLiveData<PokemonListModel>()
@@ -53,7 +50,7 @@ class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
     }
 
     private fun startPagingPokemons() {
-        feed = LivePagedListBuilder<Int, PokemonModel>(pokemonDataSourceFactory, getPagedListConfig())
+        pokemonPagingListLiveData = LivePagedListBuilder<Int, PokemonModel>(pokemonDataSourceFactory, getPagedListConfig())
             .setBoundaryCallback(object : PagedList.BoundaryCallback<PokemonModel>() {
                 override fun onItemAtEndLoaded(itemAtEnd: PokemonModel) {
                     super.onItemAtEndLoaded(itemAtEnd)
@@ -63,9 +60,16 @@ class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
             .build()
     }
 
-    fun getState(): LiveData<Boolean> =
+    fun observePagingProgress(): LiveData<Boolean> =
         Transformations.switchMap<PokemonPageKeyedDataSource, Boolean>(
-            pokemonDataSourceFactory.pokemonDataSourceLiveData, PokemonPageKeyedDataSource::shouldShowProgressNetwork)
+            pokemonDataSourceFactory.pokemonDataSourceLiveData,
+            PokemonPageKeyedDataSource::shouldShowProgressNetwork)
+
+    fun observeInitialProgress(): LiveData<Boolean> {
+        return Transformations.switchMap<PokemonPageKeyedDataSource, Boolean>(
+            pokemonDataSourceFactory.pokemonDataSourceLiveData,
+            PokemonPageKeyedDataSource::shimmerProgressLiveData)
+    }
 
   /*  fun getPokemonsList() {
         shouldShowLoading.value = true

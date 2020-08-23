@@ -6,22 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
-import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.pokemon_list_item.*
+import kotlinx.android.synthetic.main.pokemon_list_item_placeholder.view.*
 import me.androidbox.pokemon.data.datasource.PokemonController
 import me.androidbox.pokemon.databinding.FragmentPokemonListBinding
 import me.androidbox.pokemon.di.ProvideApplicationComponent.getApplicationComponent
 import me.androidbox.pokemon.di.modules.PokemonModule
-import me.androidbox.pokemon.domain.models.PokemonModel
 import me.androidbox.pokemon.presentation.adapters.PokemonAdapter
-import me.androidbox.pokemon.presentation.adapters.models.epoxyPokemon
-import me.androidbox.pokemon.presentation.utils.EndlessRecyclerViewScrollListener
 import me.androidbox.pokemon.presentation.viewmodels.PokemonViewModel
-import timber.log.Timber
 import javax.inject.Inject
 
 class PokemonListFragment : Fragment() {
@@ -78,11 +70,11 @@ class PokemonListFragment : Fragment() {
             }
         })
 
-        pokemonViewModel.feed.observe(viewLifecycleOwner, Observer { pagedList ->
+        pokemonViewModel.pokemonPagingListLiveData.observe(viewLifecycleOwner, Observer { pagedList ->
             pokemonController.submitList(pagedList)
         })
 
-        pokemonViewModel.getState().observe(viewLifecycleOwner, Observer { shouldShow ->
+        pokemonViewModel.observePagingProgress().observe(viewLifecycleOwner, Observer { shouldShow ->
             if(shouldShow) {
                 bindings.pbLoading.visibility = View.VISIBLE
                 bindings.pbLoading.show()
@@ -90,6 +82,16 @@ class PokemonListFragment : Fragment() {
             else {
                 bindings.pbLoading.visibility = View.GONE
                 bindings.pbLoading.hide()
+            }
+        })
+
+        pokemonViewModel.observeInitialProgress().observe(viewLifecycleOwner, Observer { shouldShowShimmer ->
+            if(shouldShowShimmer) {
+                bindings.shimmerFrameLayout.startShimmer()
+            }
+            else {
+                bindings.shimmerFrameLayout.stopShimmer()
+                bindings.shimmerFrameLayout.visibility = View.GONE
             }
         })
 
