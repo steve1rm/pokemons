@@ -36,8 +36,9 @@ class PokemonModule(private val fragment: PokemonListFragment) {
 
     @ViewScope
     @Provides
-    fun providePokemonDataSourceFactory(pokemonListInteractor: PokemonListInteractor): PokemonDataSourceFactory {
-        return PokemonDataSourceFactory(pokemonListInteractor)
+    fun providePokemonDataSourceFactory(pokemonListInteractor: PokemonListInteractor,
+                                        pokemonDetailInteractor: PokemonDetailInteractor): PokemonDataSourceFactory {
+        return PokemonDataSourceFactory(pokemonListInteractor, pokemonDetailInteractor)
     }
 
     @ViewScope

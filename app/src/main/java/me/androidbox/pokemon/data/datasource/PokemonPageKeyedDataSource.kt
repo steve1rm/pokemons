@@ -24,10 +24,11 @@ class PokemonPageKeyedDataSource(
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, PokemonModel>) {
         pokemonListInteractor.getListOfPokemons()
             .toObservable()
-            .flatMapIterable { it }
-            .map {
-
+            .flatMapIterable { it.pokemonList }
+            .flatMap {
+                pokemonDetailInteractor.getPokemonDetailByName(it.name).toObservable()
             }
+            .toList()
             .subscribeOn(Schedulers.io())
             .subscribeBy(
                 onSuccess = {
