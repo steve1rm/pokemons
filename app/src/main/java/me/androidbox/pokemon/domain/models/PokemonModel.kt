@@ -17,7 +17,13 @@ class PokemonModel(
     val weight: Float,
 
     @field:[Expose SerializedName("base_experience")]
-    val baseExperience: Int
+    val baseExperience: Int,
+
+    @field:[Expose SerializedName("url")]
+    val url: String,
+
+    @field:[Expose SerializedName("sprites")]
+    val sprites: Sprites
 ) : Parcelable
 
 

@@ -2,16 +2,20 @@ package me.androidbox.pokemon.data.datasource
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
+import me.androidbox.pokemon.domain.interactors.PokemonDetailInteractor
 import me.androidbox.pokemon.domain.interactors.PokemonListInteractor
 import me.androidbox.pokemon.domain.models.PokemonModel
 import timber.log.Timber
 
-class PokemonPageKeyedDataSource(private val pokemonListInteractor: PokemonListInteractor)
+class PokemonPageKeyedDataSource(
+    private val pokemonListInteractor: PokemonListInteractor,
+    private val pokemonDetailInteractor: PokemonDetailInteractor)
     : PageKeyedDataSource<Int, PokemonModel>() {
 
     val compositeDisposable = CompositeDisposable()
@@ -19,10 +23,15 @@ class PokemonPageKeyedDataSource(private val pokemonListInteractor: PokemonListI
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, PokemonModel>) {
         pokemonListInteractor.getListOfPokemons()
+            .toObservable()
+            .flatMapIterable { it }
+            .map {
+
+            }
             .subscribeOn(Schedulers.io())
             .subscribeBy(
-                onSuccess = { pokemonListModel ->
-                    callback.onResult(pokemonListModel.pokemonList, null, 0)},
+                onSuccess = {
+                    callback.onResult(it, null, 0)},
                 onError = { Timber.e(it, it.localizedMessage) }
             ).addTo(compositeDisposable)
     }
