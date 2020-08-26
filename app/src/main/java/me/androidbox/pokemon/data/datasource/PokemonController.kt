@@ -26,7 +26,12 @@ class PokemonController @Inject constructor()
                 .pokemonName(item.name)
                 .id(UUID.randomUUID().toString())
                 .pokemonClickedRelay(pokemonNameClickedRelay)
+                .spriteUrl(getSpriteOrNull(item))
         }
+    }
+
+    private fun getSpriteOrNull(item: PokemonModel?): String {
+        return item?.sprites?.backDefault ?: ""
     }
 
     fun bindPokemonNameClickedRelay(): PublishRelay<String> = pokemonNameClickedRelay
