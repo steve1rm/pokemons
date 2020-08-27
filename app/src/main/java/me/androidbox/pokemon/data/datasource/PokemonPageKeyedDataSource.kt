@@ -1,10 +1,12 @@
 package me.androidbox.pokemon.data.datasource
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
@@ -20,20 +22,33 @@ class PokemonPageKeyedDataSource(
 
     val compositeDisposable = CompositeDisposable()
     val shouldShowProgressNetwork = MutableLiveData<Boolean>()
+    private val shimmerPublishSubject = PublishSubject.create<Boolean>()
+    val shimmerProgressObservable: Observable<Boolean>
+        get() = shimmerPublishSubject.hide()
+
+    private val shimmerMutableLiveData = MutableLiveData<Boolean>()
+    val shimmerProgressLiveData: LiveData<Boolean>
+        get() = shimmerMutableLiveData
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, PokemonModel>) {
+        shimmerMutableLiveData.postValue(true)
+
         pokemonListInteractor.getListOfPokemons()
-            .toObservable()
-            .flatMapIterable { it.pokemonList }
+            .flattenAsObservable { it.pokemonList }
             .flatMap {
                 pokemonDetailInteractor.getPokemonDetailByName(it.name).toObservable()
             }
             .toList()
             .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
-                onSuccess = {
-                    callback.onResult(it, null, 0)},
-                onError = { Timber.e(it, it.localizedMessage) }
+                onSuccess = { pokemonListModel ->
+                    shimmerMutableLiveData.value = false
+                    callback.onResult(pokemonListModel, null, 0)},
+                onError = {
+                    shimmerMutableLiveData.value = false
+                    Timber.e(it, it.localizedMessage)
+                }
             ).addTo(compositeDisposable)
     }
 
