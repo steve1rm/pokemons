@@ -57,11 +57,16 @@ class PokemonPageKeyedDataSource(
 
         shouldShowProgressNetwork.postValue(true)
         pokemonListInteractor.loadMorePokemonsByOffset(nextOffSet)
+            .flattenAsObservable { it.pokemonList }
+            .flatMap {
+                pokemonDetailInteractor.getPokemonDetailByName(it.name).toObservable()
+            }
+            .toList()
             .subscribeOn(Schedulers.io())
             .subscribeBy(
                 onSuccess = {
                     shouldShowProgressNetwork.postValue(false)
-                    callback.onResult(it.pokemonList, nextOffSet )
+                    callback.onResult(it, nextOffSet)
                 },
                 onError = {
                     shouldShowProgressNetwork.postValue(false)
