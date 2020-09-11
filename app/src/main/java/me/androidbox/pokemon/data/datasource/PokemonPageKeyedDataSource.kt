@@ -22,9 +22,6 @@ class PokemonPageKeyedDataSource(
 
     val compositeDisposable = CompositeDisposable()
     val shouldShowProgressNetwork = MutableLiveData<Boolean>()
-    private val shimmerPublishSubject = PublishSubject.create<Boolean>()
-    val shimmerProgressObservable: Observable<Boolean>
-        get() = shimmerPublishSubject.hide()
 
     private val shimmerMutableLiveData = MutableLiveData<Boolean>()
     val shimmerProgressLiveData: LiveData<Boolean>
