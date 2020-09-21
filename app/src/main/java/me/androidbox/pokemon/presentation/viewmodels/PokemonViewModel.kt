@@ -1,13 +1,16 @@
 package me.androidbox.pokemon.presentation.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
+import com.jakewharton.rxrelay3.PublishRelay
+import com.jakewharton.rxrelay3.Relay
+import io.reactivex.BackpressureStrategy
+import io.reactivex.Flowable
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 import me.androidbox.pokemon.data.datasource.PokemonDataSourceFactory
@@ -69,56 +72,6 @@ class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
         return Transformations.switchMap<PokemonPageKeyedDataSource, Boolean>(
             pokemonDataSourceFactory.pokemonDataSourceLiveData,
             PokemonPageKeyedDataSource::shimmerProgressLiveData)
-    }
-
-  /*  fun getPokemonsList() {
-        shouldShowLoading.value = true
-
-        pokemonListInteractor.getListOfPokemons()
-            .subscribeOn(pokemonSchedulers.background())
-            .observeOn(pokemonSchedulers.ui())
-            .subscribeBy(
-                onSuccess = { pokemonList ->
-                    this.pokemonListLiveData.value = pokemonList
-                    shouldShowLoading.value = false
-                },
-                onError = {
-                    shouldShowLoading.value = false
-                    Timber.e(TAG, it.localizedMessage)
-                }
-            ).addTo(compositeDisposable)
-    }
-*/
-    fun getMorePokemons(offset: Int) {
-        shouldShowLoading.value = true
-
-        pokemonListInteractor.loadMorePokemonsByOffset(offset)
-            .subscribeOn(pokemonSchedulers.background())
-            .observeOn(pokemonSchedulers.ui())
-            .subscribeBy(
-                onSuccess = { pokemonList ->
-                    shouldShowLoading.value = false
-                    pokemonListLiveData.value = pokemonList
-                },
-                onError = {
-                    shouldShowLoading.value = false
-                    Timber.e(TAG, it.localizedMessage)
-                }
-            ).addTo(compositeDisposable)
-    }
-
-    fun getPokemonDetailById(id: Int) {
-        pokemonDetailInteractor.getPokemonDetailById(id)
-            .subscribeOn(pokemonSchedulers.background())
-            .observeOn(pokemonSchedulers.ui())
-            .subscribeBy(
-                onSuccess = { pokemon ->
-                    pokemonDetailLiveData.value = pokemon
-                },
-                onError = {
-                    Timber.e(TAG, it.localizedMessage)
-                }
-            ).addTo(compositeDisposable)
     }
 
     fun getPokemonDetailByName(name: String) {

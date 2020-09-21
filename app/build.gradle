@@ -99,6 +99,7 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$navigationComponentVersion"
     implementation 'com.jakewharton.rxbinding3:rxbinding:3.0.0'
     implementation 'com.jakewharton.rxrelay3:rxrelay:3.0.0'
+    implementation 'android.arch.lifecycle:reactivestreams:1.1.1'
 
     implementation 'com.airbnb.android:epoxy:3.11.0'
     kapt 'com.airbnb.android:epoxy-processor:3.11.0'

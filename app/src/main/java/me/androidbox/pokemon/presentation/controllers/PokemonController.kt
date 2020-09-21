@@ -1,10 +1,8 @@
-package me.androidbox.pokemon.data.datasource
+package me.androidbox.pokemon.presentation.controllers
 
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.jakewharton.rxrelay3.PublishRelay
-import io.reactivex.Observable
-import io.reactivex.rxjava3.annotations.NonNull
 import me.androidbox.pokemon.domain.models.PokemonModel
 import me.androidbox.pokemon.presentation.adapters.models.EpoxyPokemonModel_
 import java.util.*
