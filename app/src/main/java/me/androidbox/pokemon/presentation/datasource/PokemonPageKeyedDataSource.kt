@@ -1,4 +1,4 @@
-package me.androidbox.pokemon.data.datasource
+package me.androidbox.pokemon.presentation.datasource
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

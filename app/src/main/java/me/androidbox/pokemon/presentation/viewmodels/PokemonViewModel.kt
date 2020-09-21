@@ -1,31 +1,30 @@
 package me.androidbox.pokemon.presentation.viewmodels
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import com.jakewharton.rxrelay3.PublishRelay
-import com.jakewharton.rxrelay3.Relay
-import io.reactivex.BackpressureStrategy
-import io.reactivex.Flowable
-import io.reactivex.Observable
-import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
-import me.androidbox.pokemon.data.datasource.PokemonDataSourceFactory
-import me.androidbox.pokemon.data.datasource.PokemonPageKeyedDataSource
+import me.androidbox.pokemon.presentation.datasource.PokemonDataSourceFactory
+import me.androidbox.pokemon.presentation.datasource.PokemonPageKeyedDataSource
 import me.androidbox.pokemon.di.modules.ApplicationModule.PokemonSchedulers
 import me.androidbox.pokemon.domain.interactors.PokemonDetailInteractor
 import me.androidbox.pokemon.domain.interactors.PokemonListInteractor
 import me.androidbox.pokemon.domain.models.PokemonListModel
 import me.androidbox.pokemon.domain.models.PokemonModel
+import me.androidbox.pokemon.presentation.datasource.CreateLivePageListBuilder
 import timber.log.Timber
 
 class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
                        private val pokemonDetailInteractor: PokemonDetailInteractor,
                        private val pokemonSchedulers: PokemonSchedulers,
-                       private val pokemonDataSourceFactory: PokemonDataSourceFactory) : ViewModel() {
+                       private val pokemonDataSourceFactory: PokemonDataSourceFactory,
+                       private val createLivePageListBuilder: CreateLivePageListBuilder
+) : ViewModel() {
 
     companion object {
         @JvmField
@@ -53,6 +52,8 @@ class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
     }
 
     private fun startPagingPokemons() {
+        pokemonPagingListLiveData = createLivePageListBuilder.createLivePageListBuilder()
+/*
         pokemonPagingListLiveData = LivePagedListBuilder<Int, PokemonModel>(pokemonDataSourceFactory, getPagedListConfig())
             .setBoundaryCallback(object : PagedList.BoundaryCallback<PokemonModel>() {
                 override fun onItemAtEndLoaded(itemAtEnd: PokemonModel) {
@@ -61,6 +62,7 @@ class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
                 }
             })
             .build()
+*/
     }
 
     fun observePagingProgress(): LiveData<Boolean> =
