@@ -31,7 +31,9 @@ class PokemonPageKeyedDataSource(
         shimmerMutableLiveData.postValue(true)
 
         pokemonListInteractor.getListOfPokemons()
-            .flattenAsObservable { it.pokemonList }
+            .flattenAsObservable { pokemonListModel ->
+                pokemonListModel.pokemonList
+            }
             .flatMap {
                 pokemonDetailInteractor.getPokemonDetailByName(it.name).toObservable()
             }
@@ -54,7 +56,9 @@ class PokemonPageKeyedDataSource(
 
         shouldShowProgressNetwork.postValue(true)
         pokemonListInteractor.loadMorePokemonsByOffset(nextOffSet)
-            .flattenAsObservable { it.pokemonList }
+            .flattenAsObservable { pokemonListModel ->
+                pokemonListModel.pokemonList
+            }
             .flatMap {
                 pokemonDetailInteractor.getPokemonDetailByName(it.name).toObservable()
             }
