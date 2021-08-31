@@ -69,6 +69,7 @@ dependencies {
     def fragmentVersion = "1.2.5"
     def mockitoVersion = "3.3.3"
     def navigationComponentVersion = "2.3.0"
+    def epoxyVersion = "4.6.2"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -78,7 +79,6 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
-    implementation "com.google.dagger:dagger-android:$daggerAndroidVersion"
     kapt "com.google.dagger:dagger-compiler:$daggerAndroidVersion"
     kapt "com.google.dagger:dagger-android-processor:$daggerAndroidVersion"
     implementation "com.google.dagger:dagger-android-support:$daggerAndroidVersion"
@@ -100,9 +100,9 @@ dependencies {
     implementation 'com.jakewharton.rxbinding3:rxbinding:3.0.0'
     implementation 'com.jakewharton.rxrelay3:rxrelay:3.0.0'
 
-    implementation 'com.airbnb.android:epoxy:3.11.0'
-    kapt 'com.airbnb.android:epoxy-processor:3.11.0'
-    implementation 'com.airbnb.android:epoxy-paging:3.11.0'
+    implementation "com.airbnb.android:epoxy:$epoxyVersion"
+    kapt "com.airbnb.android:epoxy-processor:$epoxyVersion"
+    implementation "com.airbnb.android:epoxy-paging:$epoxyVersion"
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
 
     testImplementation 'junit:junit:4.13'
