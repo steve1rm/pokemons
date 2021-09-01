@@ -6,7 +6,6 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
@@ -71,24 +70,6 @@ class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
             PokemonPageKeyedDataSource::shimmerProgressLiveData)
     }
 
-  /*  fun getPokemonsList() {
-        shouldShowLoading.value = true
-
-        pokemonListInteractor.getListOfPokemons()
-            .subscribeOn(pokemonSchedulers.background())
-            .observeOn(pokemonSchedulers.ui())
-            .subscribeBy(
-                onSuccess = { pokemonList ->
-                    this.pokemonListLiveData.value = pokemonList
-                    shouldShowLoading.value = false
-                },
-                onError = {
-                    shouldShowLoading.value = false
-                    Timber.e(TAG, it.localizedMessage)
-                }
-            ).addTo(compositeDisposable)
-    }
-*/
     fun getMorePokemons(offset: Int) {
         shouldShowLoading.value = true
 
