@@ -1,6 +1,6 @@
 package me.androidbox.pokemon.domain.interactors
 
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Single
 import me.androidbox.pokemon.domain.models.PokemonListModel
 
 interface PokemonListInteractor {
