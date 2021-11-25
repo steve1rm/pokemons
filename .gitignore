@@ -12,8 +12,13 @@
 /.idea/jarRepositories.xml
 /.idea/sonarlint/issuestore/index.pb
 /.idea/misc.xml
+/.idea/compiler.xml
+/.idea/deploymentTargetDropDown.xml
 .DS_Store
 /build
 /captures
 .externalNativeBuild
 .cxx
+buildSrc/build/classes/
+buildSrc/build/kotlin/compileKotlin/
+
