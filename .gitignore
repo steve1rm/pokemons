@@ -21,4 +21,6 @@
 .cxx
 buildSrc/build/classes/
 buildSrc/build/kotlin/compileKotlin/
+buildSrc/build/kotlin/
+buildSrc/build/libs/
 

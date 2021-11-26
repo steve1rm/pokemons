@@ -9,7 +9,7 @@ object Versions {
     const val versionName = "1.0"
     const val kotlinVersion = "1.6"
     const val gradleVersion = "7.2"
-    const val appcompatVersion = "1.2.0"
+    const val appcompatVersion = "1.4.0"
 
     /* Libraries */
     const val gsonVersion = "2.8.6"
@@ -19,6 +19,7 @@ object Versions {
     const val rxjavaVersion = "2.2.19"
     const val rxAndroidVersion = "2.1.1"
     const val rxkotlinVersion = "2.4.0"
+    const val rxRelayVersion = "3.0.0"
     const val timberVersion = "4.7.1"
     const val lifecycleVersion = "2.2.0"
     const val parcelerVersion = "1.1.12"
@@ -26,6 +27,8 @@ object Versions {
     const val fragmentVersion = "1.2.5"
     const val navigationComponentVersion = "2.3.0"
     const val epoxyVersion = "4.6.2"
+    const val constraintlayoutVersion = "2.1.2"
+    const val shimmerVersion = "0.5.0"
 
     /** Testing */
     const val coreTestingVersion = "2.1.0"
@@ -39,4 +42,6 @@ object Versions {
     const val androidxCoreVersion = "1.2.0"
     const val mockWebServerVersion = "4.7.2"
     const val mockitoVersion = "3.3.3"
+    const val junitVersion = "4.13"
+    const val testExtJunitVersion = "1.1.3"
 }
