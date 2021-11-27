@@ -14,6 +14,7 @@
 /.idea/misc.xml
 /.idea/compiler.xml
 /.idea/deploymentTargetDropDown.xml
+.idea/kotlinScripting.xml
 .DS_Store
 /build
 /captures

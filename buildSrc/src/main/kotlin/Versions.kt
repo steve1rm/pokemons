@@ -7,8 +7,9 @@ object Versions {
     const val compileSdkVersion = 30
     const val versionCode = 1
     const val versionName = "1.0"
-    const val kotlinVersion = "1.6"
+    const val kotlinVersion = "1.6.0"
     const val gradleVersion = "7.2"
+    const val androidGradlePluginVersion = "4.2.2"
     const val appcompatVersion = "1.4.0"
 
     /* Libraries */

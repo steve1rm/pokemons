@@ -41,6 +41,7 @@ import Dependencies.parcelerApi
 import Dependencies.parceler
 import Dependencies.lifecycleExtensions
 import Dependencies.kotlinStdlib
+import Dependencies.appCompat
 
 import org.gradle.api.artifacts.dsl.DependencyHandler
 
@@ -103,6 +104,10 @@ object Dependencies {
     const val espressoIntents = "androidx.test.espresso:espresso-intents:${Versions.espressoCoreVersion}"
     const val kakao = "com.agoda.kakao:kakao:${Versions.kakaoVersion}"
     const val mockWebServer = "com.squareup.okhttp3:mockwebserver:${Versions.mockWebServerVersion}"
+}
+
+fun DependencyHandler.appcompat() {
+    implementation(appCompat)
 }
 
 fun DependencyHandler.kotlinStdLib() {
