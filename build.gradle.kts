@@ -7,10 +7,10 @@ buildscript {
     }
 
     dependencies {
-        classpath ("com.android.tools.build:gradle:${Versions.androidGradlePluginVersion}")
-        classpath ("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlinVersion}")
+        classpath ("com.android.tools.build:gradle:_")
+        classpath ("org.jetbrains.kotlin:kotlin-gradle-plugin:_")
         val navVersion = "2.3.5"
-        classpath ("androidx.navigation:navigation-safe-args-gradle-plugin:$navVersion")
+        classpath (AndroidX.navigation.safeArgsGradlePlugin)
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
