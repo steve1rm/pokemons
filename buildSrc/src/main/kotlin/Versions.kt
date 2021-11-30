@@ -37,7 +37,7 @@ object Versions {
     const val runnerVersion = "1.2.0"
     const val robolectricVersion = "4.3.1"
     const val espressoCoreVersion = "3.2.0"
-    const val kakaoVersion = "2.3.0"
+    const val kakaoVersion = "3.0.5"
     const val assertJVersion = "3.11.1"
     const val mockitoKotlinVersion = "2.1.0"
     const val androidxCoreVersion = "1.2.0"
