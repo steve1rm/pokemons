@@ -52,7 +52,7 @@ class PokemonViewModelTest {
     fun `should get a list of pokemon`() {
         // Arrange
         val pokemonList = MockDataFactory.createListOfPokemons(10)
-        whenever(pokemonListInteractor.getListOfPokemons())
+        whenever(pokemonListInteractor.loadMorePokemonsByOffset(20))
             .thenReturn(Single.just(PokemonListModel(pokemonList)))
 
         // Act
@@ -60,14 +60,14 @@ class PokemonViewModelTest {
         testScheduler.triggerActions()
 
         // Assert
-        verify(pokemonListInteractor, atLeast(1)).getListOfPokemons()
+        verify(pokemonListInteractor, atLeast(1)).loadMorePokemonsByOffset(20)
         assertThat(pokemonViewModel.registerPokemonList().value).isEqualTo(PokemonListModel(pokemonList))
     }
 
     @Test
     fun `should not get a list of pokemon on error`() {
         // Arrange
-           whenever(pokemonListInteractor.loadMorePokemonsByOffset(20))
+        whenever(pokemonListInteractor.loadMorePokemonsByOffset(20))
             .thenReturn(Single.error(Exception("Exception happened")))
 
         // Act
