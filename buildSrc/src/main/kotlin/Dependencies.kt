@@ -102,7 +102,7 @@ object Dependencies {
     const val fragmentTesting = "androidx.fragment:fragment-testing:${Versions.fragmentVersion}"
     const val espressoCore = "androidx.test.espresso:espresso-core:${Versions.espressoCoreVersion}"
     const val espressoIntents = "androidx.test.espresso:espresso-intents:${Versions.espressoCoreVersion}"
-    const val kakao = "com.agoda.kakao:kakao:${Versions.kakaoVersion}"
+    const val kakao = "io.github.kakaocup:kakao:${Versions.kakaoVersion}"
     const val mockWebServer = "com.squareup.okhttp3:mockwebserver:${Versions.mockWebServerVersion}"
 }
 

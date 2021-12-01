@@ -8,6 +8,7 @@ import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Single
 import io.reactivex.schedulers.TestScheduler
+import me.androidbox.pokemon.data.datasource.PokemonDataSourceFactory
 import me.androidbox.pokemon.di.modules.ApplicationModule.PokemonSchedulers
 import me.androidbox.pokemon.domain.interactors.PokemonDetailInteractor
 import me.androidbox.pokemon.domain.interactors.PokemonListInteractor
@@ -24,6 +25,8 @@ class PokemonViewModelTest {
     private val pokemonSchedulers: PokemonSchedulers = mock()
     private val testScheduler: TestScheduler = TestScheduler()
     private lateinit var pokemonViewModel: PokemonViewModel
+    private lateinit var pokemonDataSourceFactory: PokemonDataSourceFactory
+
     private val pokemonListObserver: Observer<PokemonListModel> = mock()
 
     @get:Rule
@@ -34,11 +37,14 @@ class PokemonViewModelTest {
         whenever(pokemonSchedulers.background()).thenReturn(testScheduler)
         whenever(pokemonSchedulers.ui()).thenReturn(testScheduler)
         whenever(pokemonListInteractor.getListOfPokemons()).thenReturn(Single.just(PokemonListModel(emptyList())))
+        pokemonDataSourceFactory = PokemonDataSourceFactory(pokemonListInteractor, pokemonDetailInteractor)
 
         pokemonViewModel = PokemonViewModel(
             pokemonListInteractor,
             pokemonDetailInteractor,
-            pokemonSchedulers)
+            pokemonSchedulers,
+            pokemonDataSourceFactory)
+
         pokemonViewModel.registerPokemonList().observeForever(pokemonListObserver)
     }
 
@@ -46,30 +52,30 @@ class PokemonViewModelTest {
     fun `should get a list of pokemon`() {
         // Arrange
         val pokemonList = MockDataFactory.createListOfPokemons(10)
-        whenever(pokemonListInteractor.getListOfPokemons())
+        whenever(pokemonListInteractor.loadMorePokemonsByOffset(20))
             .thenReturn(Single.just(PokemonListModel(pokemonList)))
 
         // Act
-        pokemonViewModel.getPokemonsList()
+        pokemonViewModel.getMorePokemons(20)
         testScheduler.triggerActions()
 
         // Assert
-        verify(pokemonListInteractor, atLeast(1)).getListOfPokemons()
+        verify(pokemonListInteractor, atLeast(1)).loadMorePokemonsByOffset(20)
         assertThat(pokemonViewModel.registerPokemonList().value).isEqualTo(PokemonListModel(pokemonList))
     }
 
     @Test
     fun `should not get a list of pokemon on error`() {
         // Arrange
-           whenever(pokemonListInteractor.getListOfPokemons())
+        whenever(pokemonListInteractor.loadMorePokemonsByOffset(20))
             .thenReturn(Single.error(Exception("Exception happened")))
 
         // Act
-        pokemonViewModel.getPokemonsList()
+        pokemonViewModel.getMorePokemons(20)
         testScheduler.triggerActions()
 
         // Assert
-        verify(pokemonListInteractor, atLeast(1)).getListOfPokemons()
-        assertThat(pokemonViewModel.registerPokemonList().value).isEqualTo(PokemonListModel(emptyList()))
+        verify(pokemonListInteractor, atLeast(1)).loadMorePokemonsByOffset(20)
+        assertThat(pokemonViewModel.registerPokemonList().value).isNull()
     }
 }

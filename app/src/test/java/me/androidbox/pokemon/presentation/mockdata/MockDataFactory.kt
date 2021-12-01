@@ -2,6 +2,7 @@ package me.androidbox.pokemon.presentation.mockdata
 
 import me.androidbox.pokemon.domain.models.PokemonListModel
 import me.androidbox.pokemon.domain.models.PokemonModel
+import me.androidbox.pokemon.domain.models.Sprites
 import java.util.*
 
 object MockDataFactory {
@@ -28,6 +29,9 @@ object MockDataFactory {
             UUID.randomUUID().toString(),
             (10..100).shuffled().first().toFloat(),
             (10..100).shuffled().first().toFloat(),
-            (10..100).shuffled().first())
+            (10..100).shuffled().first(),
+            UUID.randomUUID().toString(),
+            Sprites(UUID.randomUUID().toString())
+        )
     }
 }

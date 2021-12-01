@@ -9,8 +9,10 @@ android {
     defaultConfig {
         minSdkVersion(21)
         targetSdkVersion(31)
+/*
         versionCode = 1
         versionName = "1.0"
+*/
 
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -33,8 +35,8 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.appcompat:appcompat:1.4.0")
+    implementation(AndroidX.core.ktx)
+    implementation(AndroidX.appCompat)
 
-    testImplementation("junit:junit:4.13.2")
+    testImplementation(Testing.junit4)
 }
