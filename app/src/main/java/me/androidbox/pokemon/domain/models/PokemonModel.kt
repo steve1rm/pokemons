@@ -25,5 +25,3 @@ class PokemonModel(
     @field:[Expose SerializedName("sprites")]
     val sprites: Sprites
 ) : Parcelable
-
-

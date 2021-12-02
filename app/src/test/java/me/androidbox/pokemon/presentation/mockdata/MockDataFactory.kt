@@ -17,7 +17,7 @@ object MockDataFactory {
         return pokemonList.toList()
     }
 
-    fun createPokemonList(count: Int) : PokemonListModel {
+    fun createPokemonList(count: Int): PokemonListModel {
         return createListOfPokemons(10)
             .run {
                 PokemonListModel(this)

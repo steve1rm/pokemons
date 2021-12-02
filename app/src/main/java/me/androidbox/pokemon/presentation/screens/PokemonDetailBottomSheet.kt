@@ -24,7 +24,11 @@ class PokemonDetailBottomSheet : BottomSheetDialogFragment() {
         setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomBottomSheetDialog)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = BottomSheetLayoutBinding.inflate(inflater, container, false)
 
         arguments?.let {

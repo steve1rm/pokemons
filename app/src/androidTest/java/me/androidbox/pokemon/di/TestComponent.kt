@@ -6,9 +6,12 @@ import me.androidbox.pokemon.di.components.ApplicationComponent
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [
-    TestApplicationModule::class,
-    TestNetworkModule::class])
-interface TestComponent : ApplicationComponent{
+@Component(
+    modules = [
+        TestApplicationModule::class,
+        TestNetworkModule::class
+    ]
+)
+interface TestComponent : ApplicationComponent {
     fun inject(activity: PokemonListTest)
 }

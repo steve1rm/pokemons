@@ -1,10 +1,11 @@
 
 plugins {
     id("com.android.application")
- //   id("androidx.navigation.safeargs.kotlin")
+    //   id("androidx.navigation.safeargs.kotlin")
     id("kotlin-android")
     id("kotlin-android-extensions")
     id("kotlin-kapt")
+    id("com.diffplug.gradle.spotless") version "4.3.0"
 }
 
 android {
@@ -29,7 +30,7 @@ android {
 
     buildTypes {
         getByName("release") {
-            isMinifyEnabled =  false
+            isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
@@ -43,6 +44,18 @@ android {
     buildFeatures {
         viewBinding = true
         dataBinding = true
+    }
+}
+
+spotless {
+    kotlin {
+        target("**/*.kt")
+        trimTrailingWhitespace()
+        ktlint("0.37.2").userData(mapOf("android" to "true", "color" to "true", "insert_final_newline" to "false", "reporter" to "checkstyle", "disabled_rules" to "no-wildcard-imports,max-line-length,import-ordering"))
+    }
+    kotlinGradle {
+        target("*.gradle.kts", "additionalScripts/*.gradle.kts")
+        ktlint("0.37.2").userData(mapOf("android" to "true", "color" to "true", "insert_final_newline" to "false", "reporter" to "checkstyle", "disabled_rules" to "no-wildcard-imports,max-line-length,import-ordering"))
     }
 }
 

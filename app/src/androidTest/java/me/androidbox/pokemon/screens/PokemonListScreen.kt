@@ -18,5 +18,6 @@ class PokemonListScreen : Screen<PokemonListScreen>() {
 
     val pokomons: KRecyclerView = KRecyclerView(
         { withId(R.id.rvPokemons) },
-        { itemType(::Item)} )
+        { itemType(::Item) }
+    )
 }
