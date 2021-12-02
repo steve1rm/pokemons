@@ -28,8 +28,15 @@ class HomeActivity : AppCompatActivity() {
     }
 
     // 1
-    private fun complexMethod(name: String, email: String, phone: String,
-                              address: String, zipCode: String, city: String, country: String): String {
+    private fun complexMethod(
+        name: String,
+        email: String,
+        phone: String,
+        address: String,
+        zipCode: String,
+        city: String,
+        country: String
+    ): String {
         return name
     }
 
