@@ -18,10 +18,12 @@ import me.androidbox.pokemon.domain.models.PokemonListModel
 import me.androidbox.pokemon.domain.models.PokemonModel
 import timber.log.Timber
 
-class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
-                       private val pokemonDetailInteractor: PokemonDetailInteractor,
-                       private val pokemonSchedulers: PokemonSchedulers,
-                       private val pokemonDataSourceFactory: PokemonDataSourceFactory) : ViewModel() {
+class PokemonViewModel(
+    private val pokemonListInteractor: PokemonListInteractor,
+    private val pokemonDetailInteractor: PokemonDetailInteractor,
+    private val pokemonSchedulers: PokemonSchedulers,
+    private val pokemonDataSourceFactory: PokemonDataSourceFactory
+) : ViewModel() {
 
     companion object {
         @JvmField
@@ -62,12 +64,14 @@ class PokemonViewModel(private val pokemonListInteractor: PokemonListInteractor,
     fun observePagingProgress(): LiveData<Boolean> =
         Transformations.switchMap<PokemonPageKeyedDataSource, Boolean>(
             pokemonDataSourceFactory.pokemonDataSourceLiveData,
-            PokemonPageKeyedDataSource::shouldShowProgressNetwork)
+            PokemonPageKeyedDataSource::shouldShowProgressNetwork
+        )
 
     fun observeInitialProgress(): LiveData<Boolean> {
         return Transformations.switchMap<PokemonPageKeyedDataSource, Boolean>(
             pokemonDataSourceFactory.pokemonDataSourceLiveData,
-            PokemonPageKeyedDataSource::shimmerProgressLiveData)
+            PokemonPageKeyedDataSource::shimmerProgressLiveData
+        )
     }
 
     fun getMorePokemons(offset: Int) {

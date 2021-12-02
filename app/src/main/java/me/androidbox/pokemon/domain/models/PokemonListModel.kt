@@ -5,4 +5,5 @@ import com.google.gson.annotations.SerializedName
 
 data class PokemonListModel(
     @field:[Expose SerializedName("results")]
-    val pokemonList: List<PokemonModel>)
+    val pokemonList: List<PokemonModel>
+)

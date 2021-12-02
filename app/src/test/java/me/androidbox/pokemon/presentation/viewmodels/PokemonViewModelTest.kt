@@ -43,7 +43,8 @@ class PokemonViewModelTest {
             pokemonListInteractor,
             pokemonDetailInteractor,
             pokemonSchedulers,
-            pokemonDataSourceFactory)
+            pokemonDataSourceFactory
+        )
 
         pokemonViewModel.registerPokemonList().observeForever(pokemonListObserver)
     }

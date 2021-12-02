@@ -5,8 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.subjects.PublishSubject
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
@@ -17,8 +15,9 @@ import timber.log.Timber
 
 class PokemonPageKeyedDataSource(
     private val pokemonListInteractor: PokemonListInteractor,
-    private val pokemonDetailInteractor: PokemonDetailInteractor)
-    : PageKeyedDataSource<Int, PokemonModel>() {
+    private val pokemonDetailInteractor: PokemonDetailInteractor
+) :
+    PageKeyedDataSource<Int, PokemonModel>() {
 
     val compositeDisposable = CompositeDisposable()
     val shouldShowProgressNetwork = MutableLiveData<Boolean>()
@@ -27,7 +26,10 @@ class PokemonPageKeyedDataSource(
     val shimmerProgressLiveData: LiveData<Boolean>
         get() = shimmerMutableLiveData
 
-    override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, PokemonModel>) {
+    override fun loadInitial(
+        params: LoadInitialParams<Int>,
+        callback: LoadInitialCallback<Int, PokemonModel>
+    ) {
         shimmerMutableLiveData.postValue(true)
 
         pokemonListInteractor.getListOfPokemons()
@@ -43,7 +45,8 @@ class PokemonPageKeyedDataSource(
             .subscribeBy(
                 onSuccess = { pokemonListModel ->
                     shimmerMutableLiveData.value = false
-                    callback.onResult(pokemonListModel, null, 0)},
+                    callback.onResult(pokemonListModel, null, 0)
+                },
                 onError = {
                     shimmerMutableLiveData.value = false
                     Timber.e(it, it.localizedMessage)

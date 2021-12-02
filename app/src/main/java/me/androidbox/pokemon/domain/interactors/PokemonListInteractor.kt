@@ -7,5 +7,3 @@ interface PokemonListInteractor {
     fun getListOfPokemons(): Single<PokemonListModel>
     fun loadMorePokemonsByOffset(offset: Int): Single<PokemonListModel>
 }
-
-

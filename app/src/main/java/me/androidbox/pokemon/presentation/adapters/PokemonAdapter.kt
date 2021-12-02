@@ -31,7 +31,7 @@ class PokemonAdapter : RecyclerView.Adapter<PokemonViewHolder>() {
                 onNext = {
                     val name = pokemonList[pokemonViewHolder.adapterPosition].name
 
-                    if(::pokemonTapped.isInitialized) {
+                    if (::pokemonTapped.isInitialized) {
                         pokemonTapped(name)
                     }
                 },
@@ -49,9 +49,12 @@ class PokemonAdapter : RecyclerView.Adapter<PokemonViewHolder>() {
 
     fun populatePokemons(newPokemonList: List<PokemonModel>) {
         val oldPokemonList = pokemonList
-        val diffResult = DiffUtil.calculateDiff(PokemonDiffCallback(
-            newPokemonList,
-            oldPokemonList))
+        val diffResult = DiffUtil.calculateDiff(
+            PokemonDiffCallback(
+                newPokemonList,
+                oldPokemonList
+            )
+        )
 
         this.pokemonList.addAll(newPokemonList)
         diffResult.dispatchUpdatesTo(this)
@@ -65,4 +68,3 @@ class PokemonAdapter : RecyclerView.Adapter<PokemonViewHolder>() {
         compositeDisposable.clear()
     }
 }
-

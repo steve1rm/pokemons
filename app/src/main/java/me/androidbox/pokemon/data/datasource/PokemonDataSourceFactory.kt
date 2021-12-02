@@ -6,9 +6,11 @@ import me.androidbox.pokemon.domain.interactors.PokemonDetailInteractor
 import me.androidbox.pokemon.domain.interactors.PokemonListInteractor
 import me.androidbox.pokemon.domain.models.PokemonModel
 
-class PokemonDataSourceFactory(private val pokemonListInteractor: PokemonListInteractor,
-                               private val pokemonDetailInteractor: PokemonDetailInteractor)
-    : DataSource.Factory<Int, PokemonModel>() {
+class PokemonDataSourceFactory(
+    private val pokemonListInteractor: PokemonListInteractor,
+    private val pokemonDetailInteractor: PokemonDetailInteractor
+) :
+    DataSource.Factory<Int, PokemonModel>() {
 
     val pokemonDataSourceLiveData = MutableLiveData<PokemonPageKeyedDataSource>()
 

@@ -22,10 +22,9 @@ class NetworkModule {
     fun httpLoginInterceptor(): HttpLoggingInterceptor {
         val loggingInterceptor = HttpLoggingInterceptor()
 
-        loggingInterceptor.level = if(BuildConfig.DEBUG) {
+        loggingInterceptor.level = if (BuildConfig.DEBUG) {
             HttpLoggingInterceptor.Level.BODY
-        }
-        else {
+        } else {
             HttpLoggingInterceptor.Level.NONE
         }
 
@@ -61,5 +60,4 @@ class NetworkModule {
     @Provides
     fun provideTamboonService(retrofit: Retrofit): PokemonService =
         retrofit.create(PokemonService::class.java)
-
 }

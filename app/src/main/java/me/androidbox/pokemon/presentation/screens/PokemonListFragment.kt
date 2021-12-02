@@ -41,59 +41,75 @@ class PokemonListFragment : Fragment() {
             .inject(this@PokemonListFragment)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         bindings = FragmentPokemonListBinding.inflate(inflater, container, false)
 
         setupEpoxyAdapter()
 
-        pokemonViewModel.registerPokemonDetail().observe(viewLifecycleOwner, Observer { pokemon ->
-            val bottomSheet = PokemonDetailBottomSheet()
+        pokemonViewModel.registerPokemonDetail().observe(
+            viewLifecycleOwner,
+            Observer { pokemon ->
+                val bottomSheet = PokemonDetailBottomSheet()
 
-            bottomSheet.arguments = Bundle().apply {
-                putParcelable(PokemonDetailBottomSheet.POKEMON_DETAIL_KEY, pokemon)
+                bottomSheet.arguments = Bundle().apply {
+                    putParcelable(PokemonDetailBottomSheet.POKEMON_DETAIL_KEY, pokemon)
+                }
+                bottomSheet.show(parentFragmentManager, PokemonDetailBottomSheet::class.java.simpleName)
             }
-            bottomSheet.show(parentFragmentManager, PokemonDetailBottomSheet::class.java.simpleName)
-        })
+        )
 
         pokemonController.bindPokemonNameClickedRelay().subscribe { pokemon ->
             pokemonViewModel.getPokemonDetailByName(pokemon)
         }
 
-        pokemonViewModel.registerShouldShowLoading().observe(viewLifecycleOwner, Observer { shouldShow ->
-            if(shouldShow) {
-                bindings.pbLoading.visibility = View.VISIBLE
-                bindings.pbLoading.show()
+        pokemonViewModel.registerShouldShowLoading().observe(
+            viewLifecycleOwner,
+            Observer { shouldShow ->
+                if (shouldShow) {
+                    bindings.pbLoading.visibility = View.VISIBLE
+                    bindings.pbLoading.show()
+                } else {
+                    bindings.pbLoading.visibility = View.GONE
+                    bindings.pbLoading.hide()
+                }
             }
-            else {
-                bindings.pbLoading.visibility = View.GONE
-                bindings.pbLoading.hide()
-            }
-        })
+        )
 
-        pokemonViewModel.pokemonPagingListLiveData.observe(viewLifecycleOwner, Observer { pagedList ->
-            pokemonController.submitList(pagedList)
-        })
+        pokemonViewModel.pokemonPagingListLiveData.observe(
+            viewLifecycleOwner,
+            Observer { pagedList ->
+                pokemonController.submitList(pagedList)
+            }
+        )
 
-        pokemonViewModel.observePagingProgress().observe(viewLifecycleOwner, Observer { shouldShow ->
-            if(shouldShow) {
-                bindings.pbLoading.visibility = View.VISIBLE
-                bindings.pbLoading.show()
+        pokemonViewModel.observePagingProgress().observe(
+            viewLifecycleOwner,
+            Observer { shouldShow ->
+                if (shouldShow) {
+                    bindings.pbLoading.visibility = View.VISIBLE
+                    bindings.pbLoading.show()
+                } else {
+                    bindings.pbLoading.visibility = View.GONE
+                    bindings.pbLoading.hide()
+                }
             }
-            else {
-                bindings.pbLoading.visibility = View.GONE
-                bindings.pbLoading.hide()
-            }
-        })
+        )
 
-        pokemonViewModel.observeInitialProgress().observe(viewLifecycleOwner, Observer { shouldShowShimmer ->
-            if(shouldShowShimmer) {
-                bindings.shimmerFrameLayout.startShimmer()
+        pokemonViewModel.observeInitialProgress().observe(
+            viewLifecycleOwner,
+            Observer { shouldShowShimmer ->
+                if (shouldShowShimmer) {
+                    bindings.shimmerFrameLayout.startShimmer()
+                } else {
+                    bindings.shimmerFrameLayout.stopShimmer()
+                    bindings.shimmerFrameLayout.visibility = View.GONE
+                }
             }
-            else {
-                bindings.shimmerFrameLayout.stopShimmer()
-                bindings.shimmerFrameLayout.visibility = View.GONE
-            }
-        })
+        )
 
         return bindings.root
     }

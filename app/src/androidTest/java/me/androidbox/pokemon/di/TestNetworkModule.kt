@@ -1,6 +1,5 @@
 package me.androidbox.pokemon.di
 
-import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
@@ -21,10 +20,9 @@ class TestNetworkModule {
     fun httpLoginInterceptor(): HttpLoggingInterceptor {
         val loggingInterceptor = HttpLoggingInterceptor()
 
-        loggingInterceptor.level = if(BuildConfig.DEBUG) {
+        loggingInterceptor.level = if (BuildConfig.DEBUG) {
             HttpLoggingInterceptor.Level.BODY
-        }
-        else {
+        } else {
             HttpLoggingInterceptor.Level.NONE
         }
 
