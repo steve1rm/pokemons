@@ -25,6 +25,9 @@ jobs:
       - name: Check formatting with spotless
         run: ./gradlew spotlessCheck
 
+      - name: "detekt"
+        uses: natiginfo/action-detekt-all@1.17.0
+
       - name: Build with Gradle
         run: ./gradlew assemble
 

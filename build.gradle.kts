@@ -7,8 +7,10 @@ buildscript {
     }
 
     dependencies {
-        classpath ("com.android.tools.build:gradle:_")
-        classpath ("org.jetbrains.kotlin:kotlin-gradle-plugin:_")
+        classpath("com.android.tools.build:gradle:_")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:_")
+        classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.17.1")
+
         val navVersion = "2.3.5"
         classpath (AndroidX.navigation.safeArgsGradlePlugin)
 
@@ -21,6 +23,15 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+    }
+}
+
+subprojects {
+    apply(plugin = "io.gitlab.arturbosch.detekt")
+
+    configure<io.gitlab.arturbosch.detekt.extensions.DetektExtension> {
+        config = files("${rootDir}/detekt.yml")
+        parallel = true
     }
 }
 

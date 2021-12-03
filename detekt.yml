@@ -1,0 +1,25 @@
+comments:
+  active: true
+  excludes: "**/test/**,**/androidTest/**,**/*.Test.kt"
+  CommentOverPrivateFunction:
+    active: false
+  CommentOverPrivateProperty:
+    active: false
+  EndOfSentenceFormat:
+    active: false
+    endOfSentenceFormat: ([.?!][ \t\n\r\f<])|([.?!:]$)
+  UndocumentedPublicClass:
+    active: false
+    searchInNestedClass: true
+    searchInInnerClass: true
+    searchInInnerObject: true
+    searchInInnerInterface: true
+  UndocumentedPublicFunction:
+    active: false
+coroutines:
+  active: true
+  GlobalCoroutineUsage:
+    active: true
+
+
+

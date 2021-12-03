@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>GlobalCoroutineUsage:HomeActivity.kt$HomeActivity$GlobalScope.launch { delay(2000) }</ID>
+  </CurrentIssues>
+</SmellBaseline>

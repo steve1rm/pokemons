@@ -6,6 +6,7 @@ plugins {
     id("kotlin-android-extensions")
     id("kotlin-kapt")
     id("com.diffplug.gradle.spotless") version "4.3.0"
+    id("io.gitlab.arturbosch.detekt")
 }
 
 android {
