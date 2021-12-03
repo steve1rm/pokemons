@@ -1,7 +1,7 @@
 object Versions {
     /** Android Build */
     const val buildToolsVersion = "31.0.0"
-    const val androidLibraryVersion = "30.0.0"
+    const val androidLibraryVersion = "_"
     const val minSdkVersion = 21
     const val targetSdkVersion = 30
     const val compileSdkVersion = 30
@@ -11,6 +11,8 @@ object Versions {
     const val gradleVersion = "_"
     const val androidGradlePluginVersion = "_"
     const val appcompatVersion = "_"
+    const val detektGradlePluginVersion = "_"
+    const val jacocoCoreVersion = "_"
 
     /* Libraries */
     const val gsonVersion = "_"

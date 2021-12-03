@@ -9,7 +9,8 @@ buildscript {
     dependencies {
         classpath("com.android.tools.build:gradle:_")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:_")
-        classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.17.1")
+        classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:_")
+        classpath("org.jacoco:org.jacoco.core:_")
 
         val navVersion = "2.3.5"
         classpath (AndroidX.navigation.safeArgsGradlePlugin)
@@ -24,6 +25,8 @@ allprojects {
         google()
         mavenCentral()
     }
+
+    apply(plugin = "jacoco")
 }
 
 subprojects {
