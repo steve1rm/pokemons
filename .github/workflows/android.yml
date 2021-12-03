@@ -25,11 +25,17 @@ jobs:
       - name: Check formatting with spotless
         run: ./gradlew spotlessCheck
 
-      - name: "detekt"
+      - name: "Run detekt rules"
         uses: natiginfo/action-detekt-all@1.17.0
 
       - name: Build with Gradle
         run: ./gradlew assemble
 
-      - name: run tests
+      - name: Run tests
         run: ./gradlew test
+
+      - name: Execute coverage report
+        run: ./gradlew createDebugCoverageReport
+
+      - name: Report test coverage
+        uses: codecov/codecov-action@v1
