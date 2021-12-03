@@ -186,6 +186,10 @@ fun DependencyHandler.unitTesting() {
     testImplementation(testRunner)
     testImplementation(robolectric)
     testImplementation(testExtJunit)
+    testImplementation(dagger)
+    testImplementation(daggerAndroidSupport)
+    kaptTest(daggerAndroidProcessor)
+    kaptTest(daggerCompiler)
 }
 
 fun DependencyHandler.UITesting() {
@@ -194,4 +198,8 @@ fun DependencyHandler.UITesting() {
     androidTestImplementation(espressoCore)
     androidTestImplementation(espressoIntents)
     androidTestImplementation(fragmentTesting)
+    androidTestImplementation(dagger)
+    androidTestImplementation(daggerAndroidSupport)
+    kaptAndroidTest(daggerAndroidProcessor)
+    kaptAndroidTest(daggerCompiler)
 }

@@ -5,7 +5,7 @@ plugins {
     id("kotlin-android")
     id("kotlin-android-extensions")
     id("kotlin-kapt")
-    id("com.diffplug.gradle.spotless") version "4.3.0"
+    id("com.diffplug.gradle.spotless")
     id("io.gitlab.arturbosch.detekt")
 }
 
@@ -33,6 +33,10 @@ android {
         getByName("release") {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+        }
+
+        getByName("debug") {
+            isTestCoverageEnabled = true
         }
     }
 

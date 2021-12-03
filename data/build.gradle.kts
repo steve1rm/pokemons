@@ -1,7 +1,7 @@
 plugins {
     id("com.android.library")
     kotlin("android")
-    id("com.diffplug.gradle.spotless") version "4.3.0"
+    id("com.diffplug.gradle.spotless")
     id("io.gitlab.arturbosch.detekt")
 }
 
