@@ -1,9 +1,9 @@
 package me.androidbox.pokemon.domain.interactors
 
 import io.reactivex.Single
-import me.androidbox.pokemon.domain.models.PokemonListModel
+import me.androidbox.pokemon.domain.entity.PokemonListEntity
 
 interface PokemonListInteractor {
-    fun getListOfPokemons(): Single<PokemonListModel>
-    fun loadMorePokemonsByOffset(offset: Int): Single<PokemonListModel>
+    fun getListOfPokemons(): Single<PokemonListEntity>
+    fun loadMorePokemonsByOffset(offset: Int): Single<PokemonListEntity>
 }

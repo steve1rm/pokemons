@@ -1,11 +1,11 @@
 package me.androidbox.pokemon.presentation.adapters
 
 import androidx.recyclerview.widget.DiffUtil
-import me.androidbox.pokemon.domain.models.PokemonModel
+import me.androidbox.pokemon.domain.entity.PokemonEntity
 
 class PokemonDiffCallback(
-    private val newPokemonModelList: List<PokemonModel>,
-    private val oldPokemonModelList: List<PokemonModel>
+    private val newPokemonModelList: List<PokemonEntity>,
+    private val oldPokemonModelList: List<PokemonEntity>
 ) :
     DiffUtil.Callback() {
 

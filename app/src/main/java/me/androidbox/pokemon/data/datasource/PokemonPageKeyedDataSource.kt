@@ -10,14 +10,14 @@ import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import me.androidbox.pokemon.domain.interactors.PokemonDetailInteractor
 import me.androidbox.pokemon.domain.interactors.PokemonListInteractor
-import me.androidbox.pokemon.domain.models.PokemonModel
+import me.androidbox.pokemon.domain.entity.PokemonEntity
 import timber.log.Timber
 
 class PokemonPageKeyedDataSource(
     private val pokemonListInteractor: PokemonListInteractor,
     private val pokemonDetailInteractor: PokemonDetailInteractor
 ) :
-    PageKeyedDataSource<Int, PokemonModel>() {
+    PageKeyedDataSource<Int, PokemonEntity>() {
 
     val compositeDisposable = CompositeDisposable()
     val shouldShowProgressNetwork = MutableLiveData<Boolean>()
@@ -28,7 +28,7 @@ class PokemonPageKeyedDataSource(
 
     override fun loadInitial(
         params: LoadInitialParams<Int>,
-        callback: LoadInitialCallback<Int, PokemonModel>
+        callback: LoadInitialCallback<Int, PokemonEntity>
     ) {
         shimmerMutableLiveData.postValue(true)
 
@@ -54,7 +54,7 @@ class PokemonPageKeyedDataSource(
             ).addTo(compositeDisposable)
     }
 
-    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, PokemonModel>) {
+    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, PokemonEntity>) {
         val nextOffSet = params.key + 20
 
         shouldShowProgressNetwork.postValue(true)
@@ -79,5 +79,5 @@ class PokemonPageKeyedDataSource(
             ).addTo(compositeDisposable)
     }
 
-    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, PokemonModel>): Unit = Unit
+    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, PokemonEntity>): Unit = Unit
 }

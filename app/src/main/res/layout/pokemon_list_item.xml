@@ -7,7 +7,7 @@
     <data>
         <variable
             name="pokemonModel"
-            type="me.androidbox.pokemon.domain.models.PokemonModel" />
+            type="me.androidbox.pokemon.domain.entity.PokemonEntity" />
     </data>
 
     <androidx.cardview.widget.CardView

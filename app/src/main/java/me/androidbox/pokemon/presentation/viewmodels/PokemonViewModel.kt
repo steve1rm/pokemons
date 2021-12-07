@@ -14,8 +14,8 @@ import me.androidbox.pokemon.data.datasource.PokemonPageKeyedDataSource
 import me.androidbox.pokemon.di.modules.ApplicationModule.PokemonSchedulers
 import me.androidbox.pokemon.domain.interactors.PokemonDetailInteractor
 import me.androidbox.pokemon.domain.interactors.PokemonListInteractor
-import me.androidbox.pokemon.domain.models.PokemonListModel
-import me.androidbox.pokemon.domain.models.PokemonModel
+import me.androidbox.pokemon.domain.entity.PokemonListEntity
+import me.androidbox.pokemon.domain.entity.PokemonEntity
 import timber.log.Timber
 
 class PokemonViewModel(
@@ -30,10 +30,10 @@ class PokemonViewModel(
         val TAG: String = PokemonViewModel::class.java.simpleName
     }
 
-    lateinit var pokemonPagingListLiveData: LiveData<PagedList<PokemonModel>>
+    lateinit var pokemonPagingListLiveData: LiveData<PagedList<PokemonEntity>>
     private val compositeDisposable = CompositeDisposable()
-    private val pokemonDetailLiveData = MutableLiveData<PokemonModel>()
-    private val pokemonListLiveData = MutableLiveData<PokemonListModel>()
+    private val pokemonDetailLiveData = MutableLiveData<PokemonEntity>()
+    private val pokemonListLiveData = MutableLiveData<PokemonListEntity>()
     private val shouldShowLoading = MutableLiveData<Boolean>()
     private val pokemonClickedLiveData = MutableLiveData<String>()
 
@@ -51,9 +51,9 @@ class PokemonViewModel(
     }
 
     private fun startPagingPokemons() {
-        pokemonPagingListLiveData = LivePagedListBuilder<Int, PokemonModel>(pokemonDataSourceFactory, getPagedListConfig())
-            .setBoundaryCallback(object : PagedList.BoundaryCallback<PokemonModel>() {
-                override fun onItemAtEndLoaded(itemAtEnd: PokemonModel) {
+        pokemonPagingListLiveData = LivePagedListBuilder<Int, PokemonEntity>(pokemonDataSourceFactory, getPagedListConfig())
+            .setBoundaryCallback(object : PagedList.BoundaryCallback<PokemonEntity>() {
+                override fun onItemAtEndLoaded(itemAtEnd: PokemonEntity) {
                     super.onItemAtEndLoaded(itemAtEnd)
                     Timber.d("Reached end of feed")
                 }
@@ -124,9 +124,9 @@ class PokemonViewModel(
             ).addTo(compositeDisposable)
     }
 
-    fun registerPokemonList(): MutableLiveData<PokemonListModel> = pokemonListLiveData
+    fun registerPokemonList(): MutableLiveData<PokemonListEntity> = pokemonListLiveData
 
-    fun registerPokemonDetail(): MutableLiveData<PokemonModel> = pokemonDetailLiveData
+    fun registerPokemonDetail(): MutableLiveData<PokemonEntity> = pokemonDetailLiveData
 
     fun registerShouldShowLoading(): MutableLiveData<Boolean> = shouldShowLoading
 

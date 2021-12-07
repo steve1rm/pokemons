@@ -3,16 +3,16 @@ package me.androidbox.pokemon.data.requests
 import io.reactivex.Single
 import me.androidbox.pokemon.data.service.PokemonService
 import me.androidbox.pokemon.domain.interactors.PokemonListInteractor
-import me.androidbox.pokemon.domain.models.PokemonListModel
+import me.androidbox.pokemon.domain.entity.PokemonListEntity
 import java.util.concurrent.TimeUnit
 
 class PokemonListInteractorImp(private val pokemonService: PokemonService) : PokemonListInteractor {
-    override fun getListOfPokemons(): Single<PokemonListModel> {
+    override fun getListOfPokemons(): Single<PokemonListEntity> {
         return pokemonService.getPokemons()
             .timeout(10, TimeUnit.SECONDS)
     }
 
-    override fun loadMorePokemonsByOffset(offset: Int): Single<PokemonListModel> {
+    override fun loadMorePokemonsByOffset(offset: Int): Single<PokemonListEntity> {
         return pokemonService.loadMorePokemons(offset)
             .timeout(10, TimeUnit.SECONDS)
     }

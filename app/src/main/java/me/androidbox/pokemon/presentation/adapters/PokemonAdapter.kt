@@ -9,14 +9,14 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 import me.androidbox.pokemon.databinding.PokemonListItemBinding
-import me.androidbox.pokemon.domain.models.PokemonModel
+import me.androidbox.pokemon.domain.entity.PokemonEntity
 import me.androidbox.pokemon.presentation.viewholders.PokemonViewHolder
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 class PokemonAdapter : RecyclerView.Adapter<PokemonViewHolder>() {
 
-    private val pokemonList = mutableListOf<PokemonModel>()
+    private val pokemonList = mutableListOf<PokemonEntity>()
     private lateinit var pokemonTapped: (String) -> Unit
     private lateinit var binding: PokemonListItemBinding
     private val compositeDisposable = CompositeDisposable()
@@ -47,7 +47,7 @@ class PokemonAdapter : RecyclerView.Adapter<PokemonViewHolder>() {
         binding.pokemonModel = pokemonList[position]
     }
 
-    fun populatePokemons(newPokemonList: List<PokemonModel>) {
+    fun populatePokemons(newPokemonList: List<PokemonEntity>) {
         val oldPokemonList = pokemonList
         val diffResult = DiffUtil.calculateDiff(
             PokemonDiffCallback(
