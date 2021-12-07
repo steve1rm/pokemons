@@ -51,6 +51,8 @@ spotless {
 }
 
 dependencies {
+    implementation(project(mapOf("path" to ":domain")))
+
     kotlinStdLib()
     parceler()
     logging()
