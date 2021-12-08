@@ -4,16 +4,16 @@ import android.annotation.SuppressLint
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.bumptech.glide.Glide
-import com.jakewharton.rxbinding3.view.clicks
+import com.jakewharton.rxbinding4.view.clicks
 import com.jakewharton.rxrelay3.Relay
-import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.rxjava3.kotlin.subscribeBy
 import me.androidbox.pokemon.R
 import me.androidbox.pokemon.databinding.PokemonListItemBinding
 import me.androidbox.pokemon.presentation.utils.ViewBindingEpoxyModelWithHolder
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
-@EpoxyModelClass(layout = R.layout.pokemon_list_item)
+@EpoxyModelClass
 abstract class EpoxyPokemonModel : ViewBindingEpoxyModelWithHolder<PokemonListItemBinding>() {
 
     @EpoxyAttribute
@@ -47,5 +47,9 @@ abstract class EpoxyPokemonModel : ViewBindingEpoxyModelWithHolder<PokemonListIt
                     pokemonClickedRelay.accept(pokemonName)
                 }
             )
+    }
+
+    override fun getDefaultLayout(): Int {
+        return R.layout.pokemon_list_item
     }
 }

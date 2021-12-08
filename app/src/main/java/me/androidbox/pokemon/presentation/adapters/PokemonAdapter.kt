@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.jakewharton.rxbinding3.view.clicks
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.addTo
-import io.reactivex.rxkotlin.subscribeBy
+import com.jakewharton.rxbinding4.view.clicks
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.kotlin.addTo
+import io.reactivex.rxjava3.kotlin.subscribeBy
 import me.androidbox.pokemon.databinding.PokemonListItemBinding
 import me.androidbox.pokemon.domain.entity.PokemonEntity
 import me.androidbox.pokemon.presentation.viewholders.PokemonViewHolder
@@ -44,7 +44,7 @@ class PokemonAdapter : RecyclerView.Adapter<PokemonViewHolder>() {
     override fun getItemCount(): Int = pokemonList.count()
 
     override fun onBindViewHolder(holder: PokemonViewHolder, position: Int) {
-        binding.pokemonModel = pokemonList[position]
+        binding.tvName.text = pokemonList[position].name
     }
 
     fun populatePokemons(newPokemonList: List<PokemonEntity>) {

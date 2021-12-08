@@ -1,6 +1,6 @@
 package me.androidbox.pokemon.data.requests
 
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Single
 import me.androidbox.pokemon.data.service.PokemonService
 import me.androidbox.pokemon.domain.interactors.PokemonDetailInteractor
 import me.androidbox.pokemon.domain.entity.PokemonEntity

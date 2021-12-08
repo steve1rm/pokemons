@@ -6,16 +6,16 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.addTo
-import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.kotlin.addTo
+import io.reactivex.rxjava3.kotlin.subscribeBy
+import me.androidbox.domain.interactors.PokemonDetailInteractor
+import me.androidbox.domain.interactors.PokemonListInteractor
 import me.androidbox.pokemon.data.datasource.PokemonDataSourceFactory
 import me.androidbox.pokemon.data.datasource.PokemonPageKeyedDataSource
 import me.androidbox.pokemon.di.modules.ApplicationModule.PokemonSchedulers
-import me.androidbox.pokemon.domain.interactors.PokemonDetailInteractor
-import me.androidbox.pokemon.domain.interactors.PokemonListInteractor
-import me.androidbox.pokemon.domain.entity.PokemonListEntity
 import me.androidbox.pokemon.domain.entity.PokemonEntity
+import me.androidbox.pokemon.domain.entity.PokemonListEntity
 import timber.log.Timber
 
 class PokemonViewModel(
@@ -83,7 +83,7 @@ class PokemonViewModel(
             .subscribeBy(
                 onSuccess = { pokemonList ->
                     shouldShowLoading.value = false
-                    pokemonListLiveData.value = pokemonList
+            //        pokemonListLiveData.value = pokemonList
                 },
                 onError = {
                     shouldShowLoading.value = false
@@ -98,7 +98,7 @@ class PokemonViewModel(
             .observeOn(pokemonSchedulers.ui())
             .subscribeBy(
                 onSuccess = { pokemon ->
-                    pokemonDetailLiveData.value = pokemon
+             //       pokemonDetailLiveData.value = pokemon
                 },
                 onError = {
                     Timber.e(TAG, it.localizedMessage)
@@ -115,7 +115,7 @@ class PokemonViewModel(
             .subscribeBy(
                 onSuccess = { pokemon ->
                     shouldShowLoading.postValue(false)
-                    pokemonDetailLiveData.postValue(pokemon)
+                //    pokemonDetailLiveData.postValue(pokemon)
                 },
                 onError = {
                     shouldShowLoading.value = false

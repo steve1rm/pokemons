@@ -1,6 +1,6 @@
 package me.androidbox.pokemon.data.service
 
-import io.reactivex.Single
+import io.reactivex.rxjava3.core.Single
 import me.androidbox.pokemon.domain.entity.PokemonListEntity
 import me.androidbox.pokemon.domain.entity.PokemonEntity
 import retrofit2.http.GET

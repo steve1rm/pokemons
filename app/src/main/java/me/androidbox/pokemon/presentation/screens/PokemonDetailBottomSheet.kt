@@ -28,12 +28,12 @@ class PokemonDetailBottomSheet : BottomSheetDialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = BottomSheetLayoutBinding.inflate(inflater, container, false)
 
         arguments?.let {
             (it.getParcelable(POKEMON_DETAIL_KEY) as? PokemonEntity)?.let { pokemon: PokemonEntity ->
-                binding.pokemonModel = pokemon
+                binding.tvName.text = pokemon.name
                 binding.tvHeight.text = getString(R.string.height, pokemon.height)
                 binding.tvWeight.text = getString(R.string.weight, pokemon.weight)
                 binding.tvBaseExperience.text = getString(R.string.BaseExp, pokemon.baseExperience)
