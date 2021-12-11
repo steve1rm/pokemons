@@ -12,6 +12,7 @@ import me.androidbox.pokemon.data.datasource.PokemonDataSourceFactory
 import me.androidbox.pokemon.di.ViewModelPokemonProvider
 import me.androidbox.pokemon.di.modules.ApplicationModule.PokemonSchedulers
 import me.androidbox.pokemon.di.scopes.ViewScope
+import me.androidbox.pokemon.mappers.imp.PokemonDomainMapper
 import me.androidbox.pokemon.presentation.adapters.PokemonAdapter
 import me.androidbox.pokemon.presentation.screens.PokemonListFragment
 import me.androidbox.pokemon.presentation.viewmodels.PokemonViewModel
@@ -39,9 +40,10 @@ class PokemonModule(private val fragment: PokemonListFragment) {
     fun providePokemonDataSourceFactory(
         pokemonListInteractor: PokemonListInteractor,
         pokemonDetailInteractor: PokemonDetailInteractor,
-        pokemonSchedulers: PokemonSchedulers
+        pokemonSchedulers: PokemonSchedulers,
+        pokemonDomainMapper: PokemonDomainMapper
     ): PokemonDataSourceFactory {
-        return PokemonDataSourceFactory(pokemonListInteractor, pokemonDetailInteractor, pokemonSchedulers)
+        return PokemonDataSourceFactory(pokemonListInteractor, pokemonDetailInteractor, pokemonSchedulers, pokemonDomainMapper)
     }
 
     @ViewScope
@@ -50,13 +52,14 @@ class PokemonModule(private val fragment: PokemonListFragment) {
         pokemonListInteractor: PokemonListInteractor,
         pokemonDetailInteractor: PokemonDetailInteractor,
         pokemonSchedulers: PokemonSchedulers,
-        pokemonDatasourceFactory: PokemonDataSourceFactory
+        pokemonDatasourceFactory: PokemonDataSourceFactory,
+        pokemonDomainMapper: PokemonDomainMapper
     ): PokemonViewModel {
         return ViewModelProvider(
             fragment,
             ViewModelPokemonProvider {
                 PokemonViewModel(
-                    pokemonListInteractor, pokemonDetailInteractor, pokemonSchedulers, pokemonDatasourceFactory
+                    pokemonListInteractor, pokemonDetailInteractor, pokemonSchedulers, pokemonDatasourceFactory, pokemonDomainMapper
                 )
             }
         ).get(PokemonViewModel::class.java)

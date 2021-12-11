@@ -4,6 +4,6 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class PokemonListEntity(
-    val pokemonList: List<PokemonEntity>
-): Parcelable
+data class PokemonList(
+    val pokemonList: List<Pokemon>
+) : Parcelable

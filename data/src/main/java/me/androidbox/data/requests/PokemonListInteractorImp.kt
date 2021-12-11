@@ -10,22 +10,19 @@ import java.util.concurrent.TimeUnit
 
 class PokemonListInteractorImp(private val pokemonService: PokemonService) : PokemonListInteractor {
     override fun getListOfPokemons(): Single<PokemonListEntity> {
-        return pokemonService.getPokemons()
+        val result = pokemonService.getPokemons()
             .map { pokemonListModel ->
                 PokemonListEntity(
-                    pokemonList = pokemonListModel.pokemonList.map { pokemonModel ->
+                    pokemonList = pokemonListModel.pokemonList.map {
                         PokemonEntity(
-                            name = pokemonModel.name,
-                            height = pokemonModel.height,
-                            weight = pokemonModel.weight,
-                            baseExperience = pokemonModel.baseExperience,
-                            url = pokemonModel.url,
-                            sprites = SpriteEntity(pokemonModel.sprites.backDefault)
+                            name = it.name,
+                            url = it.url
                         )
                     }
                 )
             }
-            .timeout(10, TimeUnit.SECONDS)
+
+        return result
     }
 
     override fun loadMorePokemonsByOffset(offset: Int): Single<PokemonListEntity> {

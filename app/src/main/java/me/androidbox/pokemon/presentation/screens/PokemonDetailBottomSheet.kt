@@ -8,7 +8,7 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import me.androidbox.pokemon.R
 import me.androidbox.pokemon.databinding.BottomSheetLayoutBinding
-import me.androidbox.pokemon.domain.entity.PokemonEntity
+import me.androidbox.pokemon.domain.entity.Pokemon
 
 class PokemonDetailBottomSheet : BottomSheetDialogFragment() {
 
@@ -32,7 +32,7 @@ class PokemonDetailBottomSheet : BottomSheetDialogFragment() {
         binding = BottomSheetLayoutBinding.inflate(inflater, container, false)
 
         arguments?.let {
-            (it.getParcelable(POKEMON_DETAIL_KEY) as? PokemonEntity)?.let { pokemon: PokemonEntity ->
+            (it.getParcelable(POKEMON_DETAIL_KEY) as? Pokemon)?.let { pokemon: Pokemon ->
                 binding.tvName.text = pokemon.name
                 binding.tvHeight.text = getString(R.string.height, pokemon.height)
                 binding.tvWeight.text = getString(R.string.weight, pokemon.weight)

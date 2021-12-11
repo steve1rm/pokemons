@@ -14,15 +14,17 @@ import me.androidbox.domain.interactors.PokemonListInteractor
 import me.androidbox.pokemon.data.datasource.PokemonDataSourceFactory
 import me.androidbox.pokemon.data.datasource.PokemonPageKeyedDataSource
 import me.androidbox.pokemon.di.modules.ApplicationModule.PokemonSchedulers
-import me.androidbox.pokemon.domain.entity.PokemonEntity
-import me.androidbox.pokemon.domain.entity.PokemonListEntity
+import me.androidbox.pokemon.domain.entity.Pokemon
+import me.androidbox.pokemon.domain.entity.PokemonList
+import me.androidbox.pokemon.mappers.imp.PokemonDomainMapper
 import timber.log.Timber
 
 class PokemonViewModel(
     private val pokemonListInteractor: PokemonListInteractor,
     private val pokemonDetailInteractor: PokemonDetailInteractor,
     private val pokemonSchedulers: PokemonSchedulers,
-    private val pokemonDataSourceFactory: PokemonDataSourceFactory
+    private val pokemonDataSourceFactory: PokemonDataSourceFactory,
+    private val pokemonDomainMapper: PokemonDomainMapper
 ) : ViewModel() {
 
     companion object {
@@ -30,10 +32,10 @@ class PokemonViewModel(
         val TAG: String = PokemonViewModel::class.java.simpleName
     }
 
-    lateinit var pokemonPagingListLiveData: LiveData<PagedList<PokemonEntity>>
+    lateinit var pokemonPagingListLiveData: LiveData<PagedList<Pokemon>>
     private val compositeDisposable = CompositeDisposable()
-    private val pokemonDetailLiveData = MutableLiveData<PokemonEntity>()
-    private val pokemonListLiveData = MutableLiveData<PokemonListEntity>()
+    private val pokemonDetailLiveData = MutableLiveData<Pokemon>()
+    private val pokemonListLiveData = MutableLiveData<PokemonList>()
     private val shouldShowLoading = MutableLiveData<Boolean>()
     private val pokemonClickedLiveData = MutableLiveData<String>()
 
@@ -51,9 +53,9 @@ class PokemonViewModel(
     }
 
     private fun startPagingPokemons() {
-        pokemonPagingListLiveData = LivePagedListBuilder<Int, PokemonEntity>(pokemonDataSourceFactory, getPagedListConfig())
-            .setBoundaryCallback(object : PagedList.BoundaryCallback<PokemonEntity>() {
-                override fun onItemAtEndLoaded(itemAtEnd: PokemonEntity) {
+        pokemonPagingListLiveData = LivePagedListBuilder<Int, Pokemon>(pokemonDataSourceFactory, getPagedListConfig())
+            .setBoundaryCallback(object : PagedList.BoundaryCallback<Pokemon>() {
+                override fun onItemAtEndLoaded(itemAtEnd: Pokemon) {
                     super.onItemAtEndLoaded(itemAtEnd)
                     Timber.d("Reached end of feed")
                 }
@@ -81,9 +83,10 @@ class PokemonViewModel(
             .subscribeOn(pokemonSchedulers.background())
             .observeOn(pokemonSchedulers.ui())
             .subscribeBy(
-                onSuccess = { pokemonList ->
+                onSuccess = { pokemonListEntity ->
+                    val pokemonList = pokemonDomainMapper.mapPokemonListFromDomain(pokemonListEntity)
                     shouldShowLoading.value = false
-            //        pokemonListLiveData.value = pokemonList
+                    pokemonListLiveData.value = pokemonList
                 },
                 onError = {
                     shouldShowLoading.value = false
@@ -97,8 +100,9 @@ class PokemonViewModel(
             .subscribeOn(pokemonSchedulers.background())
             .observeOn(pokemonSchedulers.ui())
             .subscribeBy(
-                onSuccess = { pokemon ->
-             //       pokemonDetailLiveData.value = pokemon
+                onSuccess = { pokemonEntity ->
+                    val pokemon = pokemonDomainMapper.mapPokemonFromDomain(pokemonEntity)
+                    pokemonDetailLiveData.value = pokemon
                 },
                 onError = {
                     Timber.e(TAG, it.localizedMessage)
@@ -113,9 +117,11 @@ class PokemonViewModel(
             .subscribeOn(pokemonSchedulers.background())
             .observeOn(pokemonSchedulers.ui())
             .subscribeBy(
-                onSuccess = { pokemon ->
+                onSuccess = { pokemonEntity ->
+                    val pokemon = pokemonDomainMapper.mapPokemonFromDomain(pokemonEntity)
+
                     shouldShowLoading.postValue(false)
-                //    pokemonDetailLiveData.postValue(pokemon)
+                    pokemonDetailLiveData.postValue(pokemon)
                 },
                 onError = {
                     shouldShowLoading.value = false
@@ -124,9 +130,9 @@ class PokemonViewModel(
             ).addTo(compositeDisposable)
     }
 
-    fun registerPokemonList(): MutableLiveData<PokemonListEntity> = pokemonListLiveData
+    fun registerPokemonList(): MutableLiveData<PokemonList> = pokemonListLiveData
 
-    fun registerPokemonDetail(): MutableLiveData<PokemonEntity> = pokemonDetailLiveData
+    fun registerPokemonDetail(): MutableLiveData<Pokemon> = pokemonDetailLiveData
 
     fun registerShouldShowLoading(): MutableLiveData<Boolean> = shouldShowLoading
 

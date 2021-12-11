@@ -8,5 +8,5 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class SpriteModel(
     @field:[Expose SerializedName("back_default")]
-    val backDefault: String
+    val backDefault: String = ""
 ) : Parcelable

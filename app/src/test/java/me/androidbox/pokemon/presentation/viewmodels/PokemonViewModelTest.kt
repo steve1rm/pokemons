@@ -12,7 +12,7 @@ import me.androidbox.pokemon.data.datasource.PokemonDataSourceFactory
 import me.androidbox.pokemon.di.modules.ApplicationModule.PokemonSchedulers
 import me.androidbox.pokemon.domain.interactors.PokemonDetailInteractor
 import me.androidbox.pokemon.domain.interactors.PokemonListInteractor
-import me.androidbox.pokemon.domain.entity.PokemonListEntity
+import me.androidbox.pokemon.domain.entity.PokemonList
 import me.androidbox.pokemon.presentation.mockdata.MockDataFactory
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
@@ -27,7 +27,7 @@ class PokemonViewModelTest {
     private lateinit var pokemonViewModel: PokemonViewModel
     private lateinit var pokemonDataSourceFactory: PokemonDataSourceFactory
 
-    private val pokemonListObserver: Observer<PokemonListEntity> = mock()
+    private val pokemonListObserver: Observer<PokemonList> = mock()
 
     @get:Rule
     val instantTastRunExecutableRule = InstantTaskExecutorRule()
@@ -36,7 +36,7 @@ class PokemonViewModelTest {
     fun setUp() {
         whenever(pokemonSchedulers.background()).thenReturn(testScheduler)
         whenever(pokemonSchedulers.ui()).thenReturn(testScheduler)
-        whenever(pokemonListInteractor.getListOfPokemons()).thenReturn(Single.just(PokemonListEntity(emptyList())))
+        whenever(pokemonListInteractor.getListOfPokemons()).thenReturn(Single.just(PokemonList(emptyList())))
         pokemonDataSourceFactory = PokemonDataSourceFactory(pokemonListInteractor, pokemonDetailInteractor)
 
         pokemonViewModel = PokemonViewModel(
@@ -54,7 +54,7 @@ class PokemonViewModelTest {
         // Arrange
         val pokemonList = MockDataFactory.createListOfPokemons(10)
         whenever(pokemonListInteractor.loadMorePokemonsByOffset(20))
-            .thenReturn(Single.just(PokemonListEntity(pokemonList)))
+            .thenReturn(Single.just(PokemonList(pokemonList)))
 
         // Act
         pokemonViewModel.getMorePokemons(20)
@@ -62,7 +62,7 @@ class PokemonViewModelTest {
 
         // Assert
         verify(pokemonListInteractor, atLeast(1)).loadMorePokemonsByOffset(20)
-        assertThat(pokemonViewModel.registerPokemonList().value).isEqualTo(PokemonListEntity(pokemonList))
+        assertThat(pokemonViewModel.registerPokemonList().value).isEqualTo(PokemonList(pokemonList))
     }
 
     @Test

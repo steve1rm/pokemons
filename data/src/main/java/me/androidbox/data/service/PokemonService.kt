@@ -19,5 +19,4 @@ interface PokemonService {
 
     @GET(EndPoints.POKEMON)
     fun loadMorePokemons(@Query("offset") offset: Int): Single<PokemonListModel>
-
 }

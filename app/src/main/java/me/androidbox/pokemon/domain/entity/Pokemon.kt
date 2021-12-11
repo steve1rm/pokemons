@@ -4,11 +4,11 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class PokemonEntity(
+data class Pokemon(
     val name: String,
     val height: Float,
     val weight: Float,
     val baseExperience: Int,
     val url: String,
-    val sprites: SpriteEntity
+    val sprites: Sprite
 ) : Parcelable
