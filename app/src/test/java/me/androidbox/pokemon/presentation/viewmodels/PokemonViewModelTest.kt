@@ -66,7 +66,7 @@ class PokemonViewModelTest {
 
         // Assert
         verify(pokemonListInteractor, atLeast(1)).loadMorePokemonsByOffset(20)
-    //    assertThat(pokemonViewModel.registerPokemonList().value).isEqualTo(PokemonListEntity(pokemonList))
+        //    assertThat(pokemonViewModel.registerPokemonList().value).isEqualTo(PokemonListEntity(pokemonList))
     }
 
     @Test

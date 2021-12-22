@@ -2,8 +2,6 @@ package me.androidbox.pokemon.data.requests
 
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.whenever
-import io.reactivex.rxjava3.core.Single
 import me.androidbox.data.service.PokemonService
 import me.androidbox.pokemon.presentation.mockdata.MockDataFactory
 import org.junit.Before
@@ -25,7 +23,7 @@ class PokemonListInteractorImpTest {
     fun `should get a list of pokemons`() {
         // Arrange
         val pokomonList = MockDataFactory.createPokemonList(10)
-      //   whenever(pokemonService.getPokemons()).thenReturn(Single.just(pokomonList))
+        //   whenever(pokemonService.getPokemons()).thenReturn(Single.just(pokomonList))
 
         // Act
         val testObserver =
@@ -44,7 +42,7 @@ class PokemonListInteractorImpTest {
     fun `should get a list of pokemons with offset`() {
         // Arrange
         val pokomonList = MockDataFactory.createPokemonList(10)
-     //   whenever(pokemonService.loadMorePokemons(20)).thenReturn(Single.just(pokomonList))
+        //   whenever(pokemonService.loadMorePokemons(20)).thenReturn(Single.just(pokomonList))
 
         // Act
         val testObserver =

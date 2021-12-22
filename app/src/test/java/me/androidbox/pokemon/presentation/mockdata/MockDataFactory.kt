@@ -3,9 +3,6 @@ package me.androidbox.pokemon.presentation.mockdata
 import me.androidbox.domain.entity.PokemonEntity
 import me.androidbox.domain.entity.PokemonListEntity
 import me.androidbox.domain.entity.SpriteEntity
-import me.androidbox.pokemon.domain.entity.PokemonList
-import me.androidbox.pokemon.domain.entity.Pokemon
-import me.androidbox.pokemon.domain.entity.Sprite
 import java.util.*
 
 object MockDataFactory {
