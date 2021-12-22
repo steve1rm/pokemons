@@ -3,21 +3,23 @@ package me.androidbox.pokemon.data.datasource
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.addTo
-import io.reactivex.rxkotlin.subscribeBy
-import io.reactivex.schedulers.Schedulers
-import me.androidbox.pokemon.domain.interactors.PokemonDetailInteractor
-import me.androidbox.pokemon.domain.interactors.PokemonListInteractor
-import me.androidbox.pokemon.domain.models.PokemonModel
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.kotlin.addTo
+import io.reactivex.rxjava3.kotlin.subscribeBy
+import me.androidbox.domain.interactors.PokemonDetailInteractor
+import me.androidbox.domain.interactors.PokemonListInteractor
+import me.androidbox.pokemon.di.modules.ApplicationModule.PokemonSchedulers
+import me.androidbox.pokemon.domain.entity.Pokemon
+import me.androidbox.pokemon.mappers.imp.PokemonDomainMapper
 import timber.log.Timber
 
 class PokemonPageKeyedDataSource(
     private val pokemonListInteractor: PokemonListInteractor,
-    private val pokemonDetailInteractor: PokemonDetailInteractor
+    private val pokemonDetailInteractor: PokemonDetailInteractor,
+    private val pokemonSchedulers: PokemonSchedulers,
+    private val pokemonDomainMapper: PokemonDomainMapper
 ) :
-    PageKeyedDataSource<Int, PokemonModel>() {
+    PageKeyedDataSource<Int, Pokemon>() {
 
     val compositeDisposable = CompositeDisposable()
     val shouldShowProgressNetwork = MutableLiveData<Boolean>()
@@ -28,7 +30,7 @@ class PokemonPageKeyedDataSource(
 
     override fun loadInitial(
         params: LoadInitialParams<Int>,
-        callback: LoadInitialCallback<Int, PokemonModel>
+        callback: LoadInitialCallback<Int, Pokemon>
     ) {
         shimmerMutableLiveData.postValue(true)
 
@@ -40,12 +42,13 @@ class PokemonPageKeyedDataSource(
                 pokemonDetailInteractor.getPokemonDetailByName(it.name).toObservable()
             }
             .toList()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(pokemonSchedulers.background())
+            .observeOn(pokemonSchedulers.ui())
             .subscribeBy(
-                onSuccess = { pokemonListModel ->
+                onSuccess = { listOfPokemonEntity ->
+                    val listOfPokemon = pokemonDomainMapper.mapListOfPokemonFromDomain(listOfPokemonEntity)
                     shimmerMutableLiveData.value = false
-                    callback.onResult(pokemonListModel, null, 0)
+                    callback.onResult(listOfPokemon, null, 0)
                 },
                 onError = {
                     shimmerMutableLiveData.value = false
@@ -54,7 +57,7 @@ class PokemonPageKeyedDataSource(
             ).addTo(compositeDisposable)
     }
 
-    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, PokemonModel>) {
+    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Pokemon>) {
         val nextOffSet = params.key + 20
 
         shouldShowProgressNetwork.postValue(true)
@@ -66,11 +69,14 @@ class PokemonPageKeyedDataSource(
                 pokemonDetailInteractor.getPokemonDetailByName(it.name).toObservable()
             }
             .toList()
-            .subscribeOn(Schedulers.io())
+            .subscribeOn(pokemonSchedulers.background())
+            .observeOn(pokemonSchedulers.ui())
             .subscribeBy(
-                onSuccess = {
+                onSuccess = { listOfPokemonEntity ->
+                    println(listOfPokemonEntity.count())
+                    val listOfPokemon = pokemonDomainMapper.mapListOfPokemonFromDomain(listOfPokemonEntity)
                     shouldShowProgressNetwork.postValue(false)
-                    callback.onResult(it, nextOffSet)
+                    callback.onResult(listOfPokemon, nextOffSet)
                 },
                 onError = {
                     shouldShowProgressNetwork.postValue(false)
@@ -79,5 +85,5 @@ class PokemonPageKeyedDataSource(
             ).addTo(compositeDisposable)
     }
 
-    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, PokemonModel>): Unit = Unit
+    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Pokemon>): Unit = Unit
 }

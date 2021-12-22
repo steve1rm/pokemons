@@ -4,19 +4,19 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.jakewharton.rxbinding3.view.clicks
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.addTo
-import io.reactivex.rxkotlin.subscribeBy
+import com.jakewharton.rxbinding4.view.clicks
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.kotlin.addTo
+import io.reactivex.rxjava3.kotlin.subscribeBy
 import me.androidbox.pokemon.databinding.PokemonListItemBinding
-import me.androidbox.pokemon.domain.models.PokemonModel
+import me.androidbox.pokemon.domain.entity.Pokemon
 import me.androidbox.pokemon.presentation.viewholders.PokemonViewHolder
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 class PokemonAdapter : RecyclerView.Adapter<PokemonViewHolder>() {
 
-    private val pokemonList = mutableListOf<PokemonModel>()
+    private val pokemonList = mutableListOf<Pokemon>()
     private lateinit var pokemonTapped: (String) -> Unit
     private lateinit var binding: PokemonListItemBinding
     private val compositeDisposable = CompositeDisposable()
@@ -44,10 +44,10 @@ class PokemonAdapter : RecyclerView.Adapter<PokemonViewHolder>() {
     override fun getItemCount(): Int = pokemonList.count()
 
     override fun onBindViewHolder(holder: PokemonViewHolder, position: Int) {
-        binding.pokemonModel = pokemonList[position]
+        binding.tvName.text = pokemonList[position].name
     }
 
-    fun populatePokemons(newPokemonList: List<PokemonModel>) {
+    fun populatePokemons(newPokemonList: List<Pokemon>) {
         val oldPokemonList = pokemonList
         val diffResult = DiffUtil.calculateDiff(
             PokemonDiffCallback(

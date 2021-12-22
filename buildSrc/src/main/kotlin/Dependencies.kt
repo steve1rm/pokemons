@@ -54,16 +54,16 @@ object Dependencies {
     // Networking
     const val converterGson = "com.squareup.retrofit2:converter-gson:${Versions.retrofitVersion}"
     const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofitVersion}"
-    const val adapterRxjava2 = "com.squareup.retrofit2:adapter-rxjava2:${Versions.retrofitVersion}"
+    const val adapterRxjava2 = "com.squareup.retrofit2:adapter-rxjava3:${Versions.retrofitVersion}"
     const val okhttp = "com.squareup.okhttp3:okhttp:${Versions.okhttpVersion}"
     const val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.okhttpVersion}"
     const val gson = "com.google.code.gson:gson:${Versions.gsonVersion}"
 
     // Aysnc
-    const val rxJava = "io.reactivex.rxjava2:rxjava:${Versions.rxjavaVersion}"
-    const val rxAndroid = "io.reactivex.rxjava2:rxandroid:${Versions.rxAndroidVersion}"
-    const val rxKotlin = "io.reactivex.rxjava2:rxkotlin:${Versions.rxkotlinVersion}"
-    const val rxBinding = "com.jakewharton.rxbinding3:rxbinding:${Versions.rxRelayVersion}"
+    const val rxJava = "io.reactivex.rxjava3:rxjava:${Versions.rxjavaVersion}"
+    const val rxAndroid = "io.reactivex.rxjava3:rxandroid:${Versions.rxAndroidVersion}"
+    const val rxKotlin = "io.reactivex.rxjava3:rxkotlin:${Versions.rxkotlinVersion}"
+    const val rxBinding = "com.jakewharton.rxbinding4:rxbinding:${Versions.rxRelayVersion}"
     const val rxRelay = "com.jakewharton.rxrelay3:rxrelay:${Versions.rxRelayVersion}"
 
     // Dagger

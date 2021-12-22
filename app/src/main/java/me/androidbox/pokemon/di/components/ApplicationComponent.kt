@@ -3,11 +3,12 @@ package me.androidbox.pokemon.di.components
 import dagger.Component
 import me.androidbox.pokemon.di.modules.ApplicationModule
 import me.androidbox.pokemon.di.modules.NetworkModule
+import me.androidbox.pokemon.di.modules.PokemonListModule
 import me.androidbox.pokemon.di.modules.PokemonModule
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [ApplicationModule::class, NetworkModule::class])
+@Component(modules = [ApplicationModule::class, NetworkModule::class, PokemonListModule::class])
 interface ApplicationComponent {
     fun add(pokemonModule: PokemonModule): PokemonSubcomponent
 }

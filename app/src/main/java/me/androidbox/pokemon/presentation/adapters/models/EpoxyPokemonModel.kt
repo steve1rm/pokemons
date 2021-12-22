@@ -1,25 +1,20 @@
 package me.androidbox.pokemon.presentation.adapters.models
 
-import android.content.Context
-import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.cardview.widget.CardView
+import android.annotation.SuppressLint
 import com.airbnb.epoxy.EpoxyAttribute
-import com.airbnb.epoxy.EpoxyHolder
 import com.airbnb.epoxy.EpoxyModelClass
-import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.bumptech.glide.Glide
-import com.jakewharton.rxbinding3.view.clicks
+import com.jakewharton.rxbinding4.view.clicks
 import com.jakewharton.rxrelay3.Relay
-import io.reactivex.rxkotlin.subscribeBy
-import kotlinx.android.synthetic.main.pokemon_list_item.view.*
+import io.reactivex.rxjava3.kotlin.subscribeBy
 import me.androidbox.pokemon.R
+import me.androidbox.pokemon.databinding.PokemonListItemBinding
+import me.androidbox.pokemon.presentation.utils.ViewBindingEpoxyModelWithHolder
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
-@EpoxyModelClass(layout = R.layout.pokemon_list_item)
-abstract class EpoxyPokemonModel : EpoxyModelWithHolder<EpoxyPokemonModel.PokemonHolder>() {
+@EpoxyModelClass
+abstract class EpoxyPokemonModel : ViewBindingEpoxyModelWithHolder<PokemonListItemBinding>() {
 
     @EpoxyAttribute
     lateinit var pokemonName: CharSequence
@@ -30,38 +25,31 @@ abstract class EpoxyPokemonModel : EpoxyModelWithHolder<EpoxyPokemonModel.Pokemo
     @EpoxyAttribute
     lateinit var pokemonClickedRelay: Relay<String>
 
-    override fun bind(holder: PokemonHolder) {
-        holder.pokemonName.text = pokemonName
+    @SuppressLint("CheckResult")
+    override fun PokemonListItemBinding.bind() {
+        this.tvName.text = pokemonName
 
-        Glide.with(holder.context)
+        Glide.with(this.root.context)
             .load(spriteUrl)
             .placeholder(R.drawable.ic_image_place_holder)
             .error(R.drawable.ic_broken_image)
             .fallback(R.drawable.ic_no_image)
-            .into(holder.spriteImage)
+            .into(this.ivSprite)
 
-        holder.pokemonCardView.clicks()
-            .debounce(300, TimeUnit.MILLISECONDS)
+        this.cvPokemonContainer.clicks()
+            .debounce(250, TimeUnit.MILLISECONDS)
             .map {
                 pokemonName.toString()
             }
             .subscribeBy(
-                onNext = pokemonClickedRelay::accept,
-                onError = { Timber.e(it.localizedMessage, "Failed to click pokemon") }
+                onError = Timber::e,
+                onNext = { pokemonName ->
+                    pokemonClickedRelay.accept(pokemonName)
+                }
             )
     }
 
-    class PokemonHolder : EpoxyHolder() {
-        lateinit var pokemonName: TextView
-        lateinit var pokemonCardView: CardView
-        lateinit var spriteImage: ImageView
-        lateinit var context: Context
-
-        override fun bindView(itemView: View) {
-            pokemonName = itemView.tvName
-            pokemonCardView = itemView.cvPokemonContainer
-            spriteImage = itemView.ivSprite
-            context = itemView.context
-        }
+    override fun getDefaultLayout(): Int {
+        return R.layout.pokemon_list_item
     }
 }

@@ -1,9 +1,9 @@
 package me.androidbox.pokemon.domain.interactors
 
-import io.reactivex.Single
-import me.androidbox.pokemon.domain.models.PokemonModel
+import io.reactivex.rxjava3.core.Single
+import me.androidbox.pokemon.domain.entity.Pokemon
 
 interface PokemonDetailInteractor {
-    fun getPokemonDetailById(id: Int): Single<PokemonModel>
-    fun getPokemonDetailByName(name: String): Single<PokemonModel>
+    fun getPokemonDetailById(id: Int): Single<Pokemon>
+    fun getPokemonDetailByName(name: String): Single<Pokemon>
 }

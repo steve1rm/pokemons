@@ -1,8 +1,10 @@
 plugins {
     id("com.android.library")
     kotlin("android")
+    id("kotlin-kapt")
     id("com.diffplug.gradle.spotless")
     id("io.gitlab.arturbosch.detekt")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -49,8 +51,12 @@ spotless {
 }
 
 dependencies {
-    implementation(AndroidX.core.ktx)
-    implementation(AndroidX.appCompat)
+    implementation(project(":domain"))
 
-    testImplementation(Testing.junit4)
+    kotlinStdLib()
+    parceler()
+    logging()
+    async()
+    networking()
+    unitTesting()
 }

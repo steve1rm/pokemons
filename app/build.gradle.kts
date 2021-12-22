@@ -3,8 +3,8 @@ plugins {
     id("com.android.application")
     //   id("androidx.navigation.safeargs.kotlin")
     id("kotlin-android")
-    id("kotlin-android-extensions")
     id("kotlin-kapt")
+    id("kotlin-parcelize")
     id("com.diffplug.gradle.spotless")
     id("io.gitlab.arturbosch.detekt")
 }
@@ -65,6 +65,9 @@ spotless {
 }
 
 dependencies {
+    implementation(project(":domain"))
+    implementation(project(":data"))
+
     appcompat()
     kotlinStdLib()
     lifecycleExtensions()
