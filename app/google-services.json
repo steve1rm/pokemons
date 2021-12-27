@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "219955073766",
+    "project_id": "pokemon-dd599",
+    "storage_bucket": "pokemon-dd599.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:219955073766:android:ed83db833b259ba6e96127",
+        "android_client_info": {
+          "package_name": "me.androidbox.pokemon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "219955073766-jo0j37ngiabv900ab06uqqdc2ipm2ilu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "me.androidbox.pokemon",
+            "certificate_hash": "5c63622c68d8cf98e1bd1caaf2c310041e4c1147"
+          }
+        },
+        {
+          "client_id": "219955073766-ntpu7jp99dgv0oaspsgn361l0kpm42q6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGVH65IKZ6KdzuIYmd0zUxxDTIo4o83X0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "219955073766-ntpu7jp99dgv0oaspsgn361l0kpm42q6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
