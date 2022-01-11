@@ -8,13 +8,17 @@ import java.util.concurrent.TimeUnit
 
 class PokemonDetailInteractorImp(private val pokemonService: PokemonService) : PokemonDetailInteractor {
 
+    companion object {
+        private const val TIMEOUT = 10L
+    }
+
     override fun getPokemonDetailById(id: Int): Single<Pokemon> {
         return pokemonService.getPokemonById(id)
-            .timeout(10, TimeUnit.SECONDS)
+            .timeout(TIMEOUT, TimeUnit.SECONDS)
     }
 
     override fun getPokemonDetailByName(name: String): Single<Pokemon> {
         return pokemonService.getPokemonByName(name)
-            .timeout(10, TimeUnit.SECONDS)
+            .timeout(TIMEOUT, TimeUnit.SECONDS)
     }
 }
