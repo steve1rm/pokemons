@@ -20,6 +20,10 @@ coroutines:
   active: true
   GlobalCoroutineUsage:
     active: true
+complexity:
+  active: true
+  TooManyFunctions:
+    thresholdInClasses: 15
 
 
 
