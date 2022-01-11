@@ -23,6 +23,7 @@ coroutines:
 complexity:
   active: true
   TooManyFunctions:
+    active: true
     thresholdInClasses: 15
 
 
