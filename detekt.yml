@@ -26,6 +26,10 @@ complexity:
     active: true
     thresholdInFiles: 14
     thresholdInClasses: 14
+formatting:
+  active: true
+  ParameterListWrapping:
+    maxLineLength: 120
 
 
 

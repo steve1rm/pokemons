@@ -9,6 +9,7 @@ class PokemonDiffCallback(
 ) :
     DiffUtil.Callback() {
 
+    @Suppress("MaxLineLength", "MaximumLineLength")
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
         return newPokemonModelList[newItemPosition].name == oldPokemonModelList[oldItemPosition].name &&
             newPokemonModelList[newItemPosition].baseExperience == oldPokemonModelList[oldItemPosition].baseExperience &&

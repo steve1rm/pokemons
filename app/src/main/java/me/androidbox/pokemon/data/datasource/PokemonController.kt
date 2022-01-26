@@ -5,7 +5,7 @@ import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.jakewharton.rxrelay3.PublishRelay
 import me.androidbox.pokemon.domain.entity.Pokemon
 import me.androidbox.pokemon.presentation.adapters.models.EpoxyPokemonModel_
-import java.util.*
+import java.util.UUID
 import javax.inject.Inject
 
 class PokemonController @Inject constructor() :

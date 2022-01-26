@@ -10,6 +10,10 @@ import java.util.concurrent.TimeUnit
 class PokemonDetailInteractorImp(private val pokemonService: PokemonService) :
     PokemonDetailInteractor {
 
+    private companion object {
+        const val TIMEOUT = 10L
+    }
+
     override fun getPokemonDetailById(id: Int): Single<PokemonEntity> {
         return pokemonService.getPokemonById(id)
             .map { pokemonModel ->
@@ -22,7 +26,7 @@ class PokemonDetailInteractorImp(private val pokemonService: PokemonService) :
                     sprites = SpriteEntity(pokemonModel.sprites.backDefault)
                 )
             }
-            .timeout(10, TimeUnit.SECONDS)
+            .timeout(TIMEOUT, TimeUnit.SECONDS)
     }
 
     override fun getPokemonDetailByName(name: String): Single<PokemonEntity> {
@@ -37,6 +41,6 @@ class PokemonDetailInteractorImp(private val pokemonService: PokemonService) :
                     sprites = SpriteEntity(pokemonModel.sprites.backDefault)
                 )
             }
-            .timeout(10, TimeUnit.SECONDS)
+            .timeout(TIMEOUT, TimeUnit.SECONDS)
     }
 }

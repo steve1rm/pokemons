@@ -21,6 +21,7 @@ class PokemonAdapter : RecyclerView.Adapter<PokemonViewHolder>() {
     private lateinit var binding: PokemonListItemBinding
     private val compositeDisposable = CompositeDisposable()
 
+    @Suppress("MagicNumber")
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonViewHolder {
         binding = PokemonListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         val pokemonViewHolder = PokemonViewHolder(binding.root)
