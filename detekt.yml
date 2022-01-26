@@ -20,6 +20,13 @@ coroutines:
   active: true
   GlobalCoroutineUsage:
     active: true
+complexity:
+  active: true
+  TooManyFunctions:
+    active: true
+    thresholdInFiles: 14
+    thresholdInClasses: 14
+
 
 
 
