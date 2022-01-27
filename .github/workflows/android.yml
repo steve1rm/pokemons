@@ -26,7 +26,9 @@ jobs:
         run: ./gradlew spotlessCheck
 
       - name: "Run detekt rules"
-        uses: natiginfo/action-detekt-all@1.17.0
+        uses: natiginfo/action-detekt-all@1.19.0
+        with:
+          args: --config detekt.yaml --fail-fast
 
       - name: Build with Gradle
         run: ./gradlew assemble

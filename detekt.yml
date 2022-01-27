@@ -30,6 +30,13 @@ formatting:
   active: true
   ParameterListWrapping:
     maxLineLength: 120
+  FinalNewline:
+    active: false
+    insertFinalNewLine: false
+style:
+  active: false
+  NewLineAtEndOfFile:
+    active: false
 
 
 
