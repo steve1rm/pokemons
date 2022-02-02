@@ -28,10 +28,6 @@ jobs:
       - name: "Run detekt rules"
         run: ./gradlew detekt
 
-#        uses: natiginfo/action-detekt-all@1.19.0
-#        with:
-#          args: --config detekt.yml --fail-fast
-
       - name: Build with Gradle
         run: ./gradlew assemble
 
