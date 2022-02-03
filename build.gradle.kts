@@ -8,7 +8,7 @@ buildscript {
 
     dependencies {
         classpath("com.android.tools.build:gradle:_")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.0")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10")
         classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:_")
         classpath("org.jacoco:org.jacoco.core:_")
 
@@ -29,12 +29,27 @@ allprojects {
     apply(plugin = "jacoco")
 }
 
+plugins {
+    id("io.gitlab.arturbosch.detekt") version "1.19.0"
+}
+
 subprojects {
     apply(plugin = "io.gitlab.arturbosch.detekt")
 
-    configure<io.gitlab.arturbosch.detekt.extensions.DetektExtension> {
+    detekt {
         config = files("${rootDir}/detekt.yml")
-        parallel = true
+        autoCorrect = true
+        allRules = true
+        buildUponDefaultConfig = true
+    }
+}
+
+tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+    reports {
+        html.required.set(true)
+        xml.required.set(true)
+        txt.required.set(true)
+        sarif.required.set(true)
     }
 }
 

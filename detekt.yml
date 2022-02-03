@@ -20,6 +20,24 @@ coroutines:
   active: true
   GlobalCoroutineUsage:
     active: true
+complexity:
+  active: true
+  TooManyFunctions:
+    active: true
+    thresholdInFiles: 14
+    thresholdInClasses: 14
+formatting:
+  active: true
+  ParameterListWrapping:
+    maxLineLength: 120
+  FinalNewline:
+    active: false
+    insertFinalNewLine: false
+style:
+  active: false
+  NewLineAtEndOfFile:
+    active: false
+
 
 
 

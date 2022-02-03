@@ -1,3 +1,5 @@
+@file:Suppress("MaxLineLength")
+
 package me.androidbox.pokemon.presentation.adapters
 
 import androidx.recyclerview.widget.DiffUtil

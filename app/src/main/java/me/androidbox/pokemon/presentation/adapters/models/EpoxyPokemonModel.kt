@@ -26,6 +26,7 @@ abstract class EpoxyPokemonModel : ViewBindingEpoxyModelWithHolder<PokemonListIt
     lateinit var pokemonClickedRelay: Relay<String>
 
     @SuppressLint("CheckResult")
+    @Suppress("MagicNumber")
     override fun PokemonListItemBinding.bind() {
         this.tvName.text = pokemonName
 

@@ -9,6 +9,11 @@ import me.androidbox.domain.interactors.PokemonListInteractor
 import java.util.concurrent.TimeUnit
 
 class PokemonListInteractorImp(private val pokemonService: PokemonService) : PokemonListInteractor {
+
+    private companion object {
+        const val TIMEOUT = 10L
+    }
+
     override fun getListOfPokemons(): Single<PokemonListEntity> {
         val result = pokemonService.getPokemons()
             .map { pokemonListModel ->
@@ -41,6 +46,6 @@ class PokemonListInteractorImp(private val pokemonService: PokemonService) : Pok
                     }
                 )
             }
-            .timeout(10, TimeUnit.SECONDS)
+            .timeout(TIMEOUT, TimeUnit.SECONDS)
     }
 }
