@@ -3,7 +3,7 @@ package me.androidbox.pokemon.presentation.mockdata
 import me.androidbox.domain.entity.PokemonEntity
 import me.androidbox.domain.entity.PokemonListEntity
 import me.androidbox.domain.entity.SpriteEntity
-import java.util.*
+import java.util.UUID
 
 object MockDataFactory {
 
@@ -17,8 +17,8 @@ object MockDataFactory {
         return pokemonList.toList()
     }
 
-    fun createPokemonList(count: Int): PokemonListEntity {
-        return createListOfPokemons(10)
+    fun createPokemonList(count: Int = 10): PokemonListEntity {
+        return createListOfPokemons(count)
             .run {
                 PokemonListEntity(this)
             }

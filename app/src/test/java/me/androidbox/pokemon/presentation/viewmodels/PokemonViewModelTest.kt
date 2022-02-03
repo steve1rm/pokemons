@@ -1,3 +1,5 @@
+@file:Suppress("MaxLineLength")
+
 package me.androidbox.pokemon.presentation.viewmodels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule

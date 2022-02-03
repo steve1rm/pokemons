@@ -1,3 +1,5 @@
+@file:Suppress("MaxLineLength")
+
 package me.androidbox.pokemon.presentation.adapters
 
 import androidx.recyclerview.widget.DiffUtil
@@ -9,7 +11,6 @@ class PokemonDiffCallback(
 ) :
     DiffUtil.Callback() {
 
-    @Suppress("MaximumLineLength")
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
         return newPokemonModelList[newItemPosition].name == oldPokemonModelList[oldItemPosition].name &&
             newPokemonModelList[newItemPosition].baseExperience == oldPokemonModelList[oldItemPosition].baseExperience &&

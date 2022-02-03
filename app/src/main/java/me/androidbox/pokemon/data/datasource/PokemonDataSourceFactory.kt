@@ -19,7 +19,12 @@ class PokemonDataSourceFactory(
     val pokemonDataSourceLiveData = MutableLiveData<PokemonPageKeyedDataSource>()
 
     override fun create(): DataSource<Int, Pokemon> {
-        val dataSource = PokemonPageKeyedDataSource(pokemonListInteractor, pokemonDetailInteractor, pokemonSchedulers, pokemonDomainMapper)
+        val dataSource = PokemonPageKeyedDataSource(
+            pokemonListInteractor,
+            pokemonDetailInteractor,
+            pokemonSchedulers,
+            pokemonDomainMapper
+        )
 
         pokemonDataSourceLiveData.postValue(dataSource)
 
