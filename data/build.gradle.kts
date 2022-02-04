@@ -52,6 +52,7 @@ spotless {
 
 dependencies {
     implementation(project(":domain"))
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.19.0")
 
     kotlinStdLib()
     parceler()

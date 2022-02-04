@@ -19,8 +19,8 @@ android {
         applicationId = "me.androidbox.pokemon"
         minSdkVersion(Versions.minSdkVersion)
         targetSdkVersion(Versions.targetSdkVersion)
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -76,6 +76,7 @@ spotless {
 dependencies {
     implementation(project(":domain"))
     implementation(project(":data"))
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.19.0")
 
     implementation(platform("com.google.firebase:firebase-bom:29.0.3"))
     implementation("com.google.firebase:firebase-analytics-ktx")

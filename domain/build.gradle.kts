@@ -30,6 +30,7 @@ spotless {
 
 dependencies {
     async()
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.19.0")
 
     testImplementation(assertjCore)
     testImplementation(junit)

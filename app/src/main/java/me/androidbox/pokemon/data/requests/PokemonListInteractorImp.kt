@@ -2,8 +2,8 @@ package me.androidbox.pokemon.data.requests
 
 import io.reactivex.rxjava3.core.Single
 import me.androidbox.pokemon.data.service.PokemonService
-import me.androidbox.pokemon.domain.interactors.PokemonListInteractor
 import me.androidbox.pokemon.domain.entity.PokemonList
+import me.androidbox.pokemon.domain.interactors.PokemonListInteractor
 import java.util.concurrent.TimeUnit
 
 class PokemonListInteractorImp(private val pokemonService: PokemonService) : PokemonListInteractor {

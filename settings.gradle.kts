@@ -8,3 +8,4 @@ plugins {
 ////                            # available:"0.30.2"
 }
 include(":domain")
+include(":detektCustomRules")
