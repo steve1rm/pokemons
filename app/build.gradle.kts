@@ -41,7 +41,7 @@ android {
             isTestCoverageEnabled = true
 
             firebaseAppDistribution {
-                serviceCredentialsFile = "app/pokemon-app-distribution.json"
+                serviceCredentialsFile = "./android/pokemon-app-distribution.json"
                 appId = "1:219955073766:android:ed83db833b259ba6e96127"
                 releaseNotes = "Release One with groups"
                 groups = "PokemonTesters"
