@@ -1,11 +1,12 @@
-package me.androidbox.pokemon.mappers.imp
+package me.androidbox.pokemon.mapper.imp
 
 import me.androidbox.domain.entity.PokemonEntity
 import me.androidbox.domain.entity.PokemonListEntity
 import me.androidbox.domain.entity.SpriteEntity
-import me.androidbox.pokemon.domain.entity.Pokemon
-import me.androidbox.pokemon.domain.entity.PokemonList
-import me.androidbox.pokemon.domain.entity.Sprite
+import me.androidbox.pokemon.entity.Pokemon
+import me.androidbox.pokemon.entity.PokemonList
+import me.androidbox.pokemon.entity.Sprite
+import me.androidbox.pokemon.mapper.PokemonDomainMapper
 import javax.inject.Inject
 
 class PokemonDomainMapperImp @Inject constructor() : PokemonDomainMapper {

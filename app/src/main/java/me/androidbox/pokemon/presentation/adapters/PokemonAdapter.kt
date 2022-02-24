@@ -9,7 +9,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import me.androidbox.pokemon.databinding.PokemonListItemBinding
-import me.androidbox.pokemon.domain.entity.Pokemon
+import me.androidbox.pokemon.entity.Pokemon
 import me.androidbox.pokemon.presentation.viewholders.PokemonViewHolder
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
