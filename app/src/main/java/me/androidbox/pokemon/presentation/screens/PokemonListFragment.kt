@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import me.androidbox.pokemon.datasource.PokemonController
 import me.androidbox.pokemon.databinding.FragmentPokemonListBinding
+import me.androidbox.pokemon.datasource.PokemonController
 import me.androidbox.pokemon.di.ProvideApplicationComponent.getApplicationComponent
 import me.androidbox.pokemon.di.modules.PokemonModule
 import me.androidbox.pokemon.presentation.adapters.PokemonAdapter
