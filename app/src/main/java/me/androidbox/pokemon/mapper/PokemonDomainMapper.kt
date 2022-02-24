@@ -1,11 +1,11 @@
-package me.androidbox.pokemon.mappers.imp
+package me.androidbox.pokemon.mapper
 
 import me.androidbox.domain.entity.PokemonEntity
 import me.androidbox.domain.entity.PokemonListEntity
 import me.androidbox.domain.entity.SpriteEntity
-import me.androidbox.pokemon.domain.entity.Pokemon
-import me.androidbox.pokemon.domain.entity.PokemonList
-import me.androidbox.pokemon.domain.entity.Sprite
+import me.androidbox.pokemon.entity.Pokemon
+import me.androidbox.pokemon.entity.PokemonList
+import me.androidbox.pokemon.entity.Sprite
 
 interface PokemonDomainMapper {
     fun mapPokemonListFromDomain(pokemonListEntity: PokemonListEntity): PokemonList

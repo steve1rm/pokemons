@@ -1,12 +1,12 @@
-package me.androidbox.pokemon.data.datasource
+package me.androidbox.pokemon.datasource
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
 import me.androidbox.domain.interactors.PokemonDetailInteractor
 import me.androidbox.domain.interactors.PokemonListInteractor
 import me.androidbox.pokemon.di.modules.ApplicationModule.PokemonSchedulers
-import me.androidbox.pokemon.domain.entity.Pokemon
-import me.androidbox.pokemon.mappers.imp.PokemonDomainMapper
+import me.androidbox.pokemon.entity.Pokemon
+import me.androidbox.pokemon.mapper.PokemonDomainMapper
 
 class PokemonDataSourceFactory(
     private val pokemonListInteractor: PokemonListInteractor,

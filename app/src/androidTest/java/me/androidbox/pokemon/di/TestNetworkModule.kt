@@ -4,7 +4,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.Reusable
 import me.androidbox.pokemon.BuildConfig
-import me.androidbox.pokemon.data.service.PokemonService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -52,9 +51,4 @@ class TestNetworkModule {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
     }
-
-    @Reusable
-    @Provides
-    fun provideTamboonService(retrofit: Retrofit): PokemonService =
-        retrofit.create(PokemonService::class.java)
 }

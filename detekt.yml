@@ -33,6 +33,8 @@ formatting:
   FinalNewline:
     active: false
     insertFinalNewLine: false
+  ImportOrdering:
+      active: false
 style:
   active: false
   NewLineAtEndOfFile:

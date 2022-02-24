@@ -13,10 +13,10 @@ import io.reactivex.rxjava3.schedulers.TestScheduler
 import me.androidbox.domain.entity.PokemonListEntity
 import me.androidbox.domain.interactors.PokemonDetailInteractor
 import me.androidbox.domain.interactors.PokemonListInteractor
-import me.androidbox.pokemon.data.datasource.PokemonDataSourceFactory
+import me.androidbox.pokemon.datasource.PokemonDataSourceFactory
 import me.androidbox.pokemon.di.modules.ApplicationModule.PokemonSchedulers
-import me.androidbox.pokemon.domain.entity.PokemonList
-import me.androidbox.pokemon.mappers.imp.PokemonDomainMapper
+import me.androidbox.pokemon.entity.PokemonList
+import me.androidbox.pokemon.mapper.PokemonDomainMapper
 import me.androidbox.pokemon.presentation.mockdata.MockDataFactory
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before

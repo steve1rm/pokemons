@@ -11,12 +11,12 @@ import io.reactivex.rxjava3.kotlin.addTo
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import me.androidbox.domain.interactors.PokemonDetailInteractor
 import me.androidbox.domain.interactors.PokemonListInteractor
-import me.androidbox.pokemon.data.datasource.PokemonDataSourceFactory
-import me.androidbox.pokemon.data.datasource.PokemonPageKeyedDataSource
+import me.androidbox.pokemon.datasource.PokemonDataSourceFactory
+import me.androidbox.pokemon.datasource.PokemonPageKeyedDataSource
 import me.androidbox.pokemon.di.modules.ApplicationModule.PokemonSchedulers
-import me.androidbox.pokemon.domain.entity.Pokemon
-import me.androidbox.pokemon.domain.entity.PokemonList
-import me.androidbox.pokemon.mappers.imp.PokemonDomainMapper
+import me.androidbox.pokemon.entity.Pokemon
+import me.androidbox.pokemon.entity.PokemonList
+import me.androidbox.pokemon.mapper.PokemonDomainMapper
 import timber.log.Timber
 
 class PokemonViewModel(

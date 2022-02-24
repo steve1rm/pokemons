@@ -8,7 +8,7 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import me.androidbox.pokemon.R
 import me.androidbox.pokemon.databinding.BottomSheetLayoutBinding
-import me.androidbox.pokemon.domain.entity.Pokemon
+import me.androidbox.pokemon.entity.Pokemon
 
 class PokemonDetailBottomSheet : BottomSheetDialogFragment() {
 

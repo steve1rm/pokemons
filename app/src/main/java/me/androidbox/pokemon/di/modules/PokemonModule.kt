@@ -8,11 +8,11 @@ import me.androidbox.data.requests.PokemonListInteractorImp
 import me.androidbox.data.service.PokemonService
 import me.androidbox.domain.interactors.PokemonDetailInteractor
 import me.androidbox.domain.interactors.PokemonListInteractor
-import me.androidbox.pokemon.data.datasource.PokemonDataSourceFactory
+import me.androidbox.pokemon.datasource.PokemonDataSourceFactory
 import me.androidbox.pokemon.di.ViewModelPokemonProvider
 import me.androidbox.pokemon.di.modules.ApplicationModule.PokemonSchedulers
 import me.androidbox.pokemon.di.scopes.ViewScope
-import me.androidbox.pokemon.mappers.imp.PokemonDomainMapper
+import me.androidbox.pokemon.mapper.PokemonDomainMapper
 import me.androidbox.pokemon.presentation.adapters.PokemonAdapter
 import me.androidbox.pokemon.presentation.screens.PokemonListFragment
 import me.androidbox.pokemon.presentation.viewmodels.PokemonViewModel

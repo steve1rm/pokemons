@@ -1,9 +1,9 @@
-package me.androidbox.pokemon.data.datasource
+package me.androidbox.pokemon.datasource
 
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging.PagedListEpoxyController
 import com.jakewharton.rxrelay3.PublishRelay
-import me.androidbox.pokemon.domain.entity.Pokemon
+import me.androidbox.pokemon.entity.Pokemon
 import me.androidbox.pokemon.presentation.adapters.models.EpoxyPokemonModel_
 import java.util.UUID
 import javax.inject.Inject
