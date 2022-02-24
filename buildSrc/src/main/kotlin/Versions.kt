@@ -13,6 +13,7 @@ object Versions {
     const val appcompatVersion = "_"
     const val detektGradlePluginVersion = "_"
     const val jacocoCoreVersion = "_"
+    const val googleServicesVersion = "4.3.10"
 
     /* Libraries */
     const val gsonVersion = "_"
@@ -32,6 +33,7 @@ object Versions {
     const val epoxyVersion = "_"
     const val constraintlayoutVersion = "_"
     const val shimmerVersion = "_"
+    const val firebaseBomVersion = "29.0.3"
 
     /** Testing */
     const val coreTestingVersion = "_"

@@ -7,6 +7,8 @@ plugins {
     id("kotlin-parcelize")
     id("com.diffplug.gradle.spotless")
     id("io.gitlab.arturbosch.detekt")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.appdistribution")
 }
 
 android {
@@ -37,6 +39,13 @@ android {
 
         getByName("debug") {
             isTestCoverageEnabled = true
+
+            firebaseAppDistribution {
+                serviceCredentialsFile = "./android/pokemon-app-distribution.json"
+                appId = "1:219955073766:android:ed83db833b259ba6e96127"
+                releaseNotes = "Release One with groups"
+                groups = "PokemonTesters"
+            }
         }
     }
 
@@ -68,6 +77,9 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":data"))
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.19.0")
+
+    implementation(platform("com.google.firebase:firebase-bom:29.0.3"))
+    implementation("com.google.firebase:firebase-analytics-ktx")
 
     appcompat()
     kotlinStdLib()
